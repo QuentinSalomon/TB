@@ -12,13 +12,11 @@ namespace Framework
 
         public MainViewModel()
         {
-            EditPlaylistViewModel = new EditPlaylistViewModel();
-            SupervisionViewModel = new SupervisionViewModel();
+            EditPartitionViewModel = new EditPartitionViewModel();
         }
 
         #endregion
 
-        public EditPlaylistViewModel EditPlaylistViewModel { get; private set; }
-        public SupervisionViewModel SupervisionViewModel { get; private set; }
+        public EditPartitionViewModel EditPartitionViewModel { get; private set; }
     }
 }

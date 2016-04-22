@@ -25,8 +25,7 @@ namespace Framework
 
         public void Load()
         {
-            Playlist = new Playlist() { Description = "My Machine Description" };
-            Xylobot = new Xylobot();
+            //Playlist = new Playlist() { Description = "My Machine Description" };
         }
 
         public void Unload()
@@ -38,8 +37,7 @@ namespace Framework
 
         #region Public Properties
 
-        public Playlist Playlist { get; private set; }
-        public Xylobot Xylobot { get; private set; }
+        //public Playlist Playlist { get; private set; }
 
         #endregion
     }

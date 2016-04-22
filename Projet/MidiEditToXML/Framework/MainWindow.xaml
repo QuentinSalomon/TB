@@ -1,0 +1,17 @@
+﻿<Window x:Class="Framework.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:concept="http://www.objectis.ch/concept"
+        xmlns:local="clr-namespace:Framework"
+        Title="MyMachine" Height="400" Width="600">
+    <concept:NavigationControl>
+        <local:EditPartitionView concept:NavigationControl.MenuTitle="Edit partition" 
+                               concept:NavigationControl.MenuImageSource="/Framework;component/Images/Partition32x32.png"
+                                 DataContext="{Binding Path=EditPartitionView}"/>
+        <local:FileManagementView concept:NavigationControl.MenuTitle="Manage file" 
+                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/FileManage32x32.png"
+                                DataContext="{Binding Path=FileManagementView}"/>
+        <local:SettingsView concept:NavigationControl.MenuTitle="Settings" 
+                            concept:NavigationControl.MenuImageSource="/Framework;component/Images/Settings32x32.png"/>
+    </concept:NavigationControl>
+</Window>

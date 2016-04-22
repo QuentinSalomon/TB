@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{804C47CE-B263-4132-86B5-B007C890A898}</ProjectGuid>
+    <ProjectGuid>{861D9DE4-E6D0-43F2-A5E8-D19CDDFC9A5F}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Framework</RootNamespace>
@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common">
-      <HintPath>..\..\Common\Common\bin\Debug\Common.dll</HintPath>
-    </Reference>
     <Reference Include="Concept.Components">
       <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Components.dll</HintPath>
     </Reference>
@@ -53,6 +50,18 @@
     <Reference Include="Concept.Utils.Wpf">
       <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Utils.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Sanford.Collections">
+      <HintPath>..\..\..\..\MidiToolkit\Sanford.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanford.Multimedia">
+      <HintPath>..\..\..\..\MidiToolkit\Sanford.Multimedia.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanford.Multimedia.Timers">
+      <HintPath>..\..\..\..\MidiToolkit\Sanford.Multimedia.Timers.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanford.Threading">
+      <HintPath>..\..\..\..\MidiToolkit\Sanford.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -67,30 +76,23 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Woopsa">
-      <HintPath>..\..\..\..\Woopsa.1.1\DotNet\Woopsa.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
-    <Compile Include="EditPlaylist\Playlist.cs" />
+    <Compile Include="EditPartition\PartitionMidi.cs" />
     <Compile Include="FrameworkController.cs" />
-    <Compile Include="MainNavigationPages\EditPlaylistView.xaml.cs">
-      <DependentUpon>EditPlaylistView.xaml</DependentUpon>
+    <Compile Include="MainNavigationPages\EditPartitionViewModel.cs" />
+    <Compile Include="MainNavigationPages\EditPartitionView.xaml.cs">
+      <DependentUpon>EditPartitionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainNavigationPages\EditPlaylistViewModel.cs" />
-    <Compile Include="MainNavigationPages\HomeView.xaml.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
+    <Compile Include="MainNavigationPages\FileManagementView.xaml.cs">
+      <DependentUpon>FileManagementView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainNavigationPages\HomeViewModel.cs" />
+    <Compile Include="MainNavigationPages\FileManagementViewModel.cs" />
     <Compile Include="MainNavigationPages\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainNavigationPages\SettingsViewModel.cs" />
-    <Compile Include="MainNavigationPages\SupervisionView.xaml.cs">
-      <DependentUpon>SupervisionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainNavigationPages\SupervisionViewModel.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -108,8 +110,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Supervision\SerialUsb.cs" />
-    <Compile Include="Supervision\Xylobot.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -121,19 +121,15 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainNavigationPages\EditPlaylistView.xaml">
+    <Page Include="MainNavigationPages\EditPartitionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainNavigationPages\HomeView.xaml">
+    <Page Include="MainNavigationPages\FileManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainNavigationPages\SettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainNavigationPages\SupervisionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,20 +138,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Images\Playlist64x64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Home32x32.png" />
-    <Resource Include="Images\Playlist32x32.png" />
+    <Resource Include="Images\FileManage32x32.png" />
+    <Resource Include="Images\Partition32x32.png" />
     <Resource Include="Images\Settings32x32.png" />
-    <Resource Include="Images\Supervision32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Xylophone32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Xylophone64x64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

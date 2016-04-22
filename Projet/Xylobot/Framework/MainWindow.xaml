@@ -8,7 +8,8 @@
         <local:HomeView concept:NavigationControl.MenuTitle="Home"
                         concept:NavigationControl.MenuImageSource="/Framework;component/Images/Home32x32.png"/>
         <local:SupervisionView concept:NavigationControl.MenuTitle="Supervision" 
-                               concept:NavigationControl.MenuImageSource="/Framework;component/Images/Supervision32x32.png"/>
+                               concept:NavigationControl.MenuImageSource="/Framework;component/Images/Supervision32x32.png"
+                               DataContext="{Binding Path=SupervisionViewModel}"/>
         <local:EditPlaylistView concept:NavigationControl.MenuTitle="Playlist" 
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/Playlist32x32.png"
                                 DataContext="{Binding Path=EditPlaylistViewModel}"/>

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Framework
 {
-    public class SupervisionViewModel : BaseViewModel
+    public class EditPartitionViewModel : BaseViewModel
     {
-        public Xylobot Xylobot { get { return FrameworkController.Instance.Xylobot; } }
     }
 }

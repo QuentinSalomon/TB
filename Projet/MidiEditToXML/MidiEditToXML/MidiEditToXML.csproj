@@ -4,17 +4,19 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{804C47CE-B263-4132-86B5-B007C890A898}</ProjectGuid>
-    <OutputType>library</OutputType>
+    <ProjectGuid>{C54EC2EB-B3F5-4E5A-8404-8C4E95DAF724}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Framework</RootNamespace>
-    <AssemblyName>Framework</AssemblyName>
+    <RootNamespace>MidiEditToXML</RootNamespace>
+    <AssemblyName>MidiEditToXML</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,6 +26,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common">
-      <HintPath>..\..\Common\Common\bin\Debug\Common.dll</HintPath>
-    </Reference>
     <Reference Include="Concept.Components">
       <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Components.dll</HintPath>
     </Reference>
@@ -53,6 +53,18 @@
     <Reference Include="Concept.Utils.Wpf">
       <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Utils.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Sanford.Collections">
+      <HintPath>..\..\..\..\MidiToolkit\Sanford.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanford.Multimedia">
+      <HintPath>..\..\..\..\MidiToolkit\Sanford.Multimedia.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanford.Multimedia.Timers">
+      <HintPath>..\..\..\..\MidiToolkit\Sanford.Multimedia.Timers.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanford.Threading">
+      <HintPath>..\..\..\..\MidiToolkit\Sanford.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -67,34 +79,19 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Woopsa">
-      <HintPath>..\..\..\..\Woopsa.1.1\DotNet\Woopsa.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseViewModel.cs" />
-    <Compile Include="EditPlaylist\Playlist.cs" />
-    <Compile Include="FrameworkController.cs" />
-    <Compile Include="MainNavigationPages\EditPlaylistView.xaml.cs">
-      <DependentUpon>EditPlaylistView.xaml</DependentUpon>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainNavigationPages\EditPlaylistViewModel.cs" />
-    <Compile Include="MainNavigationPages\HomeView.xaml.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainNavigationPages\HomeViewModel.cs" />
-    <Compile Include="MainNavigationPages\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainNavigationPages\SettingsViewModel.cs" />
-    <Compile Include="MainNavigationPages\SupervisionView.xaml.cs">
-      <DependentUpon>SupervisionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainNavigationPages\SupervisionViewModel.cs" />
-    <Compile Include="MainViewModel.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -108,8 +105,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Supervision\SerialUsb.cs" />
-    <Compile Include="Supervision\Xylobot.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -121,41 +116,13 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainNavigationPages\EditPlaylistView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainNavigationPages\HomeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainNavigationPages\SettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainNavigationPages\SupervisionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Playlist64x64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Home32x32.png" />
-    <Resource Include="Images\Playlist32x32.png" />
-    <Resource Include="Images\Settings32x32.png" />
-    <Resource Include="Images\Supervision32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Xylophone32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Xylophone64x64.png" />
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{861d9de4-e6d0-43f2-a5e8-d19cddfc9a5f}</Project>
+      <Name>Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
