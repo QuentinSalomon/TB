@@ -13,11 +13,20 @@ namespace Framework
     [ConceptLargeImage(typeof(Playlist), "/Images/Xylophone64x64.png")]
     public class Xylobot : ConceptComponent
     {
+        #region Constructor
+
+        public Xylobot()
+        {
+            XyloCommunication = new XyloCommunication(this);
+        }
+
+        #endregion
+
         #region Propriétés
 
         [ConceptViewVisible(true)]
         [ConceptDefaultValue("1.0.0")]
-        [IntlConceptName("Framework.Xylbot.Version", "Buffer Usb")]
+        [IntlConceptName("Framework.Xylbot.Buffer", "Buffer Usb")]
         public string Buffer
         {
             get { return _buffer; }
@@ -33,13 +42,33 @@ namespace Framework
         private string _buffer;
         public const string BufferPropertyName = "Buffer";
 
+        [ConceptViewVisible(true)]
+        [ConceptDefaultValue("...")]
+        [IntlConceptName("Framework.Xylbot.Test", "Test")]
+        public string Test
+        {
+            get { return _test; }
+            set
+            {
+                if (_test != value)
+                {
+                    _test = value;
+                    DoPropertyChanged(TestPropertyName);
+                }
+            }
+        }
+        private string _test;
+        public const string TestPropertyName = "Test";
+
         [ConceptViewVisible(false)]
-        public SerialUsb SerialUsb { get; set; }
+        public XyloCommunication XyloCommunication { get; set; }
+
+
 
         #endregion
 
         #region Wpf Commands
-
+        // TODO : delete
         public WpfCommand CommandGoto
         {
             get

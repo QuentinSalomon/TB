@@ -1,10 +1,13 @@
 #ifndef Notes_h
 #define Notes_h
 
+#include <arduino.h>
+
 class Note
 {
   public :
     Note(byte p, long t);
+    Note();
     
     byte GetPitch();
     //void SetPitch(byte p);

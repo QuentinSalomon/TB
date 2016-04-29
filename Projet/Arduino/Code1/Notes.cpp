@@ -1,5 +1,10 @@
 #include "Notes.h"
 
+Note::Note()
+{
+
+}
+
 Note::Note(byte p, long t)
 {
   _pitch = p;

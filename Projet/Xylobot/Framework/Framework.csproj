@@ -108,7 +108,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Supervision\SerialUsb.cs" />
+    <Compile Include="Supervision\XyloCommunication.cs" />
     <Compile Include="Supervision\Xylobot.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
