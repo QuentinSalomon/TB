@@ -121,19 +121,22 @@ namespace Framework
 
         public void SendNotes(List<Note> notes)
         {
-            int noteSize = (sizeof(Int32) + sizeof(byte));
+            int noteSize = (sizeof(UInt32) + sizeof(byte));
             if (notes.Count>byte.MaxValue/noteSize)
                 throw new Exception("trop de notes");
 
             int i=0;
             byte[] msg = new byte[SizeHeadMessage + notes.Count * noteSize];
-            byte[] dataSize = BitConverter.GetBytes(notes.Count * noteSize);
-            msg[0] = StartByte;
-            msg[1] = _numMessage;
-            msg[2] = (byte)SendTypeMessage.Notes;
-            msg[3] = dataSize[0];
-            msg[4] = dataSize[1];
-            i = 5;
+            ushort dataSize = BitConverter.ToUInt16(BitConverter.GetBytes(notes.Count * noteSize), 0);
+            byte[] headMsg = HeaderMessage(dataSize, (byte)SendTypeMessage.Notes);
+            //byte[] dataSize = BitConverter.GetBytes(notes.Count * noteSize);
+            //msg[0] = StartByte;
+            //msg[1] = _numMessage;
+            //msg[2] = (byte)SendTypeMessage.Notes;
+            //msg[3] = dataSize[0];
+            //msg[4] = dataSize[1];
+
+            i = SizeHeadMessage;
             foreach (Note note in notes)
             {
                 msg[i++] = note.Pitch;

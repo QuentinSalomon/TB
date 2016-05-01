@@ -9,6 +9,6 @@ namespace Common
     public class Note
     {
         public byte Pitch { get; set; }
-        public Int32 Tick { get; set; }
+        public UInt32 Tick { get; set; }
     }
 }
