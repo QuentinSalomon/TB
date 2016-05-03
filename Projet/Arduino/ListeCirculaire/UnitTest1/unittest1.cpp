@@ -14,20 +14,21 @@ namespace UnitTest1
 		{
 			CircularBuffer c;
 			int val;
-			Assert::AreEqual(c.SizeAvailble(), BUFFER_SIZE);
+			Assert::AreEqual(c.SizeAvailable(), BUFFER_SIZE);
 			Assert::IsFalse(c.Read(&val));
 			Assert::IsTrue(c.Write(2));
 			Assert::IsTrue(c.Read(&val));
 			Assert::AreEqual(val, 2);
 			for (int i = 0; i < BUFFER_SIZE; i++)
 				Assert::IsTrue(c.Write(i));
-			Assert::AreEqual(c.SizeAvailble(), 0);
+			Assert::AreEqual(c.SizeAvailable(), 0);
+			Assert::IsFalse(c.Write(1));
 			for (int i = 0; i < BUFFER_SIZE; i++) {
 				Assert::IsTrue(c.Read(&val));
 				Assert::AreEqual(val, i);
 			}
 			Assert::IsFalse(c.Read(&val));
-			Assert::AreEqual(c.SizeAvailble(), BUFFER_SIZE);
+			Assert::AreEqual(c.SizeAvailable(), BUFFER_SIZE);
 		}
 
 	};

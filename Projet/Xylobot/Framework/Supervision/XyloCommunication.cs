@@ -22,15 +22,14 @@ namespace Framework
     public class XyloCommunication
     {
         #region const
-
-        // TODO : variables privées à la fin
+        
         const byte StartByte = 255;
         // TODO : Ajuster la vitesse
-        const Int32 BaudRate = 28800, SizeHeadMessage = 5, TimeOut = 2000;
+        const Int32 BaudRate = 19200, SizeHeadMessage = 5, TimeOut = 3000;
         const int ReceiveTypeSize = 4;
         #endregion
 
-        // TODO : delete t
+        // TODO : changer de place le thread t
         Thread t;
 
         #region Constructor
@@ -43,12 +42,19 @@ namespace Framework
             _serialPort = new SerialPort(PortName, BaudRate);
             _serialPort.ReadTimeout = TimeOut;
             _serialPort.WriteTimeout = TimeOut;
+            // TO DO: Régler comme il faut
+            _serialPort.DataBits = 8;
+            _serialPort.StopBits = StopBits.One;
+            _serialPort.Parity = Parity.None;
+            _serialPort.Handshake = Handshake.None;
+
 
             _xylo = xylo;
 
             t = new Thread(test);
 
             _serialPort.Open();
+            _serialPort.DiscardOutBuffer();
             t.Start();
         }
 
@@ -67,15 +73,25 @@ namespace Framework
 
         public void test()
         {
-            byte[] a = new byte[1];
-            a[0] = StartByte;
-            _serialPort.Write(a, 0, 1);
-            _xylo.Test = _serialPort.ReadByte().ToString(); 
+            //int a;
+            List<Note> listeTest = new List<Note>();
+            listeTest.Add(new Note(100, 1000));
+            SendNotes(listeTest);
+            //Read();
+
+
+            //int a;
+            //a = _serialPort.ReadByte();
+            //_xylo.Test = a.ToString();
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    a = _serialPort.ReadByte();
+            //    _xylo.Test = _xylo.Test + " " + a.ToString();
+            //}
         }
 
         public void Read()
         {
-            List<byte> msg = new List<byte>();
             int tmp;
             try
             {
@@ -94,6 +110,7 @@ namespace Framework
                             switch ((ReceiveTypeMessage)tmp)
                             {
                                 case ReceiveTypeMessage.Ok:
+                                    _xylo.Test = "Ok";
                                     break;
                                 case ReceiveTypeMessage.TooManyData:
                                     break;
@@ -104,13 +121,15 @@ namespace Framework
                                 default:
                                     break;
                             }
+
+                            _xylo.Test = tmp.ToString();
                         }
                         else
-                            ; //Renvoyer le message précedent
+                            _xylo.Test = "Mauvais Type"; //Renvoyer le message précedent
                     } else
-                        ; //Renvoyer le message précedent
+                        _xylo.Test = "Mauvais numéro de message"; //Renvoyer le message précedent
                 } else
-                    ; //Renvoyer le message précedent
+                    _xylo.Test = "Mauvais Startbyte"; //Renvoyer le message précedent
 
             }
             catch (TimeoutException e)
@@ -129,14 +148,8 @@ namespace Framework
             byte[] msg = new byte[SizeHeadMessage + notes.Count * noteSize];
             ushort dataSize = BitConverter.ToUInt16(BitConverter.GetBytes(notes.Count * noteSize), 0);
             byte[] headMsg = HeaderMessage(dataSize, (byte)SendTypeMessage.Notes);
-            //byte[] dataSize = BitConverter.GetBytes(notes.Count * noteSize);
-            //msg[0] = StartByte;
-            //msg[1] = _numMessage;
-            //msg[2] = (byte)SendTypeMessage.Notes;
-            //msg[3] = dataSize[0];
-            //msg[4] = dataSize[1];
-
-            i = SizeHeadMessage;
+            for (i = 0; i < SizeHeadMessage; i++)
+                msg[i] = headMsg[i];
             foreach (Note note in notes)
             {
                 msg[i++] = note.Pitch;
@@ -146,6 +159,7 @@ namespace Framework
             //Envoie
             try
             {
+                _serialPort.DiscardInBuffer();
                 _serialPort.Write(msg, 0, msg.Length);
             }
             catch (TimeoutException e)
@@ -154,14 +168,14 @@ namespace Framework
             }
         }
 
-        public byte[] HeaderMessage(ushort size, byte type)
+        public byte[] HeaderMessage(ushort dataSize, byte type)
         {
             byte[] header = new byte[SizeHeadMessage];
             header[0] = StartByte;
-            header[1] = _numMessage;
+            header[1] = _numMessage++;
             header[2] = type;
-            header[3] = BitConverter.GetBytes(size)[0];
-            header[4] = BitConverter.GetBytes(size)[1];
+            header[3] = BitConverter.GetBytes(SizeHeadMessage)[0];
+            header[4] = BitConverter.GetBytes(SizeHeadMessage)[1];
             return header;
         }
 

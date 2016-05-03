@@ -3,19 +3,22 @@
 
 #include <arduino.h>
 
+#define NOTE_SIZE 5
+
 class Note
 {
   public :
-    Note(byte p, long t);
+  
+    Note(byte p, uint32_t t);
     Note();
     
     byte GetPitch();
-    //void SetPitch(byte p);
-    long GetTick();
-    //void SetTick(long t);
+    void SetPitch(byte p);
+    uint32_t GetTick();
+    void SetTick(uint32_t t);
   private :
     byte _pitch;
-    long _tick;
+    uint32_t _tick;
 };
 
 #endif

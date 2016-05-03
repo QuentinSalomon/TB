@@ -28,7 +28,7 @@ bool CircularBuffer::Write(int value)
 }
 bool CircularBuffer::Read(int* value)
 {
-	if (SizeAvailble() != BUFFER_SIZE) {
+	if (SizeAvailable() != BUFFER_SIZE) {
 		_full = false;
 		*value = _buffer[_iRead++];
 		if (_iRead == BUFFER_SIZE)
@@ -39,7 +39,7 @@ bool CircularBuffer::Read(int* value)
 		return false;
 }
 
-int CircularBuffer::SizeAvailble()
+int CircularBuffer::SizeAvailable()
 {
 	if (!_full)
 		return _iWrite >= _iRead ? BUFFER_SIZE - (_iWrite - _iRead) : _iRead - _iWrite;

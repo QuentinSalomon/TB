@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common">
-      <HintPath>..\..\Common\Common\bin\Debug\Common.dll</HintPath>
-    </Reference>
     <Reference Include="Concept.Components">
       <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Components.dll</HintPath>
     </Reference>
@@ -156,6 +153,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Xylophone64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibXylobot\LibXylobot.csproj">
+      <Project>{dcdce5ea-07ee-4375-aeda-5803d8ce35e6}</Project>
+      <Name>LibXylobot</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

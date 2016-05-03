@@ -4,7 +4,7 @@
 #include <arduino.h>
 #include "Notes.h"
 
-#define BUFFER_SIZE 256   //Max 256 (1 byte)
+#define BUFFER_SIZE 200   //Max 256 (1 byte)
 
 class CircularBuffer
 {
@@ -14,7 +14,7 @@ public:
 
 	bool Write(Note value);
 	bool Read(Note* value);
-	byte SizeAvailble();
+	byte SizeAvailable();
 private:
 	Note _buffer[BUFFER_SIZE];
 	int _iWrite, _iRead;
