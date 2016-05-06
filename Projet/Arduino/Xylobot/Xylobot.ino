@@ -12,20 +12,16 @@ SendTypeMessage msgSendType;
 CircularBuffer bufferNotes;
 
 byte headMessage[HEAD_RECEIVE_MSG_SIZE];
+int count;
 Note note;
 
 int modeSerial; //Lecture = 0, traitement = 1, écriture = 2
-Note n;
-  
 
 void NotesMsg(uint16_t dataSize);
 void StartMsg(uint16_t dataSize);
 void StopMsg(uint16_t dataSize);
 void PauseMsg(uint16_t dataSize);
 void TempoMsg(uint16_t dataSize);
-
-void ReadMessageTest();
-void ReadMessage();
 
 bool ReadHeadMessage();
 bool CheckMessage();
@@ -37,67 +33,76 @@ void setup() {
   pinMode(13, OUTPUT);
   digitalWrite(13, LOW);
   modeSerial = 0;
+  count = 0;
   // open the serial port:
   numMessage =-1;
   //Serial.setTimeout(500);
-  Serial.begin(19200);
+  Serial.flush();
+  Serial.begin(57600);
+  while(Serial.available());
 }
 
 void loop() {
-//  switch (modeSerial)
-//  {
-//    case 0:   //entête du message
-      if (Serial.available() > 0)
+  switch (modeSerial)
+  {
+    case 0:   //entête du message
         if(ReadHeadMessage())
           modeSerial = 1;
-//      break;
-//    case 1:   //Validité du message? et lecture des données
-//      if(CheckMessage())
-//        void ReadDataMessage();
-//      break;
-//    case 2:
-//      ResponseMessage(msgSendType);
-//      digitalWrite(13, HIGH);
-//      break;
-//    default:
-//      break;
-//  }
+      break;
+      
+    case 1:   //Validité du message? et lecture des données
+      if(CheckMessage())
+        modeSerial = 2;
+      else
+        modeSerial = 3;
+      break;
+
+    case 2:
+      ReadDataMessage();
+      modeSerial = 3;
+      break;
+      
+    case 3:
+      while(Serial.available())
+        Serial.read();
+      ResponseMessage(msgSendType);
+      modeSerial = 0;
+      break;
+    default:
+      break;
+  }
 }
 
 /****************************************FONCTIONS****************************************/
 bool ReadHeadMessage() {
-    static byte i;
-    if(i<HEAD_RECEIVE_MSG_SIZE){
-      while(Serial.available()){
-        headMessage[i++] = Serial.read();
-        if(i==HEAD_RECEIVE_MSG_SIZE){
-          //if((headMessage[0] == 255) && (headMessage[1] == 0) && (headMessage[2] == 1) && (headMessage[3] == 5) && (headMessage[4] == 0))
-          digitalWrite(13, HIGH);
-          i = 0;
-          return true;
-        }
+    while(Serial.available()){
+      headMessage[count++] = Serial.read();
+      if(count==HEAD_RECEIVE_MSG_SIZE){
+        count = 0;
+        return true; 
       }
-      return false;
     }
-    else{
-      if((headMessage[0] == 255) && (headMessage[1] == 0) && (headMessage[2] == 1) && (headMessage[3] == 5) && (headMessage[4] == 0))
-        digitalWrite(13, HIGH);
-      i = 0;
-      return true;
-    }
+    return false;
 }
 
 bool CheckMessage() {
   uint32_t dataSize;
-  if(headMessage[0] == 255){
+  /*Start byte correcte?*/
+  if(headMessage[0] == START_BYTE){
+    /*Pas de réemission?*/
     oldNumMessage = numMessage;
     numMessage = headMessage[1];
     if(oldNumMessage != numMessage){
-        if(headMessage[2] < RECEIVE_TYPE_SIZE)
-        {
+      /*Type de message existant?*/
+      if(headMessage[2] < RECEIVE_TYPE_SIZE)
+      {
+        /*place pour toutes les données reçues?*/
+        if(bufferNotes.SizeAvailable() > (headMessage[3]|headMessage[4])/NOTE_SIZE)
           return true;
-        }else
-          msgSendType = SendType_ErrorType;
+        else
+          msgSendType = SendType_TooManyData;
+      }else
+        msgSendType = SendType_ErrorType;
     }else
       msgSendType = msgSendType;
   }else
@@ -135,25 +140,31 @@ void NotesMsg(uint16_t dataSize)
   static byte i;
   Note tmpNote;
   byte noteBytes[NOTE_SIZE] = {0};
-  uint32_t tmpTick, j, k;
+  uint32_t tmpTick;
+  int j, k;
 
   for(k=0; k<dataSize; k+=NOTE_SIZE){
     //Lit une note
-    while(Serial.available()){
-      noteBytes[i++] = Serial.read();
-      if(i == NOTE_SIZE){
-        i = 0;
-        break;
+    if(Serial.available() >= NOTE_SIZE){
+      while(Serial.available()){
+        noteBytes[i++] = Serial.read();
+        if(i == NOTE_SIZE){
+          i = 0;
+          break;
+        }
       }
+      
+      tmpTick = 0;
+      for(j=0;j<4;j++)
+        tmpTick |= (noteBytes[j+1] << (j*8));  
+      tmpNote.SetPitch(noteBytes[0]);
+      tmpNote.SetTick(tmpTick);
+      bufferNotes.Write(tmpNote);
     }
-    tmpTick = 0;
-    for(j=0;j<4;j++)
-      tmpTick |= (noteBytes[j+1] << (j*8));  
-    tmpNote.SetPitch(noteBytes[0]);
-    tmpNote.SetTick(tmpTick);
-    bufferNotes.Write(tmpNote);
-    msgSendType = SendType_Ok;
+    else
+      k -= NOTE_SIZE;
   }
+  msgSendType = SendType_Ok;
 }
 void StartMsg(uint16_t dataSize)
 {
@@ -180,123 +191,6 @@ void ResponseMessage(byte type)
   msg[2] = type;
   msg[3] = bufferNotes.SizeAvailable();
   Serial.write(msg, 4);   
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-void ReadMessageTest()
-{
-  byte head[HEAD_RECEIVE_MSG_SIZE];
-  int i;
-  uint16_t dataSize;
-  //Lecture de l'entête du message
-  while(Serial.available()){
-    head[i++] = Serial.read();
-    if(i==HEAD_RECEIVE_MSG_SIZE)
-      break;
-  }
-
-  if(head[0] == 255 && head[1] == 0 && head[2] == 1 && head[3] == 5 && head[4] == 0)
-    digitalWrite(13, HIGH);
-
-  ResponseMessage(SendType_Ok);
-  
-//  if(head[0] == 255){
-//    
-//    oldNumMessage = numMessage;
-//    numMessage = head[1];
-//    if(oldNumMessage != numMessage){
-//      dataSize = head[3];
-//      dataSize |= head[4];
-//    
-//      switch (head[2]){
-//        case ReceiveType_Tempo : //tempo
-//          TempoMsg(dataSize);
-//          return;
-//          break;
-//        case ReceiveType_Notes : //Notes
-//          digitalWrite(13, HIGH);
-//          NotesMsg(dataSize);
-//          return;
-//          break;
-//        case ReceiveType_Start : //Start
-//          StartMsg(dataSize);
-//          return;
-//          break;
-//        case ReceiveType_Stop : //Stop
-//          StopMsg(dataSize);
-//          return;
-//          break;
-//        case ReceiveType_Pause : //Pause
-//          PauseMsg(dataSize);
-//          break;
-//        default:
-//          msgSendType = SendType_ErrorType;
-//          break;
-//      }
-//    }else
-//      msgSendType = msgSendType;
-//  }else
-//    msgSendType = SendType_ErrorStartByte;
-//    
-//  ResponseMessage(msgSendType);
-}
-
-void ReadMessage()
-{
-  byte tmp;
-  uint16_t dataSize;
-  tmp = Serial.read();
-  if (tmp == START_BYTE) //check si on lit bien depuis le début du message
-  {
-    oldNumMessage = numMessage;
-    numMessage = Serial.read();
-    if (oldNumMessage != numMessage) //Check la réemission
-    {
-      tmp = Serial.read();
-      dataSize = Serial.read();
-      dataSize |= (Serial.read() << 8);
-      switch (tmp){
-        case ReceiveType_Tempo : //tempo
-          //digitalWrite(13, HIGH);
-          TempoMsg(dataSize);
-          return;
-          break;
-        case ReceiveType_Notes : //Notes
-          NotesMsg(dataSize);
-          return;
-          break;
-        case ReceiveType_Start : //Start
-          StartMsg(dataSize);
-          return;
-          break;
-        case ReceiveType_Stop : //Stop
-          StopMsg(dataSize);
-          return;
-          break;
-        case ReceiveType_Pause : //Pause
-          PauseMsg(dataSize);
-          break;
-        default:
-          msgSendType = SendType_ErrorType;
-          break;
-      }       
-    }else //Si on reçoit 2 fois le même message on transmet la même réponse qu'avant
-      msgSendType = msgSendType;
-  }else
-    msgSendType = SendType_ErrorStartByte;
-
-  ResponseMessage(msgSendType);
 }
 
 //void NotesMsg(uint16_t dataSize)

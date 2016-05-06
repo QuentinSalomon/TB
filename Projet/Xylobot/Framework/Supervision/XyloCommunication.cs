@@ -15,9 +15,9 @@ using System.Windows.Media;
 
 namespace Framework
 {
-    enum SendTypeMessage : byte { Tempo, Notes, Start, Stop, Pause }
+    public enum SendTypeMessage : byte { Tempo, Notes, Start, Stop, Pause }
     
-    enum ReceiveTypeMessage : byte { Ok, TooManyData, ErrorStartByte, ErrorType }
+    public enum ReceiveTypeMessage : byte { Ok, TooManyData, ErrorStartByte, ErrorType }
 
     public class XyloCommunication
     {
@@ -25,7 +25,7 @@ namespace Framework
         
         const byte StartByte = 255;
         // TODO : Ajuster la vitesse
-        const Int32 BaudRate = 19200, SizeHeadMessage = 5, TimeOut = 3000;
+        const Int32 BaudRate = 57600, SizeHeadMessage = 5, TimeOut = 3000;
         const int ReceiveTypeSize = 4;
         #endregion
 
@@ -73,21 +73,11 @@ namespace Framework
 
         public void test()
         {
-            //int a;
             List<Note> listeTest = new List<Note>();
             listeTest.Add(new Note(100, 1000));
+            listeTest.Add(new Note(80, 1100));
             SendNotes(listeTest);
-            //Read();
-
-
-            //int a;
-            //a = _serialPort.ReadByte();
-            //_xylo.Test = a.ToString();
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    a = _serialPort.ReadByte();
-            //    _xylo.Test = _xylo.Test + " " + a.ToString();
-            //}
+            Read();
         }
 
         public void Read()
@@ -99,7 +89,7 @@ namespace Framework
                 if (tmp == StartByte)
                 {
                     tmp = _serialPort.ReadByte();
-                    if (tmp == _numMessage)
+                    if (tmp == _numMessage-1)
                     {
                         tmp = _serialPort.ReadByte();
                         if (tmp < ReceiveTypeSize)
@@ -110,7 +100,6 @@ namespace Framework
                             switch ((ReceiveTypeMessage)tmp)
                             {
                                 case ReceiveTypeMessage.Ok:
-                                    _xylo.Test = "Ok";
                                     break;
                                 case ReceiveTypeMessage.TooManyData:
                                     break;
@@ -159,6 +148,23 @@ namespace Framework
             //Envoie
             try
             {
+                //_serialPort.DiscardInBuffer();
+                _serialPort.DiscardOutBuffer();
+                _serialPort.Write(msg, 0, msg.Length);
+            }
+            catch (TimeoutException e)
+            {
+                ;
+            }
+        }
+
+        public void SendMessage(SendTypeMessage typeMessage)
+        {
+            byte[] msg = HeaderMessage(0, (byte)typeMessage);
+
+            try
+            {
+                _serialPort.DiscardOutBuffer();
                 _serialPort.DiscardInBuffer();
                 _serialPort.Write(msg, 0, msg.Length);
             }
@@ -174,8 +180,8 @@ namespace Framework
             header[0] = StartByte;
             header[1] = _numMessage++;
             header[2] = type;
-            header[3] = BitConverter.GetBytes(SizeHeadMessage)[0];
-            header[4] = BitConverter.GetBytes(SizeHeadMessage)[1];
+            header[3] = BitConverter.GetBytes(dataSize)[0];
+            header[4] = BitConverter.GetBytes(dataSize)[1];
             return header;
         }
 

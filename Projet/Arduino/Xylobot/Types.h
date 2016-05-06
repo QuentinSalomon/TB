@@ -10,11 +10,5 @@ enum ReceiveTypeMessage { ReceiveType_Tempo, ReceiveType_Notes, ReceiveType_Star
 
 enum SendTypeMessage { SendType_Ok, SendType_TooManyData, SendType_ErrorStartByte,  SendType_ErrorType};
 
-typedef struct {
-  byte startByte;
-  byte numMessage;
-  byte type;
-  byte dataSize[2];
-} HeadMessage;
 
 #endif
