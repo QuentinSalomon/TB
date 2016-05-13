@@ -29,6 +29,23 @@ namespace UnitTest1
 			}
 			Assert::IsFalse(c.Read(&val));
 			Assert::AreEqual(c.SizeAvailable(), BUFFER_SIZE);
+			for (int i = 0; i < BUFFER_SIZE; i++)
+				Assert::IsTrue(c.Write(i));
+			Assert::AreEqual(c.SizeAvailable(), 0);
+
+			c.Clear();
+
+			Assert::AreEqual(c.SizeAvailable(), BUFFER_SIZE);
+			Assert::IsFalse(c.Read(&val));
+
+			for (int i = 0; i < BUFFER_SIZE; i++)
+				Assert::IsTrue(c.Write(i));
+			Assert::AreEqual(c.SizeAvailable(), 0);
+			Assert::IsFalse(c.Write(1));
+			for (int i = 0; i < BUFFER_SIZE; i++) {
+				Assert::IsTrue(c.Read(&val));
+				Assert::AreEqual(val, i);
+			}
 		}
 
 	};

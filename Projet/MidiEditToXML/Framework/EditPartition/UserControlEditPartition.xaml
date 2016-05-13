@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Framework.UserControlEditPartition"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Framework"
+             xmlns:concept="http://www.objectis.ch/concept"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle x:Name="RectangleViewNotes" Grid.Column="1" Fill="White"/>
+        <StackPanel x:Name="StackPanelNotesPitch">
+            <Button Content="test" Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+
+    <!--<DockPanel>
+        <concept:StringEditor DockPanel.Dock="Top" Title="Title" Value="{Binding Path=Title}"/>
+        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="White" Margin="5,0"/>
+        <concept:StringEditor DockPanel.Dock="Top" Title="Tempo" Value="{Binding Path=Tempo}"/>
+        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="White" Margin="5,0"/>
+        <concept:ConceptStaticListEditor DockPanel.Dock="Top" ConceptList="{Binding Path=Channels}" Margin="0,5"/>
+    </DockPanel>-->
+</UserControl>

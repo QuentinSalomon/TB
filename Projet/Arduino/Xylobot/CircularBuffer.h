@@ -15,6 +15,7 @@ public:
 	bool Write(Note value);
 	bool Read(Note* value);
 	byte SizeAvailable();
+  void Clear();
 private:
 	Note _buffer[BUFFER_SIZE];
 	int _iWrite, _iRead;

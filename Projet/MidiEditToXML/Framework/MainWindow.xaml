@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:concept="http://www.objectis.ch/concept"
         xmlns:local="clr-namespace:Framework"
-        Title="MyMachine" Height="400" Width="600">
+        Title="Conversion des fichiers midi" Height="400" Width="600">
     <concept:NavigationControl>
         <local:EditPartitionView concept:NavigationControl.MenuTitle="Edit partition" 
                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/Partition32x32.png"
-                                 DataContext="{Binding Path=EditPartitionView}"/>
+                                 DataContext="{Binding Path=EditPartitionViewModel}"/>
         <local:FileManagementView concept:NavigationControl.MenuTitle="Manage file" 
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/FileManage32x32.png"
                                 DataContext="{Binding Path=FileManagementView}"/>

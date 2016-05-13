@@ -56,6 +56,10 @@
     <Reference Include="Sanford.Multimedia">
       <HintPath>..\..\..\..\MidiToolkit\Sanford.Multimedia.dll</HintPath>
     </Reference>
+    <Reference Include="Sanford.Multimedia.Midi, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Sanford.Multimedia.Midi.dll</HintPath>
+    </Reference>
     <Reference Include="Sanford.Multimedia.Timers">
       <HintPath>..\..\..\..\MidiToolkit\Sanford.Multimedia.Timers.dll</HintPath>
     </Reference>
@@ -79,7 +83,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="EditPartition\Channel.cs" />
+    <Compile Include="EditPartition\Note.cs" />
+    <Compile Include="EditPartition\NotesConvert.cs" />
     <Compile Include="EditPartition\PartitionMidi.cs" />
+    <Compile Include="EditPartition\PartitionXylo.cs" />
+    <Compile Include="EditPartition\UserControlEditPartition.xaml.cs">
+      <DependentUpon>UserControlEditPartition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditPartition\UserControlNote.xaml.cs">
+      <DependentUpon>UserControlNote.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FrameworkController.cs" />
     <Compile Include="MainNavigationPages\EditPartitionViewModel.cs" />
     <Compile Include="MainNavigationPages\EditPartitionView.xaml.cs">
@@ -121,6 +135,14 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="EditPartition\UserControlEditPartition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditPartition\UserControlNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainNavigationPages\EditPartitionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,11 +160,19 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Note32x32.png" />
+    <Resource Include="Images\Note64x64.png" />
+    <Resource Include="Images\Partition64x64.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\FileManage32x32.png" />
     <Resource Include="Images\Partition32x32.png" />
     <Resource Include="Images\Settings32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Channel32x32.png" />
+    <Resource Include="Images\Channel64x64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

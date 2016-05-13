@@ -25,7 +25,7 @@ namespace Framework
 
         public void Load()
         {
-            //Playlist = new Playlist() { Description = "My Machine Description" };
+            PartitionMidi = new PartitionMidi();
         }
 
         public void Unload()
@@ -37,7 +37,7 @@ namespace Framework
 
         #region Public Properties
 
-        //public Playlist Playlist { get; private set; }
+        public PartitionMidi PartitionMidi { get; private set; }
 
         #endregion
     }

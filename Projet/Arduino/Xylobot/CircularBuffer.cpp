@@ -44,3 +44,13 @@ byte CircularBuffer::SizeAvailable()
 	else
 		return 0;
 }
+
+void CircularBuffer::Clear()
+{
+  for(int i=0; i<BUFFER_SIZE; i++)
+    _buffer[i] = null;
+  _iWrite = 0;
+  _iRead = 0;
+  _full = false;
+}
+

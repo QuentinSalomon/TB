@@ -8,5 +8,6 @@ namespace Framework
 {
     public class EditPartitionViewModel : BaseViewModel
     {
+        public PartitionMidi PartitionMidi { get { return FrameworkController.Instance.PartitionMidi; } }
     }
 }

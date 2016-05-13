@@ -1,12 +1,12 @@
 #include "Notes.h"
 #include "Types.h"
 #include "CircularBuffer.h"
+#include <TimerOne.h>
 
 #define START_BYTE 255
 #define HEAD_SEND_MSG_SIZE 4
 #define HEAD_RECEIVE_MSG_SIZE 5
 
-int idxWrite, idxRead;
 int numMessage,oldNumMessage;
 SendTypeMessage msgSendType;
 CircularBuffer bufferNotes;
@@ -15,7 +15,7 @@ byte headMessage[HEAD_RECEIVE_MSG_SIZE];
 int count;
 Note note;
 
-int modeSerial; //Lecture = 0, traitement = 1, écriture = 2
+int modeSerial; //Lecture = 0, traitement = 1 et 2, écriture = 3
 
 void NotesMsg(uint16_t dataSize);
 void StartMsg(uint16_t dataSize);
@@ -28,10 +28,16 @@ bool CheckMessage();
 void ReadDataMessage();
 void ResponseMessage(byte type);
 
+/****************************************TIMER INTERRUPT****************************************/
+#define TIMER_US 500000                            // 0.5mS set timer duration in microseconds 
+
+volatile bool in_long_isr = false;              // True if in long interrupt
+/****************************************ARDUINO FONCTIONS****************************************/
 void setup() {
   
   pinMode(13, OUTPUT);
   digitalWrite(13, LOW);
+  /* INIT SERIAL COM */
   modeSerial = 0;
   count = 0;
   // open the serial port:
@@ -40,6 +46,9 @@ void setup() {
   Serial.flush();
   Serial.begin(57600);
   while(Serial.available());
+  /* INIT INTERRUPT */
+  Timer1.initialize(TIMER_US);                  // Initialise timer 1
+  Timer1.attachInterrupt(timerIsr);           // attach the ISR routine here
 }
 
 void loop() {
@@ -73,7 +82,14 @@ void loop() {
   }
 }
 
-/****************************************FONCTIONS****************************************/
+/****************************************FONCTIONS INTERRUPT****************************************/
+
+void timerIsr()
+{
+    digitalWrite(13, digitalRead(13) ^ 1 );   // Toggle LED
+}
+
+/****************************************FONCTIONS SERIAL****************************************/
 bool ReadHeadMessage() {
     while(Serial.available()){
       headMessage[count++] = Serial.read();
@@ -168,14 +184,18 @@ void NotesMsg(uint16_t dataSize)
 }
 void StartMsg(uint16_t dataSize)
 {
+  interrupts();
   msgSendType = SendType_Ok;
 }
 void StopMsg(uint16_t dataSize)
 {
+  noInterrupts();
+  bufferNotes.Clear();
   msgSendType = SendType_Ok;
 }
 void PauseMsg(uint16_t dataSize)
 {
+  noInterrupts();
   msgSendType = SendType_Ok;
 }
 void TempoMsg(uint16_t dataSize)
@@ -192,24 +212,4 @@ void ResponseMessage(byte type)
   msg[3] = bufferNotes.SizeAvailable();
   Serial.write(msg, 4);   
 }
-
-//void NotesMsg(uint16_t dataSize)
-//{
-//  Note tmpNote;
-//  uint16_t i;
-//  uint32_t tmpTick;
-//  
-//  for(i=0;i<dataSize;i+=NOTE_SIZE)
-//  {
-//    tmpNote.SetPitch(Serial.read());
-//    tmpTick = Serial.read();
-//    tmpTick |= (Serial.read() << 8);
-//    tmpTick |= (Serial.read() << 16);
-//    tmpTick |= (Serial.read() << 24);
-//    tmpNote.SetTick(tmpTick);
-//    bufferNotes.Write(tmpNote);
-//  }
-//  msgSendType = SendType_Ok;
-//}
-
 

@@ -7,15 +7,11 @@ using System.Threading.Tasks;
 
 namespace Framework
 {
-    [ConceptView(typeof(UserControlEditPartition))]
-    [IntlConceptName("Framework.PartitionMidi.Name", "PartitionMidi")]
-    [ConceptSmallImage(typeof(PartitionMidi), "/Images/Partition32x32.png")]
-    [ConceptLargeImage(typeof(PartitionMidi), "/Images/Partition64x64.png")]
-    public class PartitionMidi : ConceptComponent
+    public class PartitionXylo : ConceptComponent
     {
         #region Constructeur
 
-        public PartitionMidi()
+        public PartitionXylo()
         {
 
         }
@@ -26,7 +22,7 @@ namespace Framework
 
         [ConceptSerialized]
         [ConceptViewVisible]
-        [IntlConceptName("Framework.PartitionMidi.Title", "Title")]
+        [IntlConceptName("Framework.PartitionXylo.Title", "Title")]
         public double Title
         {
             get { return _title; }
@@ -44,7 +40,7 @@ namespace Framework
 
         [ConceptSerialized]
         [ConceptViewVisible]
-        [IntlConceptName("Framework.PartitionMidi.Tempo", "Tempo")]
+        [IntlConceptName("Framework.PartitionXylo.Tempo", "Tempo")]
         public double Tempo
         {
             get { return _tempo; }
@@ -63,7 +59,7 @@ namespace Framework
         #endregion
 
         [ConceptAutoCreate]
-        [IntlConceptName("Framework.PartitionMidi.Channels", "Channels")]
-        public StaticListChannel Channels { get; protected set; }
+        [IntlConceptName("Framework.PartitionXylo.Notes", "Notes")]
+        public StaticListNote Notes { get; protected set; }
     }
 }
