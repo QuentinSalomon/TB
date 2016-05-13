@@ -72,9 +72,10 @@ namespace Framework
                             if (msg.MidiChannel == 0)
                             {
                                 Note tmpNote = NotesConvert.IdToNote(msg.Data1, tick);
-                                if (tmpNote.Octave >= 5 && tmpNote.Octave <= 7)
+                                if (tmpNote.Octave >= 4 && tmpNote.Octave <= 6)
                                 {
                                     tmpNote.Name = tmpNote.Name + "NyanCat" + (i++).ToString();
+                                    tmpNote.Octave += 1;
                                     PartitionXylo.Notes.Add(tmpNote);
                                 }
                             }

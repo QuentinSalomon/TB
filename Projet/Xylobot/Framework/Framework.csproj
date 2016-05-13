@@ -71,6 +71,9 @@
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="EditPlaylist\Playlist.cs" />
+    <Compile Include="EditPlaylist\UserControlEditPlaylist.xaml.cs">
+      <DependentUpon>UserControlEditPlaylist.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FrameworkController.cs" />
     <Compile Include="MainNavigationPages\EditPlaylistView.xaml.cs">
       <DependentUpon>EditPlaylistView.xaml</DependentUpon>
@@ -118,6 +121,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="EditPlaylist\UserControlEditPlaylist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainNavigationPages\EditPlaylistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,6 +166,12 @@
       <Project>{dcdce5ea-07ee-4375-aeda-5803d8ce35e6}</Project>
       <Name>LibXylobot</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Note32x32.png" />
+    <Resource Include="Images\Note64x64.png" />
+    <Resource Include="Images\Partition32x32.png" />
+    <Resource Include="Images\Partition64x64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

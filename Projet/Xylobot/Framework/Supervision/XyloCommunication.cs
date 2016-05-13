@@ -74,8 +74,8 @@ namespace Framework
         public void test()
         {
             List<Note> listeTest = new List<Note>();
-            listeTest.Add(new Note(100, 1000));
-            listeTest.Add(new Note(80, 1100));
+            //listeTest.Add(new Note(100, 1000));
+            //listeTest.Add(new Note(80, 1100));
             SendNotes(listeTest);
             Read();
         }
@@ -141,7 +141,7 @@ namespace Framework
                 msg[i] = headMsg[i];
             foreach (Note note in notes)
             {
-                msg[i++] = note.Pitch;
+                msg[i++] = (byte)(note.High * note.Octave);
                 foreach (byte data in BitConverter.GetBytes(note.Tick))
                     msg[i++] = data;
             }

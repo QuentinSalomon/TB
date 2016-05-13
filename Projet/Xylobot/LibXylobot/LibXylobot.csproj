@@ -30,6 +30,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Concept.Components">
+      <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Concept.Components.Wpf">
+      <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Components.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Concept.Model">
+      <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Concept.Model.Wpf">
+      <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Model.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Concept.Utils">
+      <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Concept.Utils.Wpf">
+      <HintPath>..\..\..\..\Concept\Binaries\Concept\Concept.Utils.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +61,12 @@
     <Compile Include="Note.cs" />
     <Compile Include="PartitionXylo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Note32x32.png" />
+    <Content Include="Images\Note64x64.png" />
+    <Content Include="Images\Partition32x32.png" />
+    <Content Include="Images\Partition64x64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

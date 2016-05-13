@@ -10,8 +10,8 @@ namespace Framework
 {
     //[ConceptView(typeof(UserControlNote))]
     [IntlConceptName("Framework.Note.Name", "NotesMidi")]
-    [ConceptSmallImage(typeof(PartitionMidi), "/Images/Note32x32.png")]
-    [ConceptLargeImage(typeof(PartitionMidi), "/Images/Note64x64.png")]
+    [ConceptSmallImage(typeof(Note), "/Images/Note32x32.png")]
+    [ConceptLargeImage(typeof(Note), "/Images/Note64x64.png")]
     public class Note : ConceptComponent
     {
 
@@ -20,7 +20,7 @@ namespace Framework
         [ConceptSerialized]
         [ConceptViewVisible]
         [IntlConceptName("Framework.Note.Octave", "Octave")]
-        public double Octave
+        public byte Octave
         {
             get { return _octave; }
             set
@@ -32,7 +32,7 @@ namespace Framework
                 }
             }
         }
-        private double _octave;
+        private byte _octave;
         public const string OctavePropertyName = "Octave";
 
         [ConceptSerialized]
@@ -55,9 +55,9 @@ namespace Framework
 
 
         [ConceptSerialized]
-        [ConceptViewVisible]
-        [IntlConceptName("Framework.Note.Note", "Note")]
-        public string High
+        //[ConceptViewVisible]
+        [IntlConceptName("Framework.Note.High", "Note")]
+        public byte High
         {
             get { return _high; }
             set
@@ -69,8 +69,27 @@ namespace Framework
                 }
             }
         }
-        private string _high;
+        private byte _high;
         public const string HighPropertyName = "High";
+
+        [ConceptSerialized]
+        [ConceptViewVisible]
+        [IntlConceptName("Framework.Note.HighString", "Note")]
+        public string HighString
+        {
+            get { return _highString; }
+            set
+            {
+                if (_highString != value)
+                {
+                    _highString = value;
+                    DoPropertyChanged(HighStringPropertyName);
+                }
+            }
+        }
+        private string _highString;
+        public const string HighStringPropertyName = "HighString";
+
         #endregion
 
     }

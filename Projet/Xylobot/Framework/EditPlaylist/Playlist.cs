@@ -1,4 +1,5 @@
-﻿using Concept.Model;
+﻿using Common;
+using Concept.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Framework
 {
+    [ConceptView(typeof(UserControlEditPlaylist))]
     [IntlConceptName("Framework.Playlist.Name", "Playlist principal")]
     [ConceptSmallImage(typeof(Playlist), "/Images/Playlist32x32.png")]
     [ConceptLargeImage(typeof(Playlist), "/Images/Playlist64x64.png")]
@@ -32,5 +34,9 @@ namespace Framework
         public const string DescriptionPropertyName = "Description";
 
         #endregion
+
+        [ConceptAutoCreate]
+        [IntlConceptName("Framework.Playlist.Partitions", "Partitions")]
+        public StaticListPartitionXylo Partitions { get; protected set; }
     }
 }
