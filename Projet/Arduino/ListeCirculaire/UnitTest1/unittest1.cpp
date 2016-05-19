@@ -43,6 +43,8 @@ namespace UnitTest1
 			Assert::AreEqual(c.SizeAvailable(), 0);
 			Assert::IsFalse(c.Write(1));
 			for (int i = 0; i < BUFFER_SIZE; i++) {
+				Assert::IsTrue(c.Current(&val));
+				Assert::AreEqual(val, i);
 				Assert::IsTrue(c.Read(&val));
 				Assert::AreEqual(val, i);
 			}

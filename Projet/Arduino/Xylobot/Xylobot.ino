@@ -1,21 +1,23 @@
 #include "Notes.h"
 #include "Types.h"
 #include "CircularBuffer.h"
+#include "ConstXylobot.h"
+#include "Mcp23017.h"
 #include <TimerOne.h>
+#include <MsTimer2.h>
 
-#define START_BYTE 255
-#define HEAD_SEND_MSG_SIZE 4
-#define HEAD_RECEIVE_MSG_SIZE 5
-
-int numMessage,oldNumMessage;
+/*Serial*/
+int numMessage = -1,oldNumMessage;
 SendTypeMessage msgSendType;
-CircularBuffer bufferNotes;
-
+//Variable pour la lecture de l'en-tête du message
 byte headMessage[HEAD_RECEIVE_MSG_SIZE];
-int count;
-Note note;
+int count = 0;
 
-int modeSerial; //Lecture = 0, traitement = 1 et 2, écriture = 3
+/*I2C*/
+Mcp23017* mcp;
+
+int modeSerial = 0; //Lecture = 0, traitement = 1 et 2, écriture = 3
+CircularBuffer bufferNotes;
 
 void NotesMsg(uint16_t dataSize);
 void StartMsg(uint16_t dataSize);
@@ -29,26 +31,28 @@ void ReadDataMessage();
 void ResponseMessage(byte type);
 
 /****************************************TIMER INTERRUPT****************************************/
-#define TIMER_US 500000                            // 0.5mS set timer duration in microseconds 
+//#define TIMER_US 1000000                            // 0.5mS set timer duration in microseconds 
 
-volatile bool in_long_isr = false;              // True if in long interrupt
+volatile bool in_long_isr = false;                 // True if in long interrupt
 /****************************************ARDUINO FONCTIONS****************************************/
 void setup() {
-  
   pinMode(13, OUTPUT);
-  digitalWrite(13, LOW);
   /* INIT SERIAL COM */
-  modeSerial = 0;
-  count = 0;
   // open the serial port:
-  numMessage =-1;
   //Serial.setTimeout(500);
   Serial.flush();
-  Serial.begin(57600);
+  Serial.begin(BAUD_RATE_SERIAL);
   while(Serial.available());
+  /* INIT I2C */
+  mcp = new Mcp23017();
   /* INIT INTERRUPT */
   Timer1.initialize(TIMER_US);                  // Initialise timer 1
-  Timer1.attachInterrupt(timerIsr);           // attach the ISR routine here
+  Timer1.stop();
+  Timer1.attachInterrupt(timerIsr);             // attach the ISR routine here
+  MsTimer2::set(TIMER_MS, timerIsr2); // 500ms period
+  Timer1.start();
+  delay(TIME_HIT_MS);
+  MsTimer2::start();
 }
 
 void loop() {
@@ -86,7 +90,13 @@ void loop() {
 
 void timerIsr()
 {
-    digitalWrite(13, digitalRead(13) ^ 1 );   // Toggle LED
+  //digitalWrite(13, digitalRead(13) ^ 1 );   // Toggle LED
+  digitalWrite(13, HIGH);
+}
+void timerIsr2()
+{
+  //digitalWrite(13, digitalRead(13) ^ 1 );   // Toggle LED
+  digitalWrite(13, LOW);
 }
 
 /****************************************FONCTIONS SERIAL****************************************/

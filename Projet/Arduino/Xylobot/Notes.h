@@ -5,6 +5,11 @@
 
 #define NOTE_SIZE 5
 
+struct Tone
+{
+  byte registerIndex, mask;
+};
+
 class Note
 {
   public :

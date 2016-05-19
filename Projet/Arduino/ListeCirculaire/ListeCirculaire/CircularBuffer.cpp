@@ -55,3 +55,13 @@ void CircularBuffer::Clear()
 	_iRead = 0;
 	_full = false;
 }
+
+bool CircularBuffer::Current(int* value)
+{
+	if (SizeAvailable() != BUFFER_SIZE) {
+		*value = _buffer[_iRead];
+		return true;
+	}
+	else
+		return false;
+}

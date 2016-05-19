@@ -13,6 +13,7 @@ public:
 	bool Read(int* value);
 	int SizeAvailable();
 	void Clear();
+	bool Current(int* value);
 private:
 	int _buffer[BUFFER_SIZE], _iWrite, _iRead;
 	bool _full;
