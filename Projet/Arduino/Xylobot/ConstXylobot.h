@@ -10,14 +10,14 @@
 
 #define NOTE_COUNT_XYLO 37
 
-#define TIME_HIT_MS 8
-#define TIMER_MS 50             //Tempo   //TODO: 50ms
-#define TIMER_US 50000          // 0.5mS set timer duration in microseconds
+#define TIME_HIT_MS 7
+#define TIMER_MS 200             //Tempo   //TODO: 50ms
+#define TIMER_US 200000          // 500mS set timer duration in microseconds
 
 #define TICK_INC 12
 
 /*I2C*/
-const Tone tones[NOTE_COUNT_XYLO] = {
+const Tone toneTab[NOTE_COUNT_XYLO] = {
   {0,128}/*Do5*/, {3,1}/*DO#5*/, {0,64}/*Ré5*/, {3,2}/*Ré#5*/, {0,32}/*Mi5*/, {0,16}/*Fa5*/, {3,4}/*Fa#5*/, 
   {0,8}/*Sol5*/, {3,8}/*Sol#5*/ , {0,4}/*La5*/, {3,16}/*La#5*/, {0,2}/*Si5*/,
   

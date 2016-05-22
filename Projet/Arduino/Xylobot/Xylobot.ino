@@ -5,6 +5,7 @@
 #include "Mcp23017.h"
 #include <TimerOne.h>
 #include <MsTimer2.h>
+//#include <Wire.h>
 
 /*Serial*/
 int numMessage = -1,oldNumMessage;
@@ -14,7 +15,8 @@ byte headMessage[HEAD_RECEIVE_MSG_SIZE];
 int count = 0;
 
 /*I2C*/
-Mcp23017* mcp;
+Mcp23017 mcp;
+bool syncInterrupt = false;
 
 int modeSerial = 0; //Lecture = 0, traitement = 1 et 2, écriture = 3
 CircularBuffer bufferNotes;
@@ -44,15 +46,16 @@ void setup() {
   Serial.begin(BAUD_RATE_SERIAL);
   while(Serial.available());
   /* INIT I2C */
-  mcp = new Mcp23017();
+  mcp.Init();
   /* INIT INTERRUPT */
+  noInterrupts();
   Timer1.initialize(TIMER_US);                  // Initialise timer 1
-  Timer1.stop();
+  //MsTimer2::set(TIMER_MS, timerIsr2);           // 500ms period
+  //démarrage décalé
   Timer1.attachInterrupt(timerIsr);             // attach the ISR routine here
-  MsTimer2::set(TIMER_MS, timerIsr2); // 500ms period
-  Timer1.start();
-  delay(TIME_HIT_MS);
-  MsTimer2::start();
+//  delay(TIME_HIT_MS);
+//  MsTimer2::start();
+  interrupts();
 }
 
 void loop() {
@@ -90,13 +93,24 @@ void loop() {
 
 void timerIsr()
 {
-  //digitalWrite(13, digitalRead(13) ^ 1 );   // Toggle LED
-  digitalWrite(13, HIGH);
+  static int a=0;
+//  if(syncInterrupt){
+    if(a++ == 5){
+      mcp.PreparePush(toneTab[3]);
+      digitalWrite(13, HIGH);
+      mcp.ApplyPush();
+      delay(TIME_HIT_MS);
+      mcp.ReleasePush();
+      digitalWrite(13, HIGH);
+    }
+//  }
 }
 void timerIsr2()
 {
-  //digitalWrite(13, digitalRead(13) ^ 1 );   // Toggle LED
-  digitalWrite(13, LOW);
+//  syncInterrupt = true;
+//  static int a=0;
+//  digitalWrite(13, LOW);
+//  mcp->ReleasePush();
 }
 
 /****************************************FONCTIONS SERIAL****************************************/

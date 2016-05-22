@@ -2,6 +2,11 @@
 
 Mcp23017::Mcp23017()
 {
+  
+}
+
+void Mcp23017::Init()
+{
   Wire.begin();
   SetIoDirOutput(32);
   SetIoDirOutput(33);
@@ -21,9 +26,9 @@ void Mcp23017::SetIoDirOutput(byte address)
   
 }
 
-void Mcp23017::PreparePush(const Tone& tone)
+void Mcp23017::PreparePush(const Tone& t)
 {
-  _registerValues[tone.registerIndex] |= tone.mask;
+  _registerValues[t.registerIndex] |= t.mask;
 }
 
 void Mcp23017::ApplyPush()

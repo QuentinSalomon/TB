@@ -62,6 +62,12 @@ namespace Framework
 
         #endregion
 
+        public PartitionXylo ConvertToPartitionXylo()
+        {
+
+            return null;
+        }
+
         [ConceptAutoCreate]
         [IntlConceptName("Framework.PartitionMidi.Channels", "Channels")]
         public StaticListChannel Channels { get; protected set; }

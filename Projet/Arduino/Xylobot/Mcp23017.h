@@ -17,6 +17,7 @@ class Mcp23017
   public :
     Mcp23017();
 
+    void Init();
     void PreparePush(const Tone& tone);
     void ApplyPush();
     void ReleasePush();

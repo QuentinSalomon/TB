@@ -22,18 +22,4 @@ namespace Framework
         }
 
     }
-
-    //class Note
-    //{
-    //    public string Name { get; set; }
-    //    public string FullName { get; set; }
-    //    public int Octave { get; set; }
-    //    public long Tick { get; set; }
-    //    public long Duration { get; set; }
-
-    //    public override string ToString()
-    //    {
-    //        return FullName;
-    //    }
-    //}
 }
