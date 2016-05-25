@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:concept="http://www.objectis.ch/concept"
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+    <DockPanel>
+        <GroupBox DockPanel.Dock="Top" Header="{Binding Element.DisplayName, ElementName=Editor}">
+            <concept:ConceptEditor x:Name="Editor" DataContext="{Binding Path=Settings, Mode=OneWay}" IsExpanded="True" ExpandLevel="0"/>
+        </GroupBox>
+    </DockPanel>
 </UserControl>

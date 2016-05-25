@@ -10,7 +10,7 @@
                                  DataContext="{Binding Path=EditPartitionViewModel}"/>
         <local:FileManagementView concept:NavigationControl.MenuTitle="Manage file" 
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/FileManage32x32.png"
-                                DataContext="{Binding Path=FileManagementView}"/>
+                                DataContext="{Binding Path=FileManagementViewModel}"/>
         <local:SettingsView concept:NavigationControl.MenuTitle="Settings" 
                             concept:NavigationControl.MenuImageSource="/Framework;component/Images/Settings32x32.png"/>
     </concept:NavigationControl>

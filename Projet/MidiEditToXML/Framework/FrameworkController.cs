@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Concept.Model;
+using Concept.Utils;
+using Concept.Utils.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,11 +29,13 @@ namespace Framework
         public void Load()
         {
             PartitionMidi = new PartitionMidi();
+            FileManagement = new FileManagement();
+            LoadConfiguration();
         }
 
         public void Unload()
         {
-
+            SaveConfiguration();
         }
 
         #endregion
@@ -38,6 +43,23 @@ namespace Framework
         #region Public Properties
 
         public PartitionMidi PartitionMidi { get; private set; }
+        public FileManagement FileManagement { get; private set; }
+
+        #endregion
+
+        #region Load / Save Configuration
+
+        public void LoadConfiguration()
+        {
+            var messages = new MessageCollection();
+            FileManagement.LoadFromFile("FileConfig.xml", PluginClassManager.AllFactories, messages);
+            if (messages.Count > 0)
+                ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
+        }
+        public void SaveConfiguration()
+        {
+            FileManagement.SaveToFile("FileConfig.xml");
+        }
 
         #endregion
     }

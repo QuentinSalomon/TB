@@ -5,20 +5,20 @@
 #include <arduino.h>
 #include "Notes.h"
 
+#define REGISTER_COUNT 5
+
 struct Mcp23017Register
 {
   byte address, registerAddress;
 };
 
-#define REGISTER_COUNT 5
-
-class Mcp23017
+class I2CXylo
 {
   public :
-    Mcp23017();
+    I2CXylo();
 
     void Init();
-    void PreparePush(const Tone& tone);
+    void PreparePush(const Tone t);
     void ApplyPush();
     void ReleasePush();
   private :

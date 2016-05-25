@@ -52,6 +52,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -108,6 +109,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\UserControlSettings.xaml.cs">
+      <DependentUpon>UserControlSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Supervision\Sequencer.cs" />
     <Compile Include="Supervision\XyloCommunication.cs" />
     <Compile Include="Supervision\Xylobot.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -145,6 +151,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Settings\UserControlSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Playlist64x64.png" />
@@ -172,6 +182,13 @@
     <Resource Include="Images\Note64x64.png" />
     <Resource Include="Images\Partition32x32.png" />
     <Resource Include="Images\Partition64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Settings64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Sequencer32x32.png" />
+    <Resource Include="Images\Sequencer64x64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

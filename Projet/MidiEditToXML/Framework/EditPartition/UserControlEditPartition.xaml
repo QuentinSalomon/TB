@@ -9,13 +9,14 @@
              d:DesignHeight="300" d:DesignWidth="400">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
 
-        <Rectangle x:Name="RectangleViewNotes" Grid.Column="1" Fill="White"/>
-        <StackPanel x:Name="StackPanelNotesPitch">
-            <Button Content="test" Click="Button_Click"/>
+        <Rectangle x:Name="RectangleViewNotes" Fill="White"/>
+        <StackPanel x:Name="StackPanelNotesPitch" Grid.Column="1">
+            <Button Content="Load" Margin="0,5,0,0" Click="ButtonLoad_Click"/>
+            <Button Content="Save" Margin="0,5,0,0" Click="ButtonSave_Click"/>
         </StackPanel>
     </Grid>
 

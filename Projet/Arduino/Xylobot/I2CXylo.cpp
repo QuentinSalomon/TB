@@ -1,11 +1,11 @@
-#include "Mcp23017.h"
+#include "I2CXylo.h"
 
-Mcp23017::Mcp23017()
+I2CXylo::I2CXylo()
 {
   
 }
 
-void Mcp23017::Init()
+void I2CXylo::Init()
 {
   Wire.begin();
   SetIoDirOutput(32);
@@ -13,7 +13,7 @@ void Mcp23017::Init()
   SetIoDirOutput(34);
 }
 
-void Mcp23017::SetIoDirOutput(byte address)
+void I2CXylo::SetIoDirOutput(byte address)
 {
   Wire.beginTransmission(address);
   Wire.write(0);
@@ -26,12 +26,12 @@ void Mcp23017::SetIoDirOutput(byte address)
   
 }
 
-void Mcp23017::PreparePush(const Tone& t)
+void I2CXylo::PreparePush(const Tone t)
 {
   _registerValues[t.registerIndex] |= t.mask;
 }
 
-void Mcp23017::ApplyPush()
+void I2CXylo::ApplyPush()
 {
   for(int i=0; i < REGISTER_COUNT; i++)
   {
@@ -45,7 +45,7 @@ void Mcp23017::ApplyPush()
   }
 }
 
-void Mcp23017::ReleasePush()
+void I2CXylo::ReleasePush()
 {
   for(int i=0; i < REGISTER_COUNT; i++)
   {

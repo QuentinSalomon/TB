@@ -13,10 +13,12 @@ namespace Framework
         public MainViewModel()
         {
             EditPartitionViewModel = new EditPartitionViewModel();
+            FileManagementViewModel = new FileManagementViewModel();
         }
 
         #endregion
 
         public EditPartitionViewModel EditPartitionViewModel { get; private set; }
+        public FileManagementViewModel FileManagementViewModel { get; private set; }
     }
 }

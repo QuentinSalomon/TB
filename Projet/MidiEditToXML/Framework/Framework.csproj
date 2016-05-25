@@ -68,6 +68,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -93,6 +94,10 @@
     </Compile>
     <Compile Include="EditPartition\UserControlNote.xaml.cs">
       <DependentUpon>UserControlNote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FileManagement\FileManagement.cs" />
+    <Compile Include="FileManagement\UserControlFileManagement.xaml.cs">
+      <DependentUpon>UserControlFileManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrameworkController.cs" />
     <Compile Include="MainNavigationPages\EditPartitionViewModel.cs" />
@@ -143,6 +148,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FileManagement\UserControlFileManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainNavigationPages\EditPartitionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -173,6 +182,10 @@
   <ItemGroup>
     <Resource Include="Images\Channel32x32.png" />
     <Resource Include="Images\Channel64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\FileManagement32x32.png" />
+    <Resource Include="Images\FileManagement64x64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

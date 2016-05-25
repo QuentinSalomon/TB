@@ -49,17 +49,14 @@ namespace Framework
 
         public PartitionXylo PartitionXylo { get; set; }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void LoadPartition(string filename)
         {
-            LoadPartition();
-            SavePartition();
-        }
-
-        private void LoadPartition()
-        {
-            PartitionXylo.Clear();
-            int i = 0;
-            Sequence sequence = new Sequence("NyanCat.mid");
+            CurrentPartition.Clear();
+            Sequence sequence = new Sequence(filename);
+            string[] tabString = filename.Split('\\');
+            string title = tabString[tabString.Length - 1];
+            CurrentPartition.Title = title.Split('.')[0];
+            int numNote=0;
             foreach (Track t in sequence)
             {
                 foreach (MidiEvent midiEvent in t.Iterator())
@@ -69,27 +66,43 @@ namespace Framework
                         int tick = midiEvent.AbsoluteTicks;
                         ChannelMessage msg = ((ChannelMessage)midiEvent.MidiMessage);
                         if (msg.Command == ChannelCommand.NoteOn)
-                            if (msg.MidiChannel == 0)
-                            {
-                                Note tmpNote = NotesConvert.IdToNote(msg.Data1, tick);
-                                if (tmpNote.Octave >= 4 && tmpNote.Octave <= 6)
+                        {
+                            Note tmpNote = NotesConvert.IdToNote(msg.Data1, tick);
+                            tmpNote.Name = CurrentPartition.Title + "_" + (numNote++).ToString();
+                            if (CurrentPartition.Channels.Count - msg.MidiChannel <= 0)
+                                for (int i = 0; i <= msg.MidiChannel - CurrentPartition.Channels.Count; i++)
                                 {
-                                    tmpNote.Name = tmpNote.Name + "NyanCat" + (i++).ToString();
-                                    tmpNote.Octave += 1;
-                                    PartitionXylo.Notes.Add(tmpNote);
+                                    Channel ch = new Channel();
+                                    ch.Name = CurrentPartition.Channels.Count.ToString();
+                                    CurrentPartition.Channels.Add(ch);
                                 }
-                            }
-                        //else if (msg.Command == ChannelCommand.NoteOff)
-                        //{
-                        //    PartitionXylo.Add(NotesConvert.IdToNote(msg.Data1, tick));
-                        //}
+                            CurrentPartition.Channels[msg.MidiChannel].Notes.Add(tmpNote);
+                        }
                     }
                 }
             }
         }
-        private void SavePartition()
+
+        private void SavePartition(string filename)
         {
-            PartitionXylo.SaveToFile("test.xml");
+            Channel[] chs = new Channel[1];
+            chs[0] = CurrentPartition.Channels[0];
+            PartitionXylo = CurrentPartition.ConvertToPartitionXylo(chs);
+            PartitionXylo.SaveToFile(filename);
         }
+
+        #region event
+
+        private void ButtonLoad_Click(object sender, RoutedEventArgs e)
+        {
+            LoadPartition(FrameworkController.Instance.FileManagement.DefaultPathLoadFile +"\\NyanCat.mid");
+        }
+
+        private void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            SavePartition(FrameworkController.Instance.FileManagement.PathSaveFile +"\\NyanCat.xml");
+        }
+
+        #endregion
     }
 }

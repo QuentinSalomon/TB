@@ -26,7 +26,7 @@ namespace Common
         [ConceptSerialized]
         [ConceptViewVisible]
         [IntlConceptName("Common.PartitionXylo.Title", "Title")]
-        public double Title
+        public string Title
         {
             get { return _title; }
             set
@@ -38,7 +38,7 @@ namespace Common
                 }
             }
         }
-        private double _title;
+        private string _title;
         public const string TitlePropertyName = "Title";
 
         [ConceptSerialized]
@@ -66,8 +66,8 @@ namespace Common
         public StaticListNote Notes { get; protected set; }
     }
 
-    [ConceptSmallImage(typeof(StaticListPartitionXylo), "/Images/Partition32x32.png")]
-    [ConceptLargeImage(typeof(StaticListPartitionXylo), "/Images/Partition64x64.png")]
+    [ConceptSmallImage(typeof(StaticListPartitionXylo), "../../../Images/Partition32x32.png")]
+    [ConceptLargeImage(typeof(StaticListPartitionXylo), "../../../Images/Partition64x64.png")]
     public class StaticListPartitionXylo : ConceptStaticList<PartitionXylo>
     { }
 }

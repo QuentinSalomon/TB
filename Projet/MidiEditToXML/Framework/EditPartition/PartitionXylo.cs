@@ -26,7 +26,7 @@ namespace Framework
         [ConceptSerialized]
         [ConceptViewVisible]
         [IntlConceptName("Framework.PartitionXylo.Title", "Title")]
-        public double Title
+        public string Title
         {
             get { return _title; }
             set
@@ -38,7 +38,7 @@ namespace Framework
                 }
             }
         }
-        private double _title;
+        private string _title;
         public const string TitlePropertyName = "Title";
 
         [ConceptSerialized]
@@ -61,6 +61,7 @@ namespace Framework
 
         #endregion
 
+        [ConceptSerialized]
         [ConceptAutoCreate]
         [IntlConceptName("Framework.PartitionXylo.Notes", "Notes")]
         public StaticListNote Notes { get; protected set; }

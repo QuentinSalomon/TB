@@ -2,7 +2,7 @@
 #include "Types.h"
 #include "CircularBuffer.h"
 #include "ConstXylobot.h"
-#include "Mcp23017.h"
+#include "I2CXylo.h"
 #include <TimerOne.h>
 #include <MsTimer2.h>
 //#include <Wire.h>
@@ -12,11 +12,10 @@ int numMessage = -1,oldNumMessage;
 SendTypeMessage msgSendType;
 //Variable pour la lecture de l'en-tête du message
 byte headMessage[HEAD_RECEIVE_MSG_SIZE];
-int count = 0;
+int count = 0, idxTime = 0, tick = 0;
 
 /*I2C*/
-Mcp23017 mcp;
-bool syncInterrupt = false;
+I2CXylo i2cXylo;
 
 int modeSerial = 0; //Lecture = 0, traitement = 1 et 2, écriture = 3
 CircularBuffer bufferNotes;
@@ -46,46 +45,59 @@ void setup() {
   Serial.begin(BAUD_RATE_SERIAL);
   while(Serial.available());
   /* INIT I2C */
-  mcp.Init();
+  i2cXylo.Init();
   /* INIT INTERRUPT */
-  noInterrupts();
-  Timer1.initialize(TIMER_US);                  // Initialise timer 1
-  //MsTimer2::set(TIMER_MS, timerIsr2);           // 500ms period
-  //démarrage décalé
-  Timer1.attachInterrupt(timerIsr);             // attach the ISR routine here
-//  delay(TIME_HIT_MS);
-//  MsTimer2::start();
-  interrupts();
+//  noInterrupts();
+//  Timer1.initialize(TIMER_US);                  // Initialise timer 1
+//  //démarrage décalé
+//  Timer1.attachInterrupt(timerIsr);             // attach the ISR routine here
+//  interrupts();
 }
 
 void loop() {
-  switch (modeSerial)
+  if(idxTime*TIMER_MS < millis())
   {
-    case 0:   //entête du message
-        if(ReadHeadMessage())
-          modeSerial = 1;
-      break;
-      
-    case 1:   //Validité du message? et lecture des données
-      if(CheckMessage())
-        modeSerial = 2;
-      else
+    if(idxTime == 5){
+      for(int i=0;i<NOTE_COUNT_XYLO;i++){
+        i2cXylo.PreparePush(toneTab[i]);
+        digitalWrite(13, HIGH);
+        i2cXylo.ApplyPush();
+        delay(TIME_HIT_MS);
+        i2cXylo.ReleasePush();
+        delay(15);
+      }
+      //digitalWrite(13, LOW);
+    }
+    idxTime++;
+  }else{
+    switch (modeSerial)
+    {
+      case 0:   //entête du message
+          if(ReadHeadMessage())
+            modeSerial = 1;
+        break;
+        
+      case 1:   //Validité du message? et lecture des données
+        if(CheckMessage())
+          modeSerial = 2;
+        else
+          modeSerial = 3;
+        break;
+  
+      case 2:
+        ReadDataMessage();
         modeSerial = 3;
-      break;
-
-    case 2:
-      ReadDataMessage();
-      modeSerial = 3;
-      break;
-      
-    case 3:
-      while(Serial.available())
-        Serial.read();
-      ResponseMessage(msgSendType);
-      modeSerial = 0;
-      break;
-    default:
-      break;
+        break;
+        
+      case 3:
+        while(Serial.available())
+          Serial.read();
+        ResponseMessage(msgSendType);
+        modeSerial = 0;
+        break;
+      default:
+        break;
+    }
   }
 }
 
@@ -96,21 +108,14 @@ void timerIsr()
   static int a=0;
 //  if(syncInterrupt){
     if(a++ == 5){
-      mcp.PreparePush(toneTab[3]);
+      i2cXylo.PreparePush(toneTab[Fa5]);
       digitalWrite(13, HIGH);
-      mcp.ApplyPush();
+      i2cXylo.ApplyPush();
       delay(TIME_HIT_MS);
-      mcp.ReleasePush();
-      digitalWrite(13, HIGH);
+      i2cXylo.ReleasePush();
+      digitalWrite(13, LOW);
     }
 //  }
-}
-void timerIsr2()
-{
-//  syncInterrupt = true;
-//  static int a=0;
-//  digitalWrite(13, LOW);
-//  mcp->ReleasePush();
 }
 
 /****************************************FONCTIONS SERIAL****************************************/

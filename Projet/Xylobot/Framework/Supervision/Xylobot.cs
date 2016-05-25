@@ -63,36 +63,9 @@ namespace Framework
         [ConceptViewVisible(false)]
         public XyloCommunication XyloCommunication { get; set; }
 
-
-
         #endregion
 
         #region Wpf Commands
-        // TODO : delete
-        public WpfCommand CommandGoto
-        {
-            get
-            {
-                if (_commandGoto == null)
-                {
-                    _commandGoto = new WpfCommand();
-                    _commandGoto.Executed += (sender, e) =>
-                    {
-                        //RobotLink.Reference.AxisXLink.Reference.Position = PositionLink.Reference.X;
-                        //RobotLink.Reference.AxisYLink.Reference.Position = PositionLink.Reference.Y;
-                        //RobotLink.Reference.AxisZLink.Reference.Position = PositionLink.Reference.Z;
-                    };
-
-                    _commandGoto.CanExecuteChecking += (sender, e) =>
-                    {
-                        //e.CanExecute = PositionLink.ValidReference && PositionLink.Reference != null &&
-                        //    RobotLink.ValidReference && RobotLink.Reference != null;
-                    };
-                }
-                return _commandGoto;
-            }
-        }
-        private WpfCommand _commandGoto;
 
         #endregion
     }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Concept.Model;
+using Concept.Utils;
+using Concept.Utils.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,11 +30,16 @@ namespace Framework
         {
             Playlist = new Playlist() { Description = "My Machine Description" };
             Xylobot = new Xylobot();
+            Settings = new Settings();
+            Sequencer = new Sequencer();
+            Sequencer.Playlist = Playlist;
+            Sequencer.Xylobot = Xylobot;
+            LoadConfiguration();
         }
 
         public void Unload()
         {
-
+            SaveConfiguration();
         }
 
         #endregion
@@ -40,6 +48,24 @@ namespace Framework
 
         public Playlist Playlist { get; private set; }
         public Xylobot Xylobot { get; private set; }
+        public Settings Settings { get; private set; }
+        public Sequencer Sequencer { get; private set; }
+
+        #endregion
+
+        #region Load / Save Configuration
+
+        public void LoadConfiguration()
+        {
+            var messages = new MessageCollection();
+            Settings.LoadFromFile("FileConfig.xml", PluginClassManager.AllFactories, messages);
+            if (messages.Count > 0)
+                ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
+        }
+        public void SaveConfiguration()
+        {
+            Settings.SaveToFile("FileConfig.xml");
+        }
 
         #endregion
     }

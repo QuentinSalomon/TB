@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Framework
 {
-    [IntlConceptName("Framework.Channel.Name", "Channels")]
+    [IntlConceptName("Framework.Channel.Name", "Channel")]
     [ConceptSmallImage(typeof(Channel), "/Images/Channelt32x32.png")]
     [ConceptLargeImage(typeof(Channel), "/Images/Channel64x64.png")]
     public class Channel : ConceptComponent
@@ -16,13 +16,14 @@ namespace Framework
 
         public Channel()
         {
-            Notes = new StaticListNote();
+
         }
 
         #endregion
-
+        
+        [ConceptViewVisible]
         [ConceptAutoCreate]
-        [IntlConceptName("Framework.Partition.Notes", "Notes")]
+        [IntlConceptName("Framework.Channel.Notes", "Notes")]
         public StaticListNote Notes { get; protected set; }
     }
 

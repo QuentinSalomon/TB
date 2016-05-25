@@ -8,5 +8,6 @@ namespace Framework
 {
     public class FileManagementViewModel : BaseViewModel
     {
+        public FileManagement FileManagement { get { return FrameworkController.Instance.FileManagement; } }
     }
 }

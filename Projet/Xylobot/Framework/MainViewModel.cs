@@ -14,11 +14,13 @@ namespace Framework
         {
             EditPlaylistViewModel = new EditPlaylistViewModel();
             SupervisionViewModel = new SupervisionViewModel();
+            SettingsViewModel = new SettingsViewModel();
         }
 
         #endregion
 
         public EditPlaylistViewModel EditPlaylistViewModel { get; private set; }
         public SupervisionViewModel SupervisionViewModel { get; private set; }
+        public SettingsViewModel SettingsViewModel { get; private set; }
     }
 }

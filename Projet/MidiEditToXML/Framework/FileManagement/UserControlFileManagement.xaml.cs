@@ -1,8 +1,4 @@
-﻿using Common;
-using Concept.Model;
-using Concept.Utils;
-using Concept.Utils.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,20 +16,13 @@ using System.Windows.Shapes;
 namespace Framework
 {
     /// <summary>
-    /// Interaction logic for UserControlEditPlaylist.xaml
+    /// Interaction logic for UserControlFileManagement.xaml
     /// </summary>
-    public partial class UserControlEditPlaylist : UserControl
+    public partial class UserControlFileManagement : UserControl
     {
-        public UserControlEditPlaylist()
+        public UserControlFileManagement()
         {
             InitializeComponent();
-
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                CurrentPlaylist = DataContext as Playlist;
-            }), null);
         }
-
-        public Playlist CurrentPlaylist { get; set; }
     }
 }

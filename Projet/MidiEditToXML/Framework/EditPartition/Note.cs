@@ -9,11 +9,28 @@ using System.Threading.Tasks;
 namespace Framework
 {
     //[ConceptView(typeof(UserControlNote))]
-    [IntlConceptName("Framework.Note.Name", "NotesMidi")]
+    [IntlConceptName("Framework.Note.Name", "Note")]
     [ConceptSmallImage(typeof(Note), "/Images/Note32x32.png")]
     [ConceptLargeImage(typeof(Note), "/Images/Note64x64.png")]
     public class Note : ConceptComponent
     {
+        #region Constructeur
+
+        public Note()
+        {
+
+        }
+
+        public Note(Note n)
+        {
+            Name = n.Name;
+            Octave = n.Octave;
+            Tick = n.Tick;
+            High = n.High;
+            HighString = n.HighString;
+        }
+
+        #endregion
 
         #region Propriétés
 

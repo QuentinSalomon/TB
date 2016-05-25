@@ -27,7 +27,7 @@ namespace Framework
         [ConceptSerialized]
         [ConceptViewVisible]
         [IntlConceptName("Framework.PartitionMidi.Title", "Title")]
-        public double Title
+        public string Title
         {
             get { return _title; }
             set
@@ -39,7 +39,7 @@ namespace Framework
                 }
             }
         }
-        private double _title;
+        private string _title;
         public const string TitlePropertyName = "Title";
 
         [ConceptSerialized]
@@ -62,12 +62,19 @@ namespace Framework
 
         #endregion
 
-        public PartitionXylo ConvertToPartitionXylo()
+        public PartitionXylo ConvertToPartitionXylo(Channel[] channels)
         {
-
-            return null;
+            PartitionXylo partitionXylo = new PartitionXylo();
+            foreach (Channel ch in channels)
+                foreach(Note n in ch.Notes)
+                    if (n.Octave >= 4 && n.Octave <= 6) //TODO: Octave 5-7
+                        partitionXylo.Notes.Add(new Note(n));
+            partitionXylo.Tempo = Tempo;
+            partitionXylo.Title = Title;
+            return partitionXylo;
         }
 
+        [ConceptViewVisible]
         [ConceptAutoCreate]
         [IntlConceptName("Framework.PartitionMidi.Channels", "Channels")]
         public StaticListChannel Channels { get; protected set; }
