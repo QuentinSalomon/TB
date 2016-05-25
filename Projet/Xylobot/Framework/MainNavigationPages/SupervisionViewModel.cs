@@ -8,6 +8,6 @@ namespace Framework
 {
     public class SupervisionViewModel : BaseViewModel
     {
-        public Xylobot Xylobot { get { return FrameworkController.Instance.Xylobot; } }
+        public Sequencer Sequencer { get { return FrameworkController.Instance.Sequencer; } }
     }
 }

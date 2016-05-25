@@ -9,7 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
         <GroupBox DockPanel.Dock="Top" Header="{Binding Element.DisplayName, ElementName=Editor}">
-            <concept:ConceptEditor x:Name="Editor" DataContext="{Binding Path=Xylobot, Mode=OneWay}" IsExpanded="True" ExpandLevel="3"/>
+            <concept:ConceptEditor x:Name="Editor" DataContext="{Binding Path=Sequencer, Mode=OneWay}" IsExpanded="True" ExpandLevel="3"/>
         </GroupBox>
     </DockPanel>
 </UserControl>

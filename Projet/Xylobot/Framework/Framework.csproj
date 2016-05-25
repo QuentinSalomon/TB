@@ -114,6 +114,9 @@
       <DependentUpon>UserControlSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Supervision\Sequencer.cs" />
+    <Compile Include="Supervision\UserControlSequencer.xaml.cs">
+      <DependentUpon>UserControlSequencer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Supervision\XyloCommunication.cs" />
     <Compile Include="Supervision\Xylobot.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -155,6 +158,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Supervision\UserControlSequencer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Playlist64x64.png" />
@@ -172,9 +179,9 @@
     <Resource Include="Images\Xylophone64x64.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibXylobot\LibXylobot.csproj">
+    <ProjectReference Include="..\LibXylobot\LibVirtuoso.csproj">
       <Project>{dcdce5ea-07ee-4375-aeda-5803d8ce35e6}</Project>
-      <Name>LibXylobot</Name>
+      <Name>LibVirtuoso</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

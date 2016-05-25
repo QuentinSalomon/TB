@@ -42,7 +42,7 @@ namespace Framework
             _serialPort = new SerialPort(PortName, BaudRate);
             _serialPort.ReadTimeout = TimeOut;
             _serialPort.WriteTimeout = TimeOut;
-            // TO DO: Régler comme il faut
+            // TODO: Régler comme il faut
             _serialPort.DataBits = 8;
             _serialPort.StopBits = StopBits.One;
             _serialPort.Parity = Parity.None;
@@ -51,11 +51,8 @@ namespace Framework
 
             _xylo = xylo;
 
-            t = new Thread(test);
-
-            _serialPort.Open();
-            _serialPort.DiscardOutBuffer();
-            t.Start();
+            //t = new Thread(test);
+            //t.Start();
         }
 
         #endregion
@@ -80,6 +77,21 @@ namespace Framework
             Read();
         }
 
+        public void Init()
+        {
+            try
+            {
+                _serialPort.Open();
+                _serialPort.DiscardOutBuffer();
+                //Stop la communication i2c et récupère la place dans le buffer
+                SendMessage(SendTypeMessage.Stop);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public ReceiveTypeMessage Read()
         {
             int tmp;
@@ -93,6 +105,7 @@ namespace Framework
                     {
                         tmp = _serialPort.ReadByte();
                         ArduinoNoteSizeAvaible = (byte)_serialPort.ReadByte();
+                        _xylo.Test = ArduinoNoteSizeAvaible.ToString(); // TODO: Delete
                         switch ((ReceiveTypeMessage)tmp)
                         {
                             case ReceiveTypeMessage.Ok:

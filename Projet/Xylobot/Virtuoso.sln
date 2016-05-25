@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xylobot", "Xylobot\Xylobot.csproj", "{A2A2CF62-536C-448B-B401-CEAF5E932C3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Virtuoso", "Xylobot\Virtuoso.csproj", "{A2A2CF62-536C-448B-B401-CEAF5E932C3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{804C47CE-B263-4132-86B5-B007C890A898}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibXylobot", "LibXylobot\LibXylobot.csproj", "{DCDCE5EA-07EE-4375-AEDA-5803D8CE35E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibVirtuoso", "LibXylobot\LibVirtuoso.csproj", "{DCDCE5EA-07EE-4375-AEDA-5803D8CE35E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
