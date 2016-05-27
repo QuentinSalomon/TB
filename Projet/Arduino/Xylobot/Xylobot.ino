@@ -12,10 +12,12 @@ int numMessage = -1,oldNumMessage;
 SendTypeMessage msgSendType;
 //Variable pour la lecture de l'en-tête du message
 byte headMessage[HEAD_RECEIVE_MSG_SIZE];
-int count = 0, idxTime = 0, tick = 0;
+int count = 0;
 
 /*I2C*/
 I2CXylo i2cXylo;
+uint32_t tick=0, idxTime = 0;
+bool play=false;
 
 int modeSerial = 0; //Lecture = 0, traitement = 1 et 2, écriture = 3
 CircularBuffer bufferNotes;
@@ -31,10 +33,6 @@ bool CheckMessage();
 void ReadDataMessage();
 void ResponseMessage(byte type);
 
-/****************************************TIMER INTERRUPT****************************************/
-//#define TIMER_US 1000000                            // 0.5mS set timer duration in microseconds 
-
-volatile bool in_long_isr = false;                 // True if in long interrupt
 /****************************************ARDUINO FONCTIONS****************************************/
 void setup() {
   pinMode(13, OUTPUT);
@@ -46,76 +44,69 @@ void setup() {
   while(Serial.available());
   /* INIT I2C */
   i2cXylo.Init();
-  /* INIT INTERRUPT */
-//  noInterrupts();
-//  Timer1.initialize(TIMER_US);                  // Initialise timer 1
-//  //démarrage décalé
-//  Timer1.attachInterrupt(timerIsr);             // attach the ISR routine here
-//  interrupts();
 }
 
 void loop() {
+  /*****I2C*****/
   if(idxTime*TIMER_MS < millis())
   {
-    if(idxTime == 5){
-      for(int i=0;i<NOTE_COUNT_XYLO;i++){
-        i2cXylo.PreparePush(toneTab[i]);
-        digitalWrite(13, HIGH);
-        i2cXylo.ApplyPush();
-        delay(TIME_HIT_MS);
-        i2cXylo.ReleasePush();
-        delay(15);
-      }
-      //digitalWrite(13, LOW);
-    }
-    idxTime++;
-  }else{
-    switch (modeSerial)
-    {
-      case 0:   //entête du message
-          if(ReadHeadMessage())
-            modeSerial = 1;
-        break;
-        
-      case 1:   //Validité du message? et lecture des données
-        if(CheckMessage())
-          modeSerial = 2;
+    if(play){
+      Note currentNote;
+      while(1)
+      {
+        if(! bufferNotes.Current(&currentNote))
+          break;
+        //Si le tick de la note est plus petit que le tick courant ==> nouvelle partition (==> tick = 0)
+        if(currentNote.GetTick() < tick){
+          digitalWrite(13, HIGH);
+          tick = 0;
+        }
+          
+        if(currentNote.GetTick() == tick){
+          bufferNotes.Consume(&currentNote); //si le tick est celui de la note courante, on consume la note
+          i2cXylo.PreparePush(toneTab[currentNote.GetPitch()]);
+        }
         else
-          modeSerial = 3;
-        break;
-  
-      case 2:
-        ReadDataMessage();
-        modeSerial = 3;
-        break;
-        
-      case 3:
-        while(Serial.available())
-          Serial.read();
-        ResponseMessage(msgSendType);
-        modeSerial = 0;
-        break;
-      default:
-        break;
-    }
-  }
-}
-
-/****************************************FONCTIONS INTERRUPT****************************************/
-
-void timerIsr()
-{
-  static int a=0;
-//  if(syncInterrupt){
-    if(a++ == 5){
-      i2cXylo.PreparePush(toneTab[Fa5]);
-      digitalWrite(13, HIGH);
+          break;
+      }
       i2cXylo.ApplyPush();
       delay(TIME_HIT_MS);
       i2cXylo.ReleasePush();
-      digitalWrite(13, LOW);
+      
+      tick += TICK_INC;
     }
-//  }
+
+    idxTime++;
+  }
+  /*****USB*****/
+  switch (modeSerial)
+  {
+    case 0:   //entête du message
+        if(ReadHeadMessage()) //Attend de recevoir tout l'entête du message avant de continuer
+          modeSerial = 1;
+      break;
+      
+    case 1:   //Validité du message? et lecture des données
+      if(CheckMessage())
+        modeSerial = 2;
+      else
+        modeSerial = 3;
+      break;
+
+    case 2:
+      ReadDataMessage();
+      modeSerial = 3;
+      break;
+      
+    case 3:
+      while(Serial.available())
+        Serial.read();
+      ResponseMessage(msgSendType);
+      modeSerial = 0;
+      break;
+    default:
+      break;
+  }
 }
 
 /****************************************FONCTIONS SERIAL****************************************/
@@ -142,7 +133,7 @@ bool CheckMessage() {
       if(headMessage[2] < RECEIVE_TYPE_SIZE)
       {
         /*place pour toutes les données reçues?*/
-        if(bufferNotes.SizeAvailable() > (headMessage[3]|headMessage[4])/NOTE_SIZE)
+        if(bufferNotes.SizeAvailable() >= (headMessage[3]|(headMessage[4]<<8))/NOTE_SIZE)
           return true;
         else
           msgSendType = SendType_TooManyData;
@@ -188,6 +179,11 @@ void NotesMsg(uint16_t dataSize)
   uint32_t tmpTick;
   int j, k;
 
+  if(dataSize%NOTE_SIZE != 0){
+    msgSendType = SendType_OtherError;
+    return;
+  }
+
   for(k=0; k<dataSize; k+=NOTE_SIZE){
     //Lit une note
     if(Serial.available() >= NOTE_SIZE){
@@ -207,24 +203,24 @@ void NotesMsg(uint16_t dataSize)
       bufferNotes.Write(tmpNote);
     }
     else
-      k -= NOTE_SIZE;
+      k -= NOTE_SIZE; //soustrait l'additoin de la boucle for car les données n'ont pas encre été reçues
   }
   msgSendType = SendType_Ok;
 }
 void StartMsg(uint16_t dataSize)
 {
-  interrupts();
+  play = true;
   msgSendType = SendType_Ok;
 }
 void StopMsg(uint16_t dataSize)
 {
-  noInterrupts();
+  play=false;
   bufferNotes.Clear();
   msgSendType = SendType_Ok;
 }
 void PauseMsg(uint16_t dataSize)
 {
-  noInterrupts();
+  play=false;
   msgSendType = SendType_Ok;
 }
 void TempoMsg(uint16_t dataSize)

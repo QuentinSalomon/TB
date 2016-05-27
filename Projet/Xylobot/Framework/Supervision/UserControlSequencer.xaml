@@ -18,7 +18,8 @@
         <ListBox x:Name="ListboxErrors" BorderBrush="Red" Grid.Column="1"></ListBox>
         <StackPanel>
             <Button Content="Init" Command="{Binding Path=CommandInit}"/>
-            <Button Content="Play" Command="{Binding Path=CommandPlayPlaylist}"/>
+            <Button Content="Play/Pause" Command="{Binding Path=CommandPlayPlaylist}"/>
+            <Button Content="Stop" Command="{Binding Path=CommandStop}"/>
             <TextBlock Text="{Binding Xylobot.Test}"/>
         </StackPanel>
     </Grid>

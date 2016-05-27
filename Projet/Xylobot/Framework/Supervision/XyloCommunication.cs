@@ -29,9 +29,6 @@ namespace Framework
         const int ReceiveTypeSize = 4;
         #endregion
 
-        // TODO : changer de place le thread t
-        Thread t;
-
         #region Constructor
 
         // TODO : dépendance incorrecte xylo
@@ -50,9 +47,6 @@ namespace Framework
 
 
             _xylo = xylo;
-
-            //t = new Thread(test);
-            //t.Start();
         }
 
         #endregion
@@ -67,15 +61,6 @@ namespace Framework
         #endregion
 
         #region Methods
-
-        public void test()
-        {
-            List<Note> listeTest = new List<Note>();
-            //listeTest.Add(new Note(100, 1000));
-            //listeTest.Add(new Note(80, 1100));
-            SendNotes(listeTest);
-            Read();
-        }
 
         public void Init()
         {
@@ -119,7 +104,6 @@ namespace Framework
                             default:
                                 return ReceiveTypeMessage.ErrorMsgArduino;
                         }
-                            //_xylo.Test = tmp.ToString();
                     } else
                         return ReceiveTypeMessage.ErrorMsgArduino;//_xylo.Test = "Mauvais numéro de message"; //Renvoyer le message précedent
                 } else
@@ -134,54 +118,53 @@ namespace Framework
 
         public void SendNotes(List<Note> notes)
         {
-            int noteSize = (sizeof(UInt32) + sizeof(byte));
-            if (notes.Count>ArduinoNoteSizeAvaible)
+            ushort noteSize = (sizeof(UInt32) + sizeof(byte));
+            if (notes.Count > ArduinoNoteSizeAvaible)
                 throw new Exception("trop de notes");
-            do
+            try
             {
-                int i = 0;
-                byte[] msg = new byte[SizeHeadMessage + notes.Count * noteSize];
-                ushort dataSize = BitConverter.ToUInt16(BitConverter.GetBytes(notes.Count * noteSize), 0);
-                byte[] headMsg = HeaderMessage(dataSize, (byte)SendTypeMessage.Notes);
-                for (i = 0; i < SizeHeadMessage; i++)
-                    msg[i] = headMsg[i];
-                foreach (Note note in notes)
+                do
                 {
-                    msg[i++] = (byte)(note.High * note.Octave);
-                    foreach (byte data in BitConverter.GetBytes(note.Tick))
-                        msg[i++] = data;
-                }
-                //Envoie
-                try
-                {
-                    //_serialPort.DiscardInBuffer();
+                    int i = 0;
+                    byte[] msg = new byte[SizeHeadMessage + notes.Count * noteSize];
+                    ushort dataSize = (ushort)(notes.Count * noteSize);//BitConverter.ToUInt16(BitConverter.GetBytes(notes.Count * noteSize), 0);
+                    byte[] headMsg = HeaderMessage(dataSize, (byte)SendTypeMessage.Notes);
+                    for (i = 0; i < SizeHeadMessage; i++)
+                        msg[i] = headMsg[i];
+                    foreach (Note note in notes)
+                    {
+                        msg[i++] = (byte)(note.High + (note.Octave-4)*12); // TODO: Modifier
+                        foreach (byte data in BitConverter.GetBytes(note.Tick))
+                            msg[i++] = data;
+                    }
+                    //Envoie
                     _serialPort.DiscardOutBuffer();
                     _serialPort.Write(msg, 0, msg.Length);
-                }
-                catch (TimeoutException e)
-                {
-                    throw e;
-                }
-            } while (Read() != ReceiveTypeMessage.Ok);
 
+                } while (Read() != ReceiveTypeMessage.Ok);
+            }
+            catch (TimeoutException e)
+            {
+                throw e;
+            }
             _numMessage++;
         }
 
         public void SendMessage(SendTypeMessage typeMessage)
         {
             byte[] msg = HeaderMessage(0, (byte)typeMessage);
-            do {
-                try
-                {
+            try
+            {
+                do {
                     _serialPort.DiscardOutBuffer();
                     _serialPort.DiscardInBuffer();
                     _serialPort.Write(msg, 0, msg.Length);
-                }
-                catch (TimeoutException e)
-                {
-                    throw e;
-                }
-            } while (Read() != ReceiveTypeMessage.Ok);
+                } while (Read() != ReceiveTypeMessage.Ok);
+            }
+            catch (TimeoutException e)
+            {
+                throw e;
+            }
 
             _numMessage++;
         }

@@ -14,6 +14,19 @@ namespace UnitTest1
 		{
 			CircularBuffer c;
 			int val;
+
+			for (int i = 0; i < BUFFER_SIZE; i++)
+				Assert::IsTrue(c.Write(i));
+			Assert::AreEqual(c.SizeAvailable(), 0);
+			Assert::IsFalse(c.Write(1));
+			for (int i = 0; i < BUFFER_SIZE; i++) {
+				Assert::IsTrue(c.Current(&val));
+				Assert::AreEqual(val, i);
+				Assert::IsTrue(c.Read(&val));
+				Assert::AreEqual(val, i);
+			}
+
+
 			Assert::AreEqual(c.SizeAvailable(), BUFFER_SIZE);
 			Assert::IsFalse(c.Read(&val));
 			Assert::IsTrue(c.Write(2));

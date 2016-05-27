@@ -72,7 +72,19 @@ namespace Framework
 
         public void ManageXylobot()
         {
-
+            while (_actionsThread != -1)
+            {
+                Thread.Sleep(10);
+                switch (_actionsThread)
+                {
+                    case 1:
+                        PlayPlayist(Playlist);
+                        _actionsThread = 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         public void Init()
@@ -90,20 +102,37 @@ namespace Framework
         {
             List<Note> notes = new List<Note>();
             PartitionXylo tmpPartition = new PartitionXylo();
+            int k = 0,i;
             tmpPartition.CopyFrom(partition);
             try {
-                while (tmpPartition.Notes.Count > 0)
+                while (k < partition.Notes.Count)
                 {
-                    for (int i = 0; i < Xylobot.XyloCommunication.ArduinoNoteSizeAvaible; i++)
+                    if (_stop)
                     {
-                        if (i >= partition.Notes.Count)
-                            break;
-                        notes.Add(tmpPartition.Notes[i]);
+                        Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Stop);
+                        break;
                     }
-                    //Envoie des notes et recupération
-                    Xylobot.XyloCommunication.SendNotes(notes);
-                    notes.Clear();
-                    Thread.Sleep(50);
+                    else if (_pause)
+                    {
+                        Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Pause);
+                        while (_pause && !_stop)
+                            Thread.Sleep(50);
+                        if(!_stop)
+                            Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Start);
+                    }
+                    else {
+                        for (i = 0; i < Xylobot.XyloCommunication.ArduinoNoteSizeAvaible; i++)
+                        {
+                            if (k + i >= partition.Notes.Count)
+                                break;
+                            notes.Add(partition.Notes[k + i]);
+                        }
+                        k += i;
+                        //Envoie des notes et recupération
+                        Xylobot.XyloCommunication.SendNotes(notes);
+                        notes.Clear();
+                        Thread.Sleep(50);
+                    }
                 }
             }
             catch (Exception e) {
@@ -113,11 +142,27 @@ namespace Framework
 
         public void PlayPlayist(Playlist playlist)
         {
-            Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Stop); //Stop l'execution en cours pour jouer la playlist
-            Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Start);//Start la musique
-            foreach (PartitionXylo p in playlist)
-                PlayPartition(p);
+            try
+            {
+                Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Stop); //Stop l'execution en cours pour jouer la playlist
+                _pause = false;
+                _stop = false;
+                Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Start);//Start la musique
+                foreach (PartitionXylo p in playlist.Partitions)
+                    PlayPartition(p);
+            }
+            catch (Exception e)
+            {
+                Errors.Add(e.Message);
+            }
 
+        }
+
+        public void Finish()
+        {
+            Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Stop);
+            _actionsThread = -1;
+            threadXyloBot.Join();
         }
 
         #endregion
@@ -133,7 +178,10 @@ namespace Framework
                     _commandPlayPlaylist = new WpfCommand();
                     _commandPlayPlaylist.Executed += (sender, e) =>
                     {
-                        PlayPlayist(Playlist);
+                        if (_actionsThread == 0)
+                            _actionsThread = 1;
+                        else
+                            _pause = !_pause;
                     };
 
                     _commandPlayPlaylist.CanExecuteChecking += (sender, e) =>
@@ -168,12 +216,35 @@ namespace Framework
         }
         private WpfCommand _commandInit;
 
+        public WpfCommand CommandStop
+        {
+            get
+            {
+                if (_commandStop == null)
+                {
+                    _commandStop = new WpfCommand();
+                    _commandStop.Executed += (sender, e) =>
+                    {
+                        _stop = true;
+                    };
+
+                    _commandStop.CanExecuteChecking += (sender, e) =>
+                    {
+                        e.CanExecute = true;
+                    };
+                }
+                return _commandStop;
+            }
+        }
+        private WpfCommand _commandStop;
+
         #endregion
 
         #region private
 
         private Thread threadXyloBot;
         private bool _pause = true, _stop = true;
+        private int _actionsThread=0;
 
         #endregion
     }

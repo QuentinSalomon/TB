@@ -11,8 +11,7 @@
 #define NOTE_COUNT_XYLO 37
 
 #define TIME_HIT_MS 9
-#define TIMER_MS 500             //Tempo   //TODO: 50ms
-#define TIMER_US 200000          // 500mS set timer duration in microseconds
+#define TIMER_MS 50             //Tempo   //TODO: 50ms
 
 #define TICK_INC 12              //Incrément du 'tick' pour les notes (=diff. de tick entre 2 notes)
 

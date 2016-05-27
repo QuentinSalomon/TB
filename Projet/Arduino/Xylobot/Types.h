@@ -8,7 +8,7 @@
 
 enum ReceiveTypeMessage { ReceiveType_Tempo, ReceiveType_Notes, ReceiveType_Start, ReceiveType_Stop, ReceiveType_Pause };
 
-enum SendTypeMessage { SendType_Ok, SendType_TooManyData, SendType_ErrorStartByte,  SendType_ErrorType};
+enum SendTypeMessage { SendType_Ok, SendType_TooManyData, SendType_ErrorStartByte,  SendType_ErrorType, SendType_OtherError};
 
 
 #endif
