@@ -1,0 +1,27 @@
+﻿<Window x:Class="Framework.WindowChannelsSelect"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Framework"
+        mc:Ignorable="d"
+        Title="Channels Select" Height="100" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="StackPanelCheckBoxs" Grid.Row="0" Orientation="Horizontal"></StackPanel>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="70"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Cancel" Grid.Column="2" Click="ButtonCancel_Click" IsCancel="True"/>
+            <Button Content="Ok" Grid.Column="1" Click="ButtonOk_Click"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -85,10 +85,10 @@ namespace Framework
 
         private void SavePartition(string filename)
         {
-            Channel[] chs = new Channel[1];
-            chs[0] = CurrentPartition.Channels[0];
-            PartitionXylo = CurrentPartition.ConvertToPartitionXylo(chs);
-            PartitionXylo.SaveToFile(filename);
+            //Channel[] chs = new Channel[1];
+            //chs[0] = CurrentPartition.Channels[0];
+            //PartitionXylo = CurrentPartition.ConvertToPartitionXylo(chs);
+            //PartitionXylo.SaveToFile(filename);
         }
 
         #region event

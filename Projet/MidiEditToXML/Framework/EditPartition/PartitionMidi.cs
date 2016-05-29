@@ -1,4 +1,5 @@
 ﻿using Concept.Model;
+using Sanford.Multimedia.Midi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,17 +63,57 @@ namespace Framework
 
         #endregion
 
-        public PartitionXylo ConvertToPartitionXylo(Channel[] channels)
+        #region Methods
+
+        public PartitionXylo ConvertToPartitionXylo(List<Channel> channels)
         {
             PartitionXylo partitionXylo = new PartitionXylo();
             foreach (Channel ch in channels)
                 foreach(Note n in ch.Notes)
-                    if (n.Octave >= 4 && n.Octave <= 6) //TODO: Octave 5-7
+                    if (n.Octave >= 5 && n.Octave <= 7) //TODO: Octave 5-7
                         partitionXylo.Notes.Add(new Note(n));
             partitionXylo.Tempo = Tempo;
             partitionXylo.Title = Title;
             return partitionXylo;
         }
+
+        public void Load(string filename)
+        {
+            Clear();
+            Sequence sequence = new Sequence(filename);
+            string[] tabString = filename.Split('\\');
+            string title = tabString[tabString.Length - 1];
+            Title = title.Split('.')[0];
+            int numNote = 0;
+            foreach (Track t in sequence)
+            {
+                foreach (MidiEvent midiEvent in t.Iterator())
+                {
+                    if (midiEvent.MidiMessage.MessageType == MessageType.Channel)
+                    {
+                        int tick = midiEvent.AbsoluteTicks;
+                        ChannelMessage msg = ((ChannelMessage)midiEvent.MidiMessage);
+                        if (msg.Command == ChannelCommand.NoteOn)
+                        {
+                            Note tmpNote = NotesConvert.IdToNote(msg.Data1, tick);
+                            tmpNote.Name = Title + "_" + (numNote++).ToString();
+                            if (Channels.Count - msg.MidiChannel <= 0) {
+                                int nbChannel = Channels.Count;
+                                for (int i = 0; i <= msg.MidiChannel - nbChannel; i++)
+                                {
+                                    Channel ch = new Channel();
+                                    ch.Name = Channels.Count.ToString();
+                                    Channels.Add(ch);
+                                }
+                            }
+                            Channels[msg.MidiChannel].Notes.Add(tmpNote);
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
 
         [ConceptViewVisible]
         [ConceptAutoCreate]

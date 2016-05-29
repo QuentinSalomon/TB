@@ -4,14 +4,50 @@
         xmlns:concept="http://www.objectis.ch/concept"
         xmlns:local="clr-namespace:Framework"
         Title="Conversion des fichiers midi" Height="400" Width="600">
-    <concept:NavigationControl>
-        <local:EditPartitionView concept:NavigationControl.MenuTitle="Edit partition" 
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="File" >
+                <MenuItem Header="New..." Click="MenuItemNew_Click" InputGestureText="Ctrl+N">
+                    <!--<MenuItem.Icon>
+                        <Image Source="Images/newfile.png"/>
+                    </MenuItem.Icon>-->
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Open" Click="MenuItemOpen_Click" InputGestureText="Ctrl+O">
+                    <!--<MenuItem.Icon>
+                        <Image Source="Images/openfile.png"/>
+                    </MenuItem.Icon>-->
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Save" Click="MenuItemSave_Click" InputGestureText="Ctrl+S">
+                    <!--<MenuItem.Icon>
+                        <Image Source="Images/save.png"/>
+                    </MenuItem.Icon>-->
+                </MenuItem>
+                <MenuItem Header="Save As..." Click="MenuItemSaveAs_Click" InputGestureText="Ctrl+alt+S"/>
+                <Separator/>
+                <MenuItem Header="Exit" Click="MenuItemClose_Click"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About..."  Click="MenuItemAbout_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <concept:NavigationControl Grid.Row="1">
+            <local:EditPartitionView concept:NavigationControl.MenuTitle="Edit partition" 
                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/Partition32x32.png"
                                  DataContext="{Binding Path=EditPartitionViewModel}"/>
-        <local:FileManagementView concept:NavigationControl.MenuTitle="Manage file" 
+            <local:FileManagementView concept:NavigationControl.MenuTitle="Manage file" 
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/FileManage32x32.png"
                                 DataContext="{Binding Path=FileManagementViewModel}"/>
-        <local:SettingsView concept:NavigationControl.MenuTitle="Settings" 
+            <local:SettingsView concept:NavigationControl.MenuTitle="Settings" 
                             concept:NavigationControl.MenuImageSource="/Framework;component/Images/Settings32x32.png"/>
-    </concept:NavigationControl>
+        </concept:NavigationControl>
+    </Grid>
 </Window>
