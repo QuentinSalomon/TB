@@ -78,7 +78,7 @@ namespace Framework
                 switch (_actionsThread)
                 {
                     case 1:
-                        PlayPlayist(Playlist);
+                        PlayPlaylist(Playlist);
                         _actionsThread = 0;
                         break;
                     default:
@@ -89,9 +89,8 @@ namespace Framework
 
         public void Init()
         {
-            //Errors.Add("blabla");
             try {
-                Xylobot.XyloCommunication.Init();
+                Xylobot.Init();
             }
             catch (Exception e) {
                 Errors.Add(e.Message);
@@ -109,16 +108,16 @@ namespace Framework
                 {
                     if (_stop)
                     {
-                        Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Stop);
+                        Xylobot.Stop();
                         break;
                     }
                     else if (_pause)
                     {
-                        Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Pause);
+                        Xylobot.Pause();
                         while (_pause && !_stop)
                             Thread.Sleep(50);
                         if(!_stop)
-                            Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Start);
+                            Xylobot.Start();
                     }
                     else {
                         for (i = 0; i < Xylobot.XyloCommunication.ArduinoNoteSizeAvaible; i++)
@@ -129,7 +128,7 @@ namespace Framework
                         }
                         k += i;
                         //Envoie des notes et recupération
-                        Xylobot.XyloCommunication.SendNotes(notes);
+                        Xylobot.SendNotes(notes);
                         notes.Clear();
                         Thread.Sleep(50);
                     }
@@ -140,16 +139,21 @@ namespace Framework
             }
         }
 
-        public void PlayPlayist(Playlist playlist)
+        public void PlayPlaylist(Playlist playlist)
         {
             try
             {
-                Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Stop); //Stop l'execution en cours pour jouer la playlist
+                Xylobot.Stop(); //Stop l'execution en cours pour jouer la playlist
                 _pause = false;
                 _stop = false;
-                Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Start);//Start la musique
+                Xylobot.Start();//Start la musique
                 foreach (PartitionXylo p in playlist.Partitions)
-                    PlayPartition(p);
+                {
+                    if (!_stop)
+                        PlayPartition(p);
+                    else
+                        break;
+                }
             }
             catch (Exception e)
             {
@@ -160,7 +164,7 @@ namespace Framework
 
         public void Finish()
         {
-            Xylobot.XyloCommunication.SendMessage(SendTypeMessage.Stop);
+            Xylobot.Stop();
             _actionsThread = -1;
             threadXyloBot.Join();
         }

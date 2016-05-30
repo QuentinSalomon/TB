@@ -35,6 +35,7 @@ namespace Framework
         public XyloCommunication(Xylobot xylo)
         {
             _numMessage = 0;
+            // TODO : rendre configurable
             PortName = "COM5";
             _serialPort = new SerialPort(PortName, BaudRate);
             _serialPort.ReadTimeout = TimeOut;
@@ -53,7 +54,7 @@ namespace Framework
 
         #region Propriétés
 
-        public byte ArduinoNoteSizeAvaible { get; set; }
+        public byte ArduinoNoteSizeAvaible { get; private set; }
 
         // TODO : a mettre dans un fichier de configuration
         public string PortName { get; set; }

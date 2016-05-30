@@ -1,4 +1,5 @@
-﻿using Concept.Model;
+﻿using Common;
+using Concept.Model;
 using Concept.Utils.Wpf;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,32 @@ namespace Framework
 
         #endregion
 
-        #region Wpf Commands
+        #region Methods
+
+        public void Init()
+        {
+            XyloCommunication.Init();
+        }
+
+        public void Start()
+        {
+            XyloCommunication.SendMessage(SendTypeMessage.Start);
+        }
+
+        public void Stop()
+        {
+            XyloCommunication.SendMessage(SendTypeMessage.Stop);
+        }
+
+        public void Pause()
+        {
+            XyloCommunication.SendMessage(SendTypeMessage.Pause);
+        }
+
+        public void SendNotes(List<Note> notes)
+        {
+            XyloCommunication.SendNotes(notes);
+        }
 
         #endregion
     }

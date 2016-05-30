@@ -63,6 +63,7 @@ namespace Framework
                         if (fileDlg.ShowDialog() == DialogResult.OK)
                         {
                             p.LoadFromFile(fileDlg.FileName, PluginClassManager.AllFactories, messages);
+                            p.Name = fileDlg.FileName;
                             if (messages.Count > 0)
                                 ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
                             else
