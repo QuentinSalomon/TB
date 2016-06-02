@@ -100,9 +100,7 @@ namespace Framework
         public void PlayPartition(PartitionXylo partition)
         {
             List<Note> notes = new List<Note>();
-            PartitionXylo tmpPartition = new PartitionXylo();
             int k = 0,i;
-            tmpPartition.CopyFrom(partition);
             try {
                 while (k < partition.Notes.Count)
                 {
@@ -130,7 +128,7 @@ namespace Framework
                         //Envoie des notes et recupération
                         Xylobot.SendNotes(notes);
                         notes.Clear();
-                        Thread.Sleep(50);
+                        Thread.Sleep(300);
                     }
                 }
             }
@@ -165,6 +163,7 @@ namespace Framework
         public void Finish()
         {
             Xylobot.Stop();
+            _stop = true;
             _actionsThread = -1;
             threadXyloBot.Join();
         }

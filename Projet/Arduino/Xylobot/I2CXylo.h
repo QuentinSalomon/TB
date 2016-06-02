@@ -20,12 +20,15 @@ class I2CXylo
     void Init();
     void PreparePush(const Tone t);
     void ApplyPush();
-    void ReleasePush();
+    void PrepareRelease(const Tone t);
+    void ApplyRelease();
   private :
     void SetIoDirOutput(byte address);
-    
+    int debug = 0;
     const Mcp23017Register _registers[REGISTER_COUNT] = {{33,0x12}, {34,0x12}, {32,0x12}, {33,0x13}, {32,0x13}};
-    byte _registerValues[5] = {0};
+    byte _registerPushValues[REGISTER_COUNT] = {0};
+    byte _registerPushedValues[REGISTER_COUNT] = {0};
+    byte _registerReleaseValues[REGISTER_COUNT] = {0};
 };
 
 #endif

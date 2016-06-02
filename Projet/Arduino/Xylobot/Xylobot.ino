@@ -3,23 +3,21 @@
 #include "CircularBuffer.h"
 #include "ConstXylobot.h"
 #include "I2CXylo.h"
-#include <TimerOne.h>
-#include <MsTimer2.h>
 //#include <Wire.h>
 
 /*Serial*/
-int numMessage = -1,oldNumMessage;
+int modeSerial = 0, numMessage = -1,oldNumMessage,idxReadHeadMessage = 0;;
 SendTypeMessage msgSendType;
-//Variable pour la lecture de l'en-tête du message
 byte headMessage[HEAD_RECEIVE_MSG_SIZE];
-int count = 0;
 
 /*I2C*/
 I2CXylo i2cXylo;
-uint32_t tick=0, idxTime = 0;
+unsigned long currentTick=0, startTime=0; //0xFFFFFFFF
 bool play=false;
+PushedNote pushedNotes[NOTE_COUNT_XYLO] = {0};
+int debug=0;
 
-int modeSerial = 0; //Lecture = 0, traitement = 1 et 2, écriture = 3
+/*Global*/
 CircularBuffer bufferNotes;
 
 void NotesMsg(uint16_t dataSize);
@@ -48,36 +46,52 @@ void setup() {
 
 void loop() {
   /*****I2C*****/
-  if(idxTime*TIMER_MS < millis())
-  {
-    if(play){
-      Note currentNote;
+  if(play)
+  {  
+    Note currentNote;
+    if(bufferNotes.Current(&currentNote)){
       while(1)
       {
-        if(! bufferNotes.Current(&currentNote))
-          break;
         //Si le tick de la note est plus petit que le tick courant ==> nouvelle partition (==> tick = 0)
-        if(currentNote.GetTick() < tick){
-          digitalWrite(13, HIGH);
-          tick = 0;
+        if(currentNote.GetTick() < currentTick){
+          currentTick = 0;
+          startTime = micros();
+          break;
         }
-          
-        if(currentNote.GetTick() == tick){
+        else if(currentNote.GetTick() == currentTick){
           bufferNotes.Consume(&currentNote); //si le tick est celui de la note courante, on consume la note
-          i2cXylo.PreparePush(toneTab[currentNote.GetPitch()]);
+          byte pitch = currentNote.GetPitch();
+          i2cXylo.PreparePush(toneTab[pitch]);
+          pushedNotes[pitch].pushed = true;
+          pushedNotes[pitch].timePushed = micros();
         }
         else
-          break;
+          break;      
       }
       i2cXylo.ApplyPush();
-      delay(TIME_HIT_MS);
-      i2cXylo.ReleasePush();
-      
-      tick += TICK_INC;
-    }
 
-    idxTime++;
+      if((micros() >= startTime ? micros() - startTime: 0xFFFFFFFF - startTime + micros()) > TEMPO ){
+        currentTick++;
+        startTime = micros();        
+      }
+    }
+    else
+      startTime = micros();
   }
+  else
+    startTime = micros();
+
+  bool needRelease = false;
+  for(int i=0;i<NOTE_COUNT_XYLO;i++)
+    if(pushedNotes[i].pushed)
+      if((micros() >= pushedNotes[i].timePushed ? micros() - pushedNotes[i].timePushed : 0xFFFFFFFF - pushedNotes[i].timePushed + micros()) > TIME_HIT_US){
+        i2cXylo.PrepareRelease(toneTab[i]);
+        pushedNotes[i].pushed = false;
+        needRelease = true;
+      }
+  if(needRelease)
+    i2cXylo.ApplyRelease();
+  
   /*****USB*****/
   switch (modeSerial)
   {
@@ -112,9 +126,9 @@ void loop() {
 /****************************************FONCTIONS SERIAL****************************************/
 bool ReadHeadMessage() {
     while(Serial.available()){
-      headMessage[count++] = Serial.read();
-      if(count==HEAD_RECEIVE_MSG_SIZE){
-        count = 0;
+      headMessage[idxReadHeadMessage++] = Serial.read();
+      if(idxReadHeadMessage==HEAD_RECEIVE_MSG_SIZE){
+        idxReadHeadMessage = 0;
         return true; 
       }
     }

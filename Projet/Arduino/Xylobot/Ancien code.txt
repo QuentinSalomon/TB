@@ -1,0 +1,30 @@
+ if(idxTime*TIMER_MS < millis())
+  {
+    if(play){
+      Note currentNote;
+      while(1)
+      {
+        if(! bufferNotes.Current(&currentNote))
+          break;
+        //Si le tick de la note est plus petit que le tick courant ==> nouvelle partition (==> tick = 0)
+        if(currentNote.GetTick() < tick){
+          digitalWrite(13, HIGH);
+          tick = 0;
+        }
+          
+        if(currentNote.GetTick() == tick){
+          bufferNotes.Consume(&currentNote); //si le tick est celui de la note courante, on consume la note
+          i2cXylo.PreparePush(toneTab[currentNote.GetPitch()]);
+        }
+        else
+          break;
+      }
+      i2cXylo.ApplyPush();
+      delay(TIME_HIT_MS);
+      i2cXylo.ReleasePush();
+      
+      tick += TICK_INC;
+    }
+
+    idxTime++;
+  }

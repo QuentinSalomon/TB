@@ -28,35 +28,40 @@ void I2CXylo::SetIoDirOutput(byte address)
 
 void I2CXylo::PreparePush(const Tone t)
 {
-  _registerValues[t.registerIndex] |= t.mask;
+  _registerPushValues[t.registerIndex] |= t.mask;
 }
 
 void I2CXylo::ApplyPush()
 {
   for(int i=0; i < REGISTER_COUNT; i++)
   {
-    if(_registerValues[i] != 0)
+    _registerPushedValues[i] |= _registerPushValues[i];
+    if(_registerPushValues[i] != 0)
     {
       Wire.beginTransmission(_registers[i].address);
       Wire.write(_registers[i].registerAddress);
-      Wire.write(_registerValues[i] | (i==4 ? 0x80 : 0));
+      Wire.write(_registerPushValues[i] | (i==4 ? 0x80 : 0));
       Wire.endTransmission();
+      _registerPushValues[i] = 0;
     }
   }
 }
 
-void I2CXylo::ReleasePush()
+void I2CXylo::PrepareRelease(const Tone t)
+{
+  _registerReleaseValues[t.registerIndex] = (_registerPushedValues[t.registerIndex] ^ t.mask);
+  _registerPushedValues[t.registerIndex] = _registerReleaseValues[t.registerIndex];
+}
+
+void I2CXylo::ApplyRelease()
 {
   for(int i=0; i < REGISTER_COUNT; i++)
   {
-    if(_registerValues[i] != 0)
-    {
-      Wire.beginTransmission(_registers[i].address);
-      Wire.write(_registers[i].registerAddress);
-      Wire.write(0 | (i==4 ? 0x80 : 0));
-      Wire.endTransmission();
-      _registerValues[i] = 0;
-    }
+    Wire.beginTransmission(_registers[i].address);
+    Wire.write(_registers[i].registerAddress);
+    Wire.write(_registerReleaseValues[i] | (i==4 ? 0x80 : 0));
+    Wire.endTransmission();
+    _registerReleaseValues[i] = 0;
   }  
 }
 

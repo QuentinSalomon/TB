@@ -26,4 +26,10 @@ class Note
     uint32_t _tick;
 };
 
+struct PushedNote
+{
+  unsigned long timePushed; // temps au quel la note à été poussée
+  bool pushed;
+};
+
 #endif

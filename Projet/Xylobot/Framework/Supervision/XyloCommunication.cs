@@ -26,7 +26,7 @@ namespace Framework
         const byte StartByte = 255;
         // TODO : Ajuster la vitesse
         const Int32 BaudRate = 57600, SizeHeadMessage = 5, TimeOut = 3000;
-        const int ReceiveTypeSize = 4;
+        const int SizeOctave = 12, StartOctaveXylophone = 4;
         #endregion
 
         #region Constructor
@@ -134,7 +134,7 @@ namespace Framework
                         msg[i] = headMsg[i];
                     foreach (Note note in notes)
                     {
-                        msg[i++] = (byte)(note.High + (note.Octave-4)*12); // TODO: Modifier
+                        msg[i++] = (byte)(note.High + (note.Octave - StartOctaveXylophone) * SizeOctave); // TODO: Modifier
                         foreach (byte data in BitConverter.GetBytes(note.Tick))
                             msg[i++] = data;
                     }
