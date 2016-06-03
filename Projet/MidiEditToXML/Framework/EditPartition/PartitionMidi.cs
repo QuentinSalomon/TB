@@ -68,13 +68,30 @@ namespace Framework
         public PartitionXylo ConvertToPartitionXylo(List<Channel> channels)
         {
             PartitionXylo partitionXylo = new PartitionXylo();
+            List<Note> notes = new List<Note>();
             foreach (Channel ch in channels)
-                foreach(Note n in ch.Notes)
-                    if (n.Octave >= 5 && n.Octave <= 7) //TODO: Octave 5-7
-                        partitionXylo.Notes.Add(new Note(n));
+                foreach (Note n in ch.Notes)
+                {
+                    n.Octave += 1;
+                    if ((n.Octave >= 5 && n.Octave <= 7) || (n.Octave == 8 && n.High == 0)) //TODO: Octave 5-7
+                        notes.Add(new Note(n));
+                }
+            notes.Sort(CompareNoteByTick);
+            foreach (Note n in notes)
+                partitionXylo.Notes.Add(n);
             partitionXylo.Tempo = Tempo;
             partitionXylo.Title = Title;
             return partitionXylo;
+        }
+
+        private static int CompareNoteByTick(Note n1, Note n2)
+        {
+            if (n1.Tick > n2.Tick)
+                return 1;
+            else if (n1.Tick < n2.Tick)
+                return -1;
+            else
+                return 0;
         }
 
         public void Load(string filename)

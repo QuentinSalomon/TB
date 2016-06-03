@@ -26,7 +26,7 @@ namespace Framework
         const byte StartByte = 255;
         // TODO : Ajuster la vitesse
         const Int32 BaudRate = 57600, SizeHeadMessage = 5, TimeOut = 3000;
-        const int SizeOctave = 12, StartOctaveXylophone = 4;
+        const int SizeOctave = 12, StartOctaveXylophone = 5;
         #endregion
 
         #region Constructor

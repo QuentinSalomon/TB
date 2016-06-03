@@ -37,8 +37,8 @@ bool CircularBuffer::Write(Note value)
 bool CircularBuffer::Consume(Note* value)
 {
 	if (SizeAvailable() != BUFFER_SIZE) {
-		_full = false;
 		*value = _buffer[_iRead++];
+   _full = false;
 		if (_iRead == BUFFER_SIZE)
 			_iRead = 0;
 		return true;

@@ -12,14 +12,19 @@ byte headMessage[HEAD_RECEIVE_MSG_SIZE];
 
 /*I2C*/
 I2CXylo i2cXylo;
-unsigned long currentTick=0, startTime=0; //0xFFFFFFFF
+unsigned long currentTick=4294967295, startTime=0; //0xFFFFFFFF
 bool play=false;
 PushedNote pushedNotes[NOTE_COUNT_XYLO] = {0};
-int debug=0;
+int debug=1;
 
 /*Global*/
 CircularBuffer bufferNotes;
 
+/*I2C*/
+void ReleasePush();
+void Push();
+
+/*Serial*/
 void NotesMsg(uint16_t dataSize);
 void StartMsg(uint16_t dataSize);
 void StopMsg(uint16_t dataSize);
@@ -48,49 +53,11 @@ void loop() {
   /*****I2C*****/
   if(play)
   {  
-    Note currentNote;
-    if(bufferNotes.Current(&currentNote)){
-      while(1)
-      {
-        //Si le tick de la note est plus petit que le tick courant ==> nouvelle partition (==> tick = 0)
-        if(currentNote.GetTick() < currentTick){
-          currentTick = 0;
-          startTime = micros();
-          break;
-        }
-        else if(currentNote.GetTick() == currentTick){
-          bufferNotes.Consume(&currentNote); //si le tick est celui de la note courante, on consume la note
-          byte pitch = currentNote.GetPitch();
-          i2cXylo.PreparePush(toneTab[pitch]);
-          pushedNotes[pitch].pushed = true;
-          pushedNotes[pitch].timePushed = micros();
-        }
-        else
-          break;      
-      }
-      i2cXylo.ApplyPush();
-
-      if((micros() >= startTime ? micros() - startTime: 0xFFFFFFFF - startTime + micros()) > TEMPO ){
-        currentTick++;
-        startTime = micros();        
-      }
-    }
-    else
-      startTime = micros();
+    Push();
   }
   else
-    startTime = micros();
-
-  bool needRelease = false;
-  for(int i=0;i<NOTE_COUNT_XYLO;i++)
-    if(pushedNotes[i].pushed)
-      if((micros() >= pushedNotes[i].timePushed ? micros() - pushedNotes[i].timePushed : 0xFFFFFFFF - pushedNotes[i].timePushed + micros()) > TIME_HIT_US){
-        i2cXylo.PrepareRelease(toneTab[i]);
-        pushedNotes[i].pushed = false;
-        needRelease = true;
-      }
-  if(needRelease)
-    i2cXylo.ApplyRelease();
+    startTime = micros(); //Actualise le temps si on est en pause
+  ReleasePush();
   
   /*****USB*****/
   switch (modeSerial)
@@ -122,6 +89,53 @@ void loop() {
       break;
   }
 }
+
+void ReleasePush()
+{
+  bool needRelease = false;
+  for(int i=0;i<NOTE_COUNT_XYLO;i++)
+    if(pushedNotes[i].pushed)
+      if((micros() >= pushedNotes[i].timePushed ? micros() - pushedNotes[i].timePushed : 0xFFFFFFFF - pushedNotes[i].timePushed + micros()) > TIME_HIT_US){
+        i2cXylo.PrepareRelease(toneTab[i]);
+        pushedNotes[i].pushed = false;
+        needRelease = true;
+      }
+  if(needRelease)
+    i2cXylo.ApplyRelease();
+}
+
+void Push()
+{
+  Note currentNote;
+  if(bufferNotes.Current(&currentNote)){ //Check que les notes soient déjà arrivée
+    //Si le tick de la note est plus petit que le tick courant ==> nouvelle partition (==> tick = 0)
+    if(currentNote.GetTick() < currentTick){
+      currentTick = 0;
+      startTime = micros();
+    } 
+    while(currentNote.GetTick() == currentTick)
+    {
+      bufferNotes.Consume(&currentNote); //si le tick est celui de la note courante, on consume la note
+      byte pitch = currentNote.GetPitch();
+      i2cXylo.PreparePush(toneTab[pitch]);
+      
+      pushedNotes[pitch].pushed = true;
+      pushedNotes[pitch].timePushed = micros();
+      if(!bufferNotes.Current(&currentNote)) //Actualise la note courante, s'il y en a plus on quitte la boucle
+        break;
+    }
+    i2cXylo.ApplyPush();
+
+    if((micros() >= startTime ? micros() - startTime : 0xFFFFFFFF - startTime + micros()) > TEMPO ){
+      currentTick++;
+      startTime = micros();        
+    }
+  }
+  else
+    startTime = micros();
+}
+
+
 
 /****************************************FONCTIONS SERIAL****************************************/
 bool ReadHeadMessage() {

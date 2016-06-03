@@ -28,13 +28,22 @@ namespace Framework
         {
             for(int i=0; i< channels.Count; i++)
             {
+                TextBlock txt = new TextBlock();
+                txt.Name = "Label" + i.ToString();
+                txt.Text = "Channel " + i.ToString();
+                txt.Width = 80;
+                txt.HorizontalAlignment = HorizontalAlignment.Center;
+                StackPanelLabels.Children.Add(txt);
+
                 CheckBox c = new CheckBox();
                 c.Name = "CheckBox" + i.ToString();
                 c.DataContext = channels[i];
-                c.Content = "Channel " + i.ToString();
-                c.VerticalContentAlignment = VerticalAlignment.Top;
+                c.Width = 80;
+                c.HorizontalAlignment = HorizontalAlignment.Center;
                 StackPanelCheckBoxs.Children.Add(c);
             }
+            this.Width = channels.Count * 80;
+            this.ResizeMode = ResizeMode.NoResize;
 
             ShowDialog();
 

@@ -5,16 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Framework"
         mc:Ignorable="d"
-        Title="Channels Select" Height="100" Width="300">
+        Title="Channels Select" Height="120" Width="300">
+    <!-- Icon="/Images/Channel32x32.png">-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-
-        <StackPanel x:Name="StackPanelCheckBoxs" Grid.Row="0" Orientation="Horizontal"></StackPanel>
+        <StackPanel x:Name="StackPanelLabels" Grid.Row="0" Orientation="Horizontal"></StackPanel>
+        <StackPanel x:Name="StackPanelCheckBoxs" Grid.Row="1" Orientation="Horizontal"></StackPanel>
         
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="70"/>
