@@ -263,6 +263,8 @@ void ResponseMessage(byte type)
   msg[1] = numMessage;
   msg[2] = type;
   msg[3] = bufferNotes.SizeAvailable();
-  Serial.write(msg, 4);   
+  for(int i=0;i<4;i++)
+    msg[i+4] = (byte)(currentTick>>i*8);
+  Serial.write(msg, HEAD_SEND_MSG_SIZE);   
 }
 

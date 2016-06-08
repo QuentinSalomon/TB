@@ -8,10 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace Framework
 {
-    [ConceptView(typeof(UserControlSequencer))]
+    //[ConceptView(typeof(UserControlSequencer))]
     [IntlConceptName("Framework.Sequencer.Name", "Sequencer")]
     [ConceptSmallImage(typeof(Playlist), "/Images/Sequencer32x32.png")]
     [ConceptLargeImage(typeof(Playlist), "/Images/Sequencer64x64.png")]
@@ -30,7 +31,7 @@ namespace Framework
 
         #region Propriétés
 
-        [ConceptViewVisible(true)] //TODO: not visible
+        [ConceptViewVisible(false)]
         [IntlConceptName("Framework.Sequencer.Xylobot", "Xylobot")]
         public Xylobot Xylobot
         {
@@ -63,6 +64,23 @@ namespace Framework
         }
         private Playlist _playlist;
         public const string PlaylistPropertyName = "Playlist";
+
+        [ConceptViewVisible(false)]
+        [IntlConceptName("Framework.Sequencer.CurrentPartitionTitle", "CurrentPartitionTitle")]
+        public string CurrentPartitionTitle
+        {
+            get { return _currentPartitionTitle; }
+            set
+            {
+                if (_currentPartitionTitle != value)
+                {
+                    _currentPartitionTitle = value;
+                    DoPropertyChanged(CurrentPartitionTitlePropertyName);
+                }
+            }
+        }
+        private string _currentPartitionTitle;
+        public const string CurrentPartitionTitlePropertyName = "CurrentPartitionTitle";
 
         public ObservableCollection<string> Errors { get; set; }
 
@@ -148,17 +166,24 @@ namespace Framework
                 foreach (PartitionXylo p in playlist.Partitions)
                 {
                     if (!_stop)
+                    {
+                        CurrentPartitionTitle = p.Title;
                         PlayPartition(p);
-                    else
+                    }
+                    else {
+                        CurrentPartitionTitle = "";
                         break;
+                    }
                 }
+                CurrentPartitionTitle = "";
             }
             catch (Exception e)
             {
-                Errors.Add(e.Message);
+                Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => this.Errors.Add(e.Message)));
             }
 
         }
+
 
         public void Finish()
         {

@@ -10,7 +10,24 @@
     <StackPanel>
         <concept:ConceptElementNameEditor DockPanel.Dock="Top"/>
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="White" Margin="5,0"/>
-        <Button Content="Load" Command="{Binding Path=CommandAddPartition}"/>
-        <Button Content="Play" Command="{Binding Path=CommandPlay}"/>
+        <Grid Height="200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <concept:ConceptStaticListEditor ConceptList="{Binding Path=CurrentPlaylist.Partitions}" ClipToBounds="True" 
+                                            CanAdd="False" CanEdit="False" CanClone="False" CanMove="False" CanRemove="False"/>
+            <ListBox x:Name="ListBoxCatalogue" Grid.Column="2"/>
+            <StackPanel Grid.Column="1">
+                <Button x:Name="ButtonAdd" Content="Add" Margin="0,5,0,0"/>
+                <Button x:Name="ButtonRemove" Content="Remove" Margin="0,5,0,0"/>
+            </StackPanel>
+            <Button Content="Load" Command="{Binding Path=CommandAddPartition}" Grid.Column="2" Grid.Row="1"/>
+        </Grid>
     </StackPanel>
 </UserControl>

@@ -6,10 +6,28 @@
              xmlns:concept="http://www.objectis.ch/concept" 
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel>
-        <GroupBox DockPanel.Dock="Top" Header="{Binding Element.DisplayName, ElementName=Editor}">
-            <concept:ConceptEditor x:Name="Editor" DataContext="{Binding Path=Sequencer, Mode=OneWay}" IsExpanded="True" ExpandLevel="3"/>
-        </GroupBox>
-    </DockPanel>
+             d:DesignHeight="300" d:DesignWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Sequencer.CurrentPartitionTitle}" Height="30" Background="DeepSkyBlue"/>
+        <ListBox x:Name="ListboxErrors" BorderBrush="Red" Grid.Row="1" Visibility="Visible"></ListBox>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Content="Play/Pause" Command="{Binding Path=Sequencer.CommandPlayPlaylist}" Width="70" Height="30" Margin="5,0,0,0"/>
+            <Button Content="Stop" Command="{Binding Path=Sequencer.CommandStop}" Width="70" Height="30" Margin="5,0,0,0"/>
+            <Button Content="Init" Command="{Binding Path=Sequencer.CommandInit}" Width="70" Height="30" Margin="5,0,0,0"/>
+            <Button Height="30" Width="30" Margin="5,0,0,0">
+                <Image Source="Framework/Images/add32x32.png"/>
+            </Button>
+            <concept:DoubleEditor Height="30" Width="30"/>
+            <Button Height="30" Width="30" Margin="5,0,0,0">
+                <Image Source="Framework/Images/substract32x32.png"/>
+            </Button>
+            <Button Content="Test" Click="Button_Click" Width="70" Height="30" Margin="5,0,0,0"/>
+            <TextBlock Text="{Binding Sequencer.Xylobot.Test}" Visibility="Collapsed"/>
+        </StackPanel>
+    </Grid>
 </UserControl>

@@ -4,7 +4,7 @@
 #include "Notes.h"
 
 #define START_BYTE 255
-#define HEAD_SEND_MSG_SIZE 4
+#define HEAD_SEND_MSG_SIZE 8
 #define HEAD_RECEIVE_MSG_SIZE 5
 #define BAUD_RATE_SERIAL 57600
 

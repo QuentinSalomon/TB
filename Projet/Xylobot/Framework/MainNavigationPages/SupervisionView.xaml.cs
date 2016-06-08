@@ -23,6 +23,16 @@ namespace Framework
         public SupervisionView()
         {
             InitializeComponent();
+
+            //Dispatcher.BeginInvoke(new Action(() =>
+            //{
+            //    ListboxErrors.ItemsSource = (DataContext as SupervisionViewModel).Sequencer.Errors;
+            //}), null);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ListboxErrors.ItemsSource = (DataContext as SupervisionViewModel).Sequencer.Errors;
         }
     }
 }

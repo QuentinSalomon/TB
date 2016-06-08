@@ -7,20 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <ListBox x:Name="ListboxErrors" BorderBrush="Red" Grid.Column="1"></ListBox>
-        <StackPanel>
-            <Button Content="Init" Command="{Binding Path=CommandInit}"/>
-            <Button Content="Play/Pause" Command="{Binding Path=CommandPlayPlaylist}"/>
-            <Button Content="Stop" Command="{Binding Path=CommandStop}"/>
-            <TextBlock Text="{Binding Xylobot.Test}"/>
+        <TextBlock Text="{Binding Path=CurrentPartitionTitle}" Height="30" Background="DeepSkyBlue"/>
+        <ListBox x:Name="ListboxErrors" BorderBrush="Red" Grid.Row="1" Visibility="Visible"></ListBox>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Content="Play/Pause" Command="{Binding Path=CommandPlayPlaylist}" Width="70" Height="30" Margin="5,0,0,0"/>
+            <Button Content="Stop" Command="{Binding Path=CommandStop}" Width="70" Height="30" Margin="5,0,0,0"/>
+            <Button Content="Init" Command="{Binding Path=CommandInit}" Width="70" Height="30" Margin="5,0,0,0"/>
+            <Button Content="Test" Width="70" Height="30" Margin="5,0,0,0"/>
+            <TextBlock Text="{Binding Xylobot.Test}" Visibility="Hidden"/>
         </StackPanel>
     </Grid>
 </UserControl>

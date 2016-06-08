@@ -4,7 +4,7 @@
         xmlns:concept="http://www.objectis.ch/concept"
         xmlns:local="clr-namespace:Framework"
         Title="MyMachine" Height="400" Width="600">
-    <concept:NavigationControl>
+    <concept:NavigationControl NavigationBarDock="Top" NavigationBarBackground="DeepSkyBlue" Transition="Fade" Opacity="0.7" OpacityMask="DeepSkyBlue">
         <local:HomeView concept:NavigationControl.MenuTitle="Home"
                         concept:NavigationControl.MenuImageSource="/Framework;component/Images/Home32x32.png"/>
         <local:SupervisionView concept:NavigationControl.MenuTitle="Supervision" 

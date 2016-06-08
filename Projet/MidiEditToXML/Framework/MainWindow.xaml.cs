@@ -59,7 +59,7 @@ namespace Framework
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.InitialDirectory = FileManagement.DefaultPathLoadFile;
-            dlg.Filter = "midi files (*.mid)|*.mid";
+            dlg.Filter = "midi files (*.mid,*.midi)|*.mid;*.midi";
 
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {

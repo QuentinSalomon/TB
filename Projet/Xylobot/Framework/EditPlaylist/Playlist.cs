@@ -48,10 +48,10 @@ namespace Framework
         {
             get
             {
-                if (_commandAddPartitione == null)
+                if (_commandAddPartition == null)
                 {
-                    _commandAddPartitione = new WpfCommand();
-                    _commandAddPartitione.Executed += (sender, e) =>
+                    _commandAddPartition = new WpfCommand();
+                    _commandAddPartition.Executed += (sender, e) =>
                     {
                         PartitionXylo p = new PartitionXylo();
                         var messages = new MessageCollection();
@@ -71,15 +71,15 @@ namespace Framework
                         }
                     };
 
-                    _commandAddPartitione.CanExecuteChecking += (sender, e) =>
+                    _commandAddPartition.CanExecuteChecking += (sender, e) =>
                     {
                         e.CanExecute = true;
                     };
                 }
-                return _commandAddPartitione;
+                return _commandAddPartition;
             }
         }
-        private WpfCommand _commandAddPartitione;
+        private WpfCommand _commandAddPartition;
 
         #endregion
     }

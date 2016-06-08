@@ -26,7 +26,7 @@ namespace Framework
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                ListboxErrors.ItemsSource = (DataContext as Sequencer).Errors;
+                //ListboxErrors.ItemsSource = (DataContext as Sequencer).Errors;
             }), null);
         }
     }

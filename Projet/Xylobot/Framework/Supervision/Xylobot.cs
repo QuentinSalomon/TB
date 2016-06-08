@@ -25,23 +25,7 @@ namespace Framework
 
         #region Propriétés
 
-        [ConceptViewVisible(true)]
-        [ConceptDefaultValue("1.0.0")]
-        [IntlConceptName("Framework.Xylbot.Buffer", "Buffer Usb")]
-        public string Buffer
-        {
-            get { return _buffer; }
-            set
-            {
-                if (_buffer != value)
-                {
-                    _buffer = value;
-                    DoPropertyChanged(BufferPropertyName);
-                }
-            }
-        }
-        private string _buffer;
-        public const string BufferPropertyName = "Buffer";
+
 
         [ConceptViewVisible(true)]
         [ConceptDefaultValue("...")]
@@ -60,6 +44,8 @@ namespace Framework
         }
         private string _test;
         public const string TestPropertyName = "Test";
+
+        public bool IsInit { get; set; }
 
         [ConceptViewVisible(false)]
         public XyloCommunication XyloCommunication { get; set; }

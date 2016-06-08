@@ -72,8 +72,7 @@ namespace Framework
             foreach (Channel ch in channels)
                 foreach (Note n in ch.Notes)
                 {
-                    n.Octave += 1;
-                    if ((n.Octave >= 5 && n.Octave <= 7) || (n.Octave == 8 && n.High == 0)) //TODO: Octave 5-7
+                    if ((n.Octave >= 5 && n.Octave <= 7) || (n.Octave == 8 && n.High == 0))
                         notes.Add(new Note(n));
                 }
             notes.Sort(CompareNoteByTick);

@@ -13,13 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Sanford.Multimedia.Midi;
+using System.Windows.Forms;
 
 namespace Framework
 {
     /// <summary>
     /// Interaction logic for UserControlEditPartition.xaml
     /// </summary>
-    public partial class UserControlEditPartition : UserControl
+    public partial class UserControlEditPartition : System.Windows.Controls.UserControl
     {
         public UserControlEditPartition()
         {
@@ -29,7 +30,7 @@ namespace Framework
             {
                 for (int i = NotesConvert.tabNote.Length - 1; i >= 0; i--)
                 {
-                    Label label = new Label();
+                    System.Windows.Controls.Label label = new System.Windows.Controls.Label();
                     label.Name = "Label" + i.ToString();
                     label.Content = NotesConvert.tabNote[i] + '\t' + j.ToString();
                     StackPanelNotesPitch.Children.Add(label);
@@ -85,22 +86,42 @@ namespace Framework
 
         private void SavePartition(string filename)
         {
-            //Channel[] chs = new Channel[1];
-            //chs[0] = CurrentPartition.Channels[0];
-            //PartitionXylo = CurrentPartition.ConvertToPartitionXylo(chs);
-            //PartitionXylo.SaveToFile(filename);
+
         }
 
         #region event
 
         private void ButtonLoad_Click(object sender, RoutedEventArgs e)
         {
-            LoadPartition(FrameworkController.Instance.FileManagement.DefaultPathLoadFile +"\\NyanCat.mid");
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.InitialDirectory = FrameworkController.Instance.FileManagement.DefaultPathLoadFile;
+            dlg.Filter = "midi files (*.mid,*.midi)|*.mid;*.midi";
+
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                CurrentPartition.Load(dlg.FileName);
+            }
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            SavePartition(FrameworkController.Instance.FileManagement.PathSaveFile +"\\NyanCat.xml");
+            List<Channel> channels = new List<Channel>();
+            PartitionXylo partitionXylo = new PartitionXylo();
+            WindowChannelsSelect window = new WindowChannelsSelect();
+
+            for (int i = 0; i < CurrentPartition.Channels.Count; i++)
+                channels.Add(CurrentPartition.Channels[i]);
+
+            if (window.Execute(channels) == true)
+            {
+                partitionXylo = CurrentPartition.ConvertToPartitionXylo(channels);
+
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.InitialDirectory = FrameworkController.Instance.FileManagement.PathSaveFile;
+                dlg.Filter = "xml files (*.xml)|*.xml";
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    partitionXylo.SaveToFile(dlg.FileName);
+            }
         }
 
         #endregion

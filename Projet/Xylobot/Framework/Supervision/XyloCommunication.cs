@@ -40,7 +40,6 @@ namespace Framework
             _serialPort = new SerialPort(PortName, BaudRate);
             _serialPort.ReadTimeout = TimeOut;
             _serialPort.WriteTimeout = TimeOut;
-            // TODO: Régler comme il faut
             _serialPort.DataBits = 8;
             _serialPort.StopBits = StopBits.One;
             _serialPort.Parity = Parity.None;
@@ -55,6 +54,7 @@ namespace Framework
         #region Propriétés
 
         public byte ArduinoNoteSizeAvaible { get; private set; }
+        public UInt32 ArduinoCurrentTick { get; private set; }
 
         // TODO : a mettre dans un fichier de configuration
         public string PortName { get; set; }
@@ -81,6 +81,7 @@ namespace Framework
         public ReceiveTypeMessage Read()
         {
             int tmp;
+            byte[] tick = new byte[sizeof(UInt32)];
             try
             {
                 tmp = _serialPort.ReadByte();
@@ -91,7 +92,10 @@ namespace Framework
                     {
                         tmp = _serialPort.ReadByte();
                         ArduinoNoteSizeAvaible = (byte)_serialPort.ReadByte();
-                        _xylo.Test = ArduinoNoteSizeAvaible.ToString(); // TODO: Delete
+                        for(int i=0;i< sizeof(UInt32);i++)
+                            tick[i] = (byte)_serialPort.ReadByte();
+                        ArduinoCurrentTick = BitConverter.ToUInt32(tick, 0);
+                        _xylo.Test = ArduinoCurrentTick.ToString(); // TODO: Delete
                         switch ((ReceiveTypeMessage)tmp)
                         {
                             case ReceiveTypeMessage.Ok:
@@ -134,7 +138,7 @@ namespace Framework
                         msg[i] = headMsg[i];
                     foreach (Note note in notes)
                     {
-                        msg[i++] = (byte)(note.High + (note.Octave - StartOctaveXylophone) * SizeOctave); // TODO: Modifier
+                        msg[i++] = (byte)(note.High + (note.Octave - StartOctaveXylophone) * SizeOctave);
                         foreach (byte data in BitConverter.GetBytes(note.Tick))
                             msg[i++] = data;
                     }
