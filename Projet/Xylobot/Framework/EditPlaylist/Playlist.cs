@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Framework
 {
-    [ConceptView(typeof(UserControlEditPlaylist))]
+    //[ConceptView(typeof(UserControlEditPlaylist))]
     [IntlConceptName("Framework.Playlist.Name", "Playlist principal")]
     [ConceptSmallImage(typeof(Playlist), "/Images/Playlist32x32.png")]
     [ConceptLargeImage(typeof(Playlist), "/Images/Playlist64x64.png")]
@@ -20,21 +20,21 @@ namespace Framework
         #region Properties
 
         [ConceptViewVisible]
-        [IntlConceptName("Framework.Playlist.Description", "Description")]
-        public string Description
+        [IntlConceptName("Framework.Playlist.Title", "Title")]
+        public string Title
         {
-            get { return _description; }
+            get { return _title; }
             set
             {
-                if (_description != value)
+                if (_title != value)
                 {
-                    _description = value;
-                    DoPropertyChanged(DescriptionPropertyName);
+                    _title = value;
+                    DoPropertyChanged(TitlePropertyName);
                 }
             }
         }
-        private string _description;
-        public const string DescriptionPropertyName = "Description";
+        private string _title;
+        public const string TitlePropertyName = "Title";
 
         #endregion
 

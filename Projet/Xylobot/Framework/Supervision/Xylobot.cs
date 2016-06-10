@@ -47,6 +47,9 @@ namespace Framework
 
         public bool IsInit { get; set; }
 
+        public UInt32 ArduinoCurrentTick { get { return XyloCommunication.ArduinoCurrentTick; } }
+        public byte ArduinoNoteSizeAvaible { get { return XyloCommunication.ArduinoNoteSizeAvaible; } }
+
         [ConceptViewVisible(false)]
         public XyloCommunication XyloCommunication { get; set; }
 

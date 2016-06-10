@@ -15,7 +15,7 @@ namespace Framework
         {
             Note note = new Note();
             note.Octave = (byte)(id / 12 -1);
-            note.High = (byte)(id % 12);//tabNote[id % 12];
+            note.High = (byte)(id % 12);
             note.HighString = tabNote[id % 12];
             note.Tick = tick;
             return note;

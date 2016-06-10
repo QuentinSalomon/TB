@@ -7,9 +7,23 @@
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel>
-        <GroupBox DockPanel.Dock="Top" Header="{Binding Element.DisplayName, ElementName=Editor}">
-            <concept:ConceptEditor x:Name="Editor" DataContext="{Binding Path=Playlist, Mode=OneWay}" IsExpanded="True" ExpandLevel="3"/>
-        </GroupBox>
-    </DockPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Playlist.Title}" Height="30" Background="DeepSkyBlue"/>
+        <!--<ListBox x:Name="ListboxErrors" Grid.Row="1" Visibility="Visible"></ListBox>-->
+        <concept:ConceptStaticListEditor CanAdd="False" ConceptList="{Binding Path=Playlist.Partitions}" Grid.Row="1"/>
+        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="2">
+            <Button x:Name="ButtonDeleteAll" Width="60" Background="Red">
+                <TextBlock TextAlignment="Center">Delete<LineBreak/>all</TextBlock>
+            </Button>
+            <Button x:Name="ButtonDeleteSelected" Width="60" Background="Red" Margin="5,0,0,0" >
+                <TextBlock TextAlignment="Center">Delete<LineBreak/>selected</TextBlock>
+            </Button>
+            <Button Content="...Add" Command="{Binding Path=Playlist.CommandAddPartition}" Width="60" Margin="5,0,0,0" Background="Green"/>
+        </StackPanel>
+    </Grid>
 </UserControl>

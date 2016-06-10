@@ -136,7 +136,7 @@ namespace Framework
                             Xylobot.Start();
                     }
                     else {
-                        for (i = 0; i < Xylobot.XyloCommunication.ArduinoNoteSizeAvaible; i++)
+                        for (i = 0; i < Xylobot.ArduinoNoteSizeAvaible; i++)
                         {
                             if (k + i >= partition.Notes.Count)
                                 break;
@@ -148,6 +148,25 @@ namespace Framework
                         notes.Clear();
                         Thread.Sleep(300);
                     }
+                }
+
+                while(Xylobot.ArduinoCurrentTick < partition.Notes[partition.Notes.Count-1].Tick)
+                {
+                    if (_stop)
+                    {
+                        Xylobot.Stop();
+                        break;
+                    }
+                    else if (_pause)
+                    {
+                        Xylobot.Pause();
+                        while (_pause && !_stop)
+                            Thread.Sleep(50);
+                        if (!_stop)
+                            Xylobot.Start();
+                    }
+                    Xylobot.SendNotes(notes);
+                    Thread.Sleep(50);
                 }
             }
             catch (Exception e) {

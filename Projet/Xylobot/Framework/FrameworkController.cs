@@ -29,7 +29,7 @@ namespace Framework
 
         public void Load()
         {
-            Playlist = new Playlist() { Description = "My Machine Description" };
+            Playlist = new Playlist() { Title = "Playlist Principal" };
             Xylobot = new Xylobot();
             Settings = new Settings();
             Sequencer = new Sequencer();
