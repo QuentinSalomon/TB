@@ -11,6 +11,12 @@ void I2CXylo::Init()
   SetIoDirOutput(32);
   SetIoDirOutput(33);
   SetIoDirOutput(34);
+
+  //Allumage des leds
+  Wire.beginTransmission(_registers[4].address);
+  Wire.write(_registers[4].registerAddress);
+  Wire.write(0x80);
+  Wire.endTransmission();
 }
 
 void I2CXylo::SetIoDirOutput(byte address)
