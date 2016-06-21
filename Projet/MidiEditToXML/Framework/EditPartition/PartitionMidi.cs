@@ -111,7 +111,9 @@ namespace Framework
                         ChannelMessage msg = ((ChannelMessage)midiEvent.MidiMessage);
                         if (msg.Command == ChannelCommand.NoteOn)
                         {
-                            Note tmpNote = NotesConvert.IdToNote(msg.Data1, tick);
+                            if (msg.Data2 < 0)
+                                ;
+                            Note tmpNote = NotesConvert.IdToNote(msg.Data1, msg.Data2, tick);
                             tmpNote.Name = Title + "_" + (numNote++).ToString();
                             if (Channels.Count - msg.MidiChannel <= 0) {
                                 int nbChannel = Channels.Count;

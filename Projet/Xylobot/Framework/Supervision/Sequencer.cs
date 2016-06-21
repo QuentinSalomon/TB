@@ -22,6 +22,7 @@ namespace Framework
 
         public Sequencer()
         {
+            Xylobot = new Xylobot();
             threadXyloBot = new Thread(ManageXylobot);
             threadXyloBot.Start();
             Errors = new ObservableCollection<string>();
@@ -82,6 +83,24 @@ namespace Framework
         private string _currentPartitionTitle;
         public const string CurrentPartitionTitlePropertyName = "CurrentPartitionTitle";
 
+        [ConceptViewVisible(false)]
+        [IntlConceptName("Framework.Sequencer.Tempo", "Tempo")]
+        public UInt16 Tempo
+        {
+            get { return _tempo; }
+            set
+            {
+                if (_tempo != value)
+                {
+                    _tempo = value;
+                    DoPropertyChanged(TempoPropertyName);
+                    Xylobot.SendTempo(value);
+                }
+            }
+        }
+        private UInt16 _tempo;
+        public const string TempoPropertyName = "Tempo";
+
         public ObservableCollection<string> Errors { get; set; }
 
         #endregion
@@ -90,6 +109,7 @@ namespace Framework
 
         public void ManageXylobot()
         {
+            Xylobot.Init();
             while (_actionsThread != -1)
             {
                 Thread.Sleep(10);
@@ -107,12 +127,7 @@ namespace Framework
 
         public void Init()
         {
-            try {
-                Xylobot.Init();
-            }
-            catch (Exception e) {
-                Errors.Add(e.Message);
-            }
+            Xylobot.Init();
         }
 
         public void PlayPartition(PartitionXylo partition)
@@ -203,10 +218,12 @@ namespace Framework
 
         }
 
-
         public void Finish()
         {
-            Xylobot.Stop();
+            if (Xylobot.IsInit)
+                Xylobot.Stop();
+            else
+                Xylobot.AbortInit = true;
             _stop = true;
             _actionsThread = -1;
             threadXyloBot.Join();

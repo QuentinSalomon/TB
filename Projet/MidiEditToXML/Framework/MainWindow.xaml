@@ -34,11 +34,17 @@
                 <Separator/>
                 <MenuItem Header="Exit" Click="MenuItemClose_Click"/>
             </MenuItem>
+            <MenuItem Header="Settings">
+                <MenuItem Header="Options..."></MenuItem>
+            </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About..."  Click="MenuItemAbout_Click"></MenuItem>
             </MenuItem>
         </Menu>
 
+        <!--UserControlEditPartition-->
+        
+        <!--
         <concept:NavigationControl Grid.Row="1">
             <local:EditPartitionView concept:NavigationControl.MenuTitle="Edit partition" 
                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/Partition32x32.png"
@@ -49,5 +55,6 @@
             <local:SettingsView concept:NavigationControl.MenuTitle="Settings" 
                             concept:NavigationControl.MenuImageSource="/Framework;component/Images/Settings32x32.png"/>
         </concept:NavigationControl>
+        -->
     </Grid>
 </Window>

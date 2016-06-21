@@ -30,11 +30,11 @@ namespace Framework
         public void Load()
         {
             Playlist = new Playlist() { Title = "Playlist Principal" };
-            Xylobot = new Xylobot();
+            //Xylobot = new Xylobot();
             Settings = new Settings();
             Sequencer = new Sequencer();
             Sequencer.Playlist = Playlist;
-            Sequencer.Xylobot = Xylobot;
+            //Sequencer.Xylobot = Xylobot;
             LoadConfiguration();
         }
 

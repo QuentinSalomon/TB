@@ -19,6 +19,9 @@ int debug=1;
 
 /*Global*/
 CircularBuffer bufferNotes;
+double tempoFactor = 1;
+int tempo = 4000;
+
 
 /*I2C*/
 void ReleasePush();
@@ -90,12 +93,13 @@ void loop() {
   }
 }
 
+/****************************************FONCTIONS I2C****************************************/
 void ReleasePush()
 {
   bool needRelease = false;
   for(int i=0;i<NOTE_COUNT_XYLO;i++)
     if(pushedNotes[i].pushed)
-      if((micros() >= pushedNotes[i].timePushed ? micros() - pushedNotes[i].timePushed : 0xFFFFFFFF - pushedNotes[i].timePushed + micros()) > TIME_HIT_US){
+      if((micros() >= pushedNotes[i].timePushed ? micros() - pushedNotes[i].timePushed : 0xFFFFFFFF - pushedNotes[i].timePushed + micros()) > TIME_HIT_US + pushedNotes[i].intensity){
         i2cXylo.PrepareRelease(toneTab[i]);
         pushedNotes[i].pushed = false;
         needRelease = true;
@@ -121,12 +125,13 @@ void Push()
       
       pushedNotes[pitch].pushed = true;
       pushedNotes[pitch].timePushed = micros();
+      pushedNotes[pitch].intensity = currentNote.GetIntensity();
       if(!bufferNotes.Current(&currentNote)) //Actualise la note courante, s'il y en a plus on quitte la boucle
         break;
     }
     i2cXylo.ApplyPush();
 
-    if((micros() >= startTime ? micros() - startTime : 0xFFFFFFFF - startTime + micros()) > TEMPO ){
+    if((micros() >= startTime ? micros() - startTime : 0xFFFFFFFF - startTime + micros()) > tempo*tempoFactor ){
       currentTick++;
       startTime = micros();        
     }
@@ -228,6 +233,7 @@ void NotesMsg(uint16_t dataSize)
         tmpTick |= (noteBytes[j+1] << (j*8));  
       tmpNote.SetPitch(noteBytes[0]);
       tmpNote.SetTick(tmpTick);
+      tmpNote.SetIntensity(((int)noteBytes[5]-64)*500/64); //Intensité changeant de +-0.5 ms le temps de frappe
       bufferNotes.Write(tmpNote);
     }
     else
@@ -253,6 +259,10 @@ void PauseMsg(uint16_t dataSize)
 }
 void TempoMsg(uint16_t dataSize)
 {
+  while(1)
+    if(Serial.available() == dataSize)
+      break;
+  tempo = Serial.read() + (Serial.read() << 8); 
   msgSendType = SendType_Ok;
 }
 

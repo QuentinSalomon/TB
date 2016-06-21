@@ -19,13 +19,15 @@ namespace Framework
         public Xylobot()
         {
             XyloCommunication = new XyloCommunication(this);
+            IsInit = false;
+            AbortInit = false;
         }
 
         #endregion
 
+        const int SizeOctave = 12, StartOctaveXylophone = 5;
+
         #region Propriétés
-
-
 
         [ConceptViewVisible(true)]
         [ConceptDefaultValue("...")]
@@ -47,6 +49,8 @@ namespace Framework
 
         public bool IsInit { get; set; }
 
+        public bool AbortInit { private get; set; }
+
         public UInt32 ArduinoCurrentTick { get { return XyloCommunication.ArduinoCurrentTick; } }
         public byte ArduinoNoteSizeAvaible { get { return XyloCommunication.ArduinoNoteSizeAvaible; } }
 
@@ -59,7 +63,19 @@ namespace Framework
 
         public void Init()
         {
-            XyloCommunication.Init();
+            while (!IsInit && !AbortInit)
+            {
+                try
+                {
+                    XyloCommunication.Init();
+                    IsInit = true;
+                }
+                catch (Exception)
+                {
+                    //IsInit = false;
+                    continue;
+                }
+            }
         }
 
         public void Start()
@@ -79,7 +95,28 @@ namespace Framework
 
         public void SendNotes(List<Note> notes)
         {
-            XyloCommunication.SendNotes(notes);
+            if (notes.Count > ArduinoNoteSizeAvaible)
+                throw new Exception("trop de notes");
+
+            List<byte> datas = new List<byte>();
+            foreach (Note note in notes)
+            {
+                datas.Add((byte)(note.High + (note.Octave - StartOctaveXylophone) * SizeOctave));
+                foreach (byte data in BitConverter.GetBytes(note.Tick))
+                    datas.Add(data);
+                datas.Add(note.Intensity);
+            }
+
+            XyloCommunication.SendDatas(SendTypeMessage.Notes, datas);
+        }
+
+        public void SendTempo(UInt16 tempo)
+        {
+            List<byte> datas = new List<byte>();
+            foreach (byte data in BitConverter.GetBytes(tempo))
+                datas.Add(data);
+
+            XyloCommunication.SendDatas(SendTypeMessage.Tempo, datas);
         }
 
         #endregion

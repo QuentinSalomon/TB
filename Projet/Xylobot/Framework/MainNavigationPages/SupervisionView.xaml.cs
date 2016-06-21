@@ -32,7 +32,7 @@ namespace Framework
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ListboxErrors.ItemsSource = (DataContext as SupervisionViewModel).Sequencer.Errors;
+            (DataContext as SupervisionViewModel).Sequencer.Xylobot.SendTempo(2000);
         }
     }
 }

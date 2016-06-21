@@ -31,3 +31,13 @@ void Note::SetTick(uint32_t t)
   _tick = t;
 }
 
+double Note::GetIntensity()
+{
+  return _intensity;
+}
+
+void Note::SetIntensity(double i)
+{
+  _intensity = i;
+}
+

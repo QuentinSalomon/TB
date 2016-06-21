@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Framework"
              xmlns:concept="http://www.objectis.ch/concept"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400">
+             d:DesignHeight="300" d:DesignWidth="400" MouseWheel="UserControl_MouseWheel">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -14,17 +14,6 @@
         </Grid.ColumnDefinitions>
 
         <Rectangle x:Name="RectangleViewNotes" Fill="White"/>
-        <StackPanel x:Name="StackPanelNotesPitch" Grid.Column="1">
-            <Button Content="Load" Margin="0,5,0,0" Click="ButtonLoad_Click"/>
-            <Button Content="Save" Margin="0,5,0,0" Click="ButtonSave_Click"/>
-        </StackPanel>
+        <StackPanel x:Name="StackPanelNotesPitch" Grid.Column="1"/>
     </Grid>
-
-    <!--<DockPanel>
-        <concept:StringEditor DockPanel.Dock="Top" Title="Title" Value="{Binding Path=Title}"/>
-        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="White" Margin="5,0"/>
-        <concept:StringEditor DockPanel.Dock="Top" Title="Tempo" Value="{Binding Path=Tempo}"/>
-        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="White" Margin="5,0"/>
-        <concept:ConceptStaticListEditor DockPanel.Dock="Top" ConceptList="{Binding Path=Channels}" Margin="0,5"/>
-    </DockPanel>-->
 </UserControl>

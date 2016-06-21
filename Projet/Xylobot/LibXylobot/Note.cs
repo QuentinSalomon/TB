@@ -101,6 +101,24 @@ namespace Common
         private string _highString;
         public const string HighStringPropertyName = "HighString";
 
+        [ConceptSerialized]
+        [ConceptViewVisible]
+        [IntlConceptName("Framework.Note.Intensity", "Intensity")]
+        public byte Intensity
+        {
+            get { return _intensity; }
+            set
+            {
+                if (_intensity != value)
+                {
+                    _intensity = value;
+                    DoPropertyChanged(IntensityPropertyName);
+                }
+            }
+        }
+        private byte _intensity;
+        public const string IntensityPropertyName = "Intensity";
+
         #endregion
 
     }
