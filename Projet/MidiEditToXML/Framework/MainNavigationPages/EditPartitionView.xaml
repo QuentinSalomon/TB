@@ -6,10 +6,47 @@
              xmlns:concept="http://www.objectis.ch/concept" 
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel>
-        <GroupBox DockPanel.Dock="Top" Header="{Binding Element.DisplayName, ElementName=Editor}">
-            <concept:ConceptEditor x:Name="Editor" DataContext="{Binding Path=PartitionMidi, Mode=OneWay}" IsExpanded="True" ExpandLevel="5"/>
-        </GroupBox>
-    </DockPanel>
+             d:DesignHeight="300" d:DesignWidth="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle x:Name="RectangleViewNotes" Fill="White"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer x:Name="ScrollViewer1" HorizontalScrollBarVisibility="Disabled" ScrollChanged="ScrollChanged" VerticalScrollBarVisibility="Hidden">
+                <Canvas x:Name="CanvasNotesHigh" Height="1800">
+                    <!--<TextBlock Text="bonjour" Height=" 10" Canvas.Bottom="1000" TextAlignment="Right"/>-->
+                </Canvas>
+            </ScrollViewer>
+            <ScrollViewer x:Name="ScrollViewer2" HorizontalScrollBarVisibility="Auto" ScrollChanged="ScrollChanged"  VerticalScrollBarVisibility="Auto" Grid.Column="1">
+                <Canvas x:Name="CanvasNotes" Height="1800"></Canvas>
+            </ScrollViewer>
+        </Grid>
+
+
+        <Grid  Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="150"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel x:Name="StackPanelChannelsColor"/>
+            <StackPanel x:Name="StackPanelChannelsName" Grid.Column="1"/>
+            <StackPanel x:Name="StackPanelNote" Grid.Row="1" Grid.ColumnSpan="2">
+                <concept:IntegerEditor x:Name="NoteHigh" Title="High" Value="{Binding Path=this.CurrentNote.High}" Margin="0,2,0,0"/>
+                <concept:IntegerEditor x:Name="NoteOctave" Title="Octave" Value="{Binding CurrentNote.Octave}" Margin="0,2,0,0"/>
+                <concept:IntegerEditor Title="Tick" Value="{Binding Path=CurrentNote.Tick}" Margin="0,2,0,0"/>
+                <concept:IntegerEditor Title="Intensity"  Value="{Binding Path=Intensity, ElementName=CurrentNote}" Margin="0,2,0,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
 </UserControl>

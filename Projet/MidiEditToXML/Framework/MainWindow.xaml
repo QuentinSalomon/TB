@@ -41,7 +41,7 @@
                 <MenuItem Header="About..."  Click="MenuItemAbout_Click"></MenuItem>
             </MenuItem>
         </Menu>
-
+        <local:EditPartitionView x:Name="UserControlEditPartition" Grid.Row="1" DataContext="{Binding Path=EditPartitionViewModel}"/>
         <!--UserControlEditPartition-->
         
         <!--

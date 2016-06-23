@@ -64,6 +64,8 @@ namespace Framework
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 PartitionMidi.Load(dlg.FileName);
+                UserControlEditPartition.CurrentPartition = PartitionMidi;
+                UserControlEditPartition.ShowPartition();
             }
         }
 

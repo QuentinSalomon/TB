@@ -10,13 +10,14 @@ namespace Framework
     {
         public static readonly string[] tabNote = new string[] 
         { "DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI" };
+        public static readonly int octaveSize = 12;
 
         public static Note IdToNote(int id, int intensity, int tick)
         {
             Note note = new Note();
-            note.Octave = (byte)(id / 12 -1);
-            note.High = (byte)(id % 12);
-            note.HighString = tabNote[id % 12];
+            note.Octave = (byte)(id / octaveSize - 1);
+            note.High = (byte)(id % octaveSize);
+            note.HighString = tabNote[id % octaveSize];
             note.Tick = tick;
             note.Intensity = (byte)intensity;
             return note;

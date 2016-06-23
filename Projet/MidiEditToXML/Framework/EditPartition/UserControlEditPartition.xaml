@@ -6,14 +6,32 @@
              xmlns:local="clr-namespace:Framework"
              xmlns:concept="http://www.objectis.ch/concept"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400" MouseWheel="UserControl_MouseWheel">
+             d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="130"/>
         </Grid.ColumnDefinitions>
 
         <Rectangle x:Name="RectangleViewNotes" Fill="White"/>
-        <StackPanel x:Name="StackPanelNotesPitch" Grid.Column="1"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer x:Name="ScrollViewer1" HorizontalScrollBarVisibility="Disabled" ScrollChanged="ScrollChanged" VerticalScrollBarVisibility="Hidden">
+                <StackPanel Height="1200"/>
+            </ScrollViewer>
+            <ScrollViewer x:Name="ScrollViewer2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1">
+                <Canvas x:Name="CanvasNotes" Height="1200"></Canvas>
+            </ScrollViewer>
+        </Grid>
+
+        <StackPanel x:Name="StackPanelNote"  Grid.Column="1">
+            <concept:IntegerEditor x:Name="NoteHigh" Title="High" Value="{Binding Path=this.CurrentNote.High}"/>
+            <concept:IntegerEditor x:Name="NoteOctave" Title="Octave" Value="{Binding Path=CurrentNote.Octave}"/>
+            <concept:IntegerEditor Title="Tick" Value="{Binding Path=CurrentNote.Tick}"/>
+            <concept:IntegerEditor Title="Intensity"  Value="{Binding Path=Intensity, ElementName=CurrentNote}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
