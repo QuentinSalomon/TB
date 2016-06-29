@@ -18,34 +18,16 @@ namespace Framework
 
         public Xylobot()
         {
-            XyloCommunication = new XyloCommunication(this);
+            XyloCommunication = new XyloCommunication();
             IsInit = false;
             AbortInit = false;
         }
 
         #endregion
 
-        const int SizeOctave = 12, StartOctaveXylophone = 5;
+        public static readonly int octaveSize = 12, StartOctaveXylophone = 5;
 
         #region Propriétés
-
-        [ConceptViewVisible(true)]
-        [ConceptDefaultValue("...")]
-        [IntlConceptName("Framework.Xylbot.Test", "Test")]
-        public string Test
-        {
-            get { return _test; }
-            set
-            {
-                if (_test != value)
-                {
-                    _test = value;
-                    DoPropertyChanged(TestPropertyName);
-                }
-            }
-        }
-        private string _test;
-        public const string TestPropertyName = "Test";
 
         public bool IsInit { get; set; }
 
@@ -101,7 +83,7 @@ namespace Framework
             List<byte> datas = new List<byte>();
             foreach (Note note in notes)
             {
-                datas.Add((byte)(note.High + (note.Octave - StartOctaveXylophone) * SizeOctave));
+                datas.Add((byte)(note.High + (note.Octave - StartOctaveXylophone) * octaveSize));
                 foreach (byte data in BitConverter.GetBytes(note.Tick))
                     datas.Add(data);
                 datas.Add(note.Intensity);

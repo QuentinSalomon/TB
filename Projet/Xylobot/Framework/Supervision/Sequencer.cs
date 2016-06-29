@@ -67,21 +67,21 @@ namespace Framework
         public const string PlaylistPropertyName = "Playlist";
 
         [ConceptViewVisible(false)]
-        [IntlConceptName("Framework.Sequencer.CurrentPartitionTitle", "CurrentPartitionTitle")]
-        public string CurrentPartitionTitle
+        [IntlConceptName("Framework.Sequencer.CurrentPartition", "CurrentPartition")]
+        public PartitionXylo CurrentPartition
         {
-            get { return _currentPartitionTitle; }
+            get { return _currentPartition; }
             set
             {
-                if (_currentPartitionTitle != value)
+                if (_currentPartition != value)
                 {
-                    _currentPartitionTitle = value;
-                    DoPropertyChanged(CurrentPartitionTitlePropertyName);
+                    _currentPartition = value;
+                    DoPropertyChanged(CurrentPartitionPropertyName);
                 }
             }
         }
-        private string _currentPartitionTitle;
-        public const string CurrentPartitionTitlePropertyName = "CurrentPartitionTitle";
+        private PartitionXylo _currentPartition;
+        public const string CurrentPartitionPropertyName = "CurrentPartition";
 
         [ConceptViewVisible(false)]
         [IntlConceptName("Framework.Sequencer.Tempo", "Tempo")]
@@ -161,10 +161,11 @@ namespace Framework
                         //Envoie des notes et recupération
                         Xylobot.SendNotes(notes);
                         notes.Clear();
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                     }
                 }
 
+                //Attente de la fin de la pratition en cours avant de lancer la suivante
                 while(Xylobot.ArduinoCurrentTick < partition.Notes[partition.Notes.Count-1].Tick)
                 {
                     if (_stop)
@@ -201,21 +202,34 @@ namespace Framework
                 {
                     if (!_stop)
                     {
-                        CurrentPartitionTitle = p.Title;
+                        CurrentPartition = p;
                         PlayPartition(p);
                     }
                     else {
-                        CurrentPartitionTitle = "";
+                        //CurrentPartition = null;
                         break;
                     }
                 }
-                CurrentPartitionTitle = "";
+                CurrentPartition = null;
             }
             catch (Exception e)
             {
                 Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => this.Errors.Add(e.Message)));
             }
 
+        }
+
+        public void PlayPause()
+        {
+            if (_actionsThread == 0)
+                _actionsThread = 1;
+            else
+                _pause = !_pause;
+        }
+
+        public void Stop()
+        {
+            _stop = true;
         }
 
         public void Finish()

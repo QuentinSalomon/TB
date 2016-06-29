@@ -23,16 +23,31 @@ namespace Framework
         public SupervisionView()
         {
             InitializeComponent();
-
-            //Dispatcher.BeginInvoke(new Action(() =>
-            //{
-            //    ListboxErrors.ItemsSource = (DataContext as SupervisionViewModel).Sequencer.Errors;
-            //}), null);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonLessSpeed_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as SupervisionViewModel).Sequencer.Xylobot.SendTempo(2000);
+        }
+
+        private void ButtonMoreSpeed_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as SupervisionViewModel).Sequencer.Xylobot.SendTempo(4000);
+        }
+
+        private void ImageNext_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        private void ImagePlayPause_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            (DataContext as SupervisionViewModel).Sequencer.PlayPause();
+        }
+
+        private void ImageStop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            (DataContext as SupervisionViewModel).Sequencer.Stop();
         }
     }
 }

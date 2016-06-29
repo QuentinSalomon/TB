@@ -41,20 +41,6 @@
                 <MenuItem Header="About..."  Click="MenuItemAbout_Click"></MenuItem>
             </MenuItem>
         </Menu>
-        <local:EditPartitionView x:Name="UserControlEditPartition" Grid.Row="1" DataContext="{Binding Path=EditPartitionViewModel}"/>
-        <!--UserControlEditPartition-->
-        
-        <!--
-        <concept:NavigationControl Grid.Row="1">
-            <local:EditPartitionView concept:NavigationControl.MenuTitle="Edit partition" 
-                               concept:NavigationControl.MenuImageSource="/Framework;component/Images/Partition32x32.png"
-                                 DataContext="{Binding Path=EditPartitionViewModel}"/>
-            <local:FileManagementView concept:NavigationControl.MenuTitle="Manage file" 
-                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/FileManage32x32.png"
-                                DataContext="{Binding Path=FileManagementViewModel}"/>
-            <local:SettingsView concept:NavigationControl.MenuTitle="Settings" 
-                            concept:NavigationControl.MenuImageSource="/Framework;component/Images/Settings32x32.png"/>
-        </concept:NavigationControl>
-        -->
+        <local:EditPartitionView OctaveNumber="10" x:Name="UserControlEditPartition" Grid.Row="1" DataContext="{Binding Path=EditPartitionViewModel}"/>
     </Grid>
 </Window>

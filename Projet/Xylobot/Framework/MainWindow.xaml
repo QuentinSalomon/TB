@@ -5,7 +5,6 @@
         xmlns:local="clr-namespace:Framework"
         Title="MyMachine" Height="400" Width="600">
     <Grid>
-        <Rectangle Stroke="DeepSkyBlue" StrokeThickness="2"/>
         <concept:NavigationControl NavigationBarDock="Top" NavigationBarBackground="DeepSkyBlue" Transition="Fade" Opacity="0.9" OpacityMask="DeepSkyBlue" Margin="2,2,2,2">
             <local:HomeView concept:NavigationControl.MenuTitle="Home"
                             concept:NavigationControl.MenuImageSource="/Framework;component/Images/Home32x32.png"/>

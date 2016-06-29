@@ -3,10 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:concept="http://www.objectis.ch/concept" 
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Button Click="Button_Click"/>
-    </Grid>
+             d:DesignHeight="100" d:DesignWidth="200">
+    <StackPanel x:Name="StackPanelNote">
+        <TextBlock Text="Note" Background="Green" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="{Binding Path=ActualWidth, ElementName=StackPanelNote}"/>
+        <concept:IntegerEditor Title="High" Value="{Binding Path=High}" Margin="0,2,0,0"/>
+        <concept:IntegerEditor Title="Octave" Value="{Binding Path=Octave}" Margin="0,2,0,0"/>
+        <concept:IntegerEditor Title="Tick" Value="{Binding Path=Tick}" Margin="0,2,0,0"/>
+        <concept:IntegerEditor Title="Intensity"  Value="{Binding Path=Intensity}" Margin="0,2,0,0"/>
+    </StackPanel>
 </UserControl>

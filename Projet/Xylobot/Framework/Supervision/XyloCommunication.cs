@@ -30,23 +30,21 @@ namespace Framework
         #endregion
 
         #region Constructor
-
-        // TODO : dépendance incorrecte xylo
-        public XyloCommunication(Xylobot xylo)
+        
+        public XyloCommunication()
         {
             _numMessage = 0;
             // TODO : rendre configurable
             PortName = "COM5";
-            _serialPort = new SerialPort(PortName, BaudRate);
+            _serialPort = new SerialPort();
+            _serialPort.PortName = SetPortName();
+            _serialPort.BaudRate = BaudRate;
             _serialPort.ReadTimeout = TimeOut;
             _serialPort.WriteTimeout = TimeOut;
             _serialPort.DataBits = 8;
             _serialPort.StopBits = StopBits.One;
             _serialPort.Parity = Parity.None;
             _serialPort.Handshake = Handshake.None;
-
-
-            _xylo = xylo;
         }
 
         #endregion
@@ -95,7 +93,6 @@ namespace Framework
                         for(int i=0;i< sizeof(UInt32);i++)
                             tick[i] = (byte)_serialPort.ReadByte();
                         ArduinoCurrentTick = BitConverter.ToUInt32(tick, 0);
-                        _xylo.Test = ArduinoCurrentTick.ToString(); // TODO: Delete
                         switch ((ReceiveTypeMessage)tmp)
                         {
                             case ReceiveTypeMessage.Ok:
@@ -110,9 +107,9 @@ namespace Framework
                                 return ReceiveTypeMessage.ErrorMsgArduino;
                         }
                     } else
-                        return ReceiveTypeMessage.ErrorMsgArduino;//_xylo.Test = "Mauvais numéro de message"; //Renvoyer le message précedent
+                        return ReceiveTypeMessage.ErrorMsgArduino; //Renvoyer le message précedent
                 } else
-                    return ReceiveTypeMessage.ErrorMsgArduino;//_xylo.Test = "Mauvais Startbyte"; //Renvoyer le message précedent
+                    return ReceiveTypeMessage.ErrorMsgArduino; //Renvoyer le message précedent
 
             }
             catch (TimeoutException e)
@@ -213,14 +210,22 @@ namespace Framework
             return header;
         }
 
+        // Display Port values and prompt user to enter a port.
+        public static string SetPortName()
+        {
+            string portName = "COM5";
+            //string defaultPortName = "COM5";
+            //WindowSelectUsbPort windowUsbPort = new WindowSelectUsbPort();
+            //windowUsbPort.Execute(ref portName, defaultPortName);
+            return portName;
+        }
+
         #endregion
 
         #region Private
 
         private SerialPort _serialPort;
         private byte _numMessage;
-        // TODO : delete xylo
-        private Xylobot _xylo;
 
         #endregion
     }

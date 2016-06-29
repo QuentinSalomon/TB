@@ -114,8 +114,18 @@
       <DependentUpon>UserControlSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Supervision\Sequencer.cs" />
+    <Compile Include="Supervision\UserControlProgressBarMusic.xaml.cs">
+      <DependentUpon>UserControlProgressBarMusic.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Supervision\UserControlSequencer.xaml.cs">
       <DependentUpon>UserControlSequencer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Supervision\UserControlShowPartition.xaml.cs">
+      <DependentUpon>UserControlShowPartition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Supervision\UserControlShowPartitionModel.cs" />
+    <Compile Include="Supervision\WindowSelectUsbPort.xaml.cs">
+      <DependentUpon>WindowSelectUsbPort.xaml</DependentUpon>
     </Compile>
     <Compile Include="Supervision\XyloCommunication.cs" />
     <Compile Include="Supervision\Xylobot.cs" />
@@ -158,7 +168,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Supervision\UserControlProgressBarMusic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Supervision\UserControlSequencer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Supervision\UserControlShowPartition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Supervision\WindowSelectUsbPort.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -204,6 +226,15 @@
   <ItemGroup>
     <Resource Include="Images\add32x32.png" />
     <Resource Include="Images\substract32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Next32x32.png" />
+    <Resource Include="Images\Play32x32.png" />
+    <Resource Include="Images\Previous32x32.png" />
+    <Resource Include="Images\Stop32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Pause32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

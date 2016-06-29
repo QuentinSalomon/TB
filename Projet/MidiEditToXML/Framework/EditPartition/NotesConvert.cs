@@ -8,8 +8,11 @@ namespace Framework
 {
     static class NotesConvert
     {
-        public static readonly string[] tabNote = new string[] 
+        public static readonly string[] tabNote = new string[]
         { "DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI" };
+        public static readonly int[] idxBlackNote = new int[]
+        {1,3,6,8,10};
+
         public static readonly int octaveSize = 12;
 
         public static Note IdToNote(int id, int intensity, int tick)

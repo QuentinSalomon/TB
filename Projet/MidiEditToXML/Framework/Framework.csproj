@@ -89,9 +89,6 @@
     <Compile Include="EditPartition\NotesConvert.cs" />
     <Compile Include="EditPartition\PartitionMidi.cs" />
     <Compile Include="EditPartition\PartitionXylo.cs" />
-    <Compile Include="EditPartition\UserControlEditPartition.xaml.cs">
-      <DependentUpon>UserControlEditPartition.xaml</DependentUpon>
-    </Compile>
     <Compile Include="EditPartition\UserControlNote.xaml.cs">
       <DependentUpon>UserControlNote.xaml</DependentUpon>
     </Compile>
@@ -143,10 +140,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="EditPartition\UserControlEditPartition.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="EditPartition\UserControlNote.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

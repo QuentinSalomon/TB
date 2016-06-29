@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Framework
 {
-    [ConceptView(typeof(UserControlEditPartition))]
     [IntlConceptName("Framework.PartitionMidi.Name", "PartitionMidi")]
     [ConceptSmallImage(typeof(PartitionMidi), "/Images/Partition32x32.png")]
     [ConceptLargeImage(typeof(PartitionMidi), "/Images/Partition64x64.png")]

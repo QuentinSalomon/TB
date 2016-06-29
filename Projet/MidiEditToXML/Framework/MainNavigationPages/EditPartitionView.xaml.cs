@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Framework
     /// <summary>
     /// Interaction logic for UserControlEditPartition.xaml
     /// </summary>
-    public partial class EditPartitionView : UserControl
+    public partial class EditPartitionView : UserControl, INotifyPropertyChanged
     {
         Brush[] ColorChannel = { Brushes.Blue, Brushes.Red, Brushes.Green, Brushes.Yellow, Brushes.Violet, Brushes.Turquoise, Brushes.Orange };
 
@@ -28,44 +29,118 @@ namespace Framework
         {
             InitializeComponent();
 
-            for (int k = 0; k < CanvasNotes.Height / rectangleNoteSize; k++)
+            Dispatcher.BeginInvoke(new Action(() =>
             {
-                Line l = new Line();
-                l.X2 = 100000;//double.MaxValue;
-                l.StrokeThickness = k % NotesConvert.octaveSize == 0 ? 2 : 1;
-                l.Stroke = k % NotesConvert.octaveSize == 0 ? Brushes.ForestGreen : Brushes.LightBlue;
-                l.StrokeDashArray = new DoubleCollection(new double[] { 4, 3 });
-                l.Visibility = Visibility.Visible;
-                CanvasNotes.Children.Add(l);
-                Canvas.SetLeft(l, 0);
-                Canvas.SetBottom(l, k * rectangleNoteSize - (k % NotesConvert.octaveSize == 0 ? 1 : 0.5));
+                int normalNoteCount = 0;
+                for (int k = 0; k < CanvasNotes.Height / rectangleNoteSize; k++)
+                {
+                    int idxNote = k % NotesConvert.octaveSize;
 
-                Rectangle r = new Rectangle();
-                r.Height = rectangleNoteSize;
-                r.Width = 100;
-                r.Fill = Brushes.White;
-                r.Stroke = Brushes.Black;
-                r.StrokeThickness = 0.3;
-                r.Visibility = Visibility.Visible;
-                CanvasNotesHigh.Children.Add(r);
-                Canvas.SetLeft(r, 0);
-                Canvas.SetBottom(r, k * rectangleNoteSize);
+                    Line l = new Line();
+                    l.X2 = 100000;//double.MaxValue;
+                    l.StrokeThickness = idxNote == 0 ? 2 : 1;
+                    l.Stroke = idxNote == 0 ? Brushes.ForestGreen : Brushes.LightBlue;
+                    l.StrokeDashArray = new DoubleCollection(new double[] { 4, 3 });
+                    l.Visibility = Visibility.Visible;
+                    CanvasNotes.Children.Add(l);
+                    Canvas.SetLeft(l, 0);
+                    Canvas.SetBottom(l, k * rectangleNoteSize - (idxNote == 0 ? 1 : 0.5));
 
-                TextBlock txtB = new TextBlock();
-                txtB.Text = NotesConvert.tabNote[k % NotesConvert.octaveSize];
-                txtB.Height = rectangleNoteSize;
-                txtB.FontSize = rectangleNoteSize-1;
-                txtB.Foreground = Brushes.Black;
-                txtB.Visibility = Visibility.Visible;
-                CanvasNotesHigh.Children.Add(txtB);
-                Canvas.SetRight(txtB, 0);
-                Canvas.SetBottom(txtB, k * rectangleNoteSize);
-            }
+                    bool blackNote = false;
+
+                    for (int i = 0; i < NotesConvert.idxBlackNote.Length; i++)
+                        if (idxNote == NotesConvert.idxBlackNote[i])
+                            blackNote = true;
+
+                    Rectangle r = new Rectangle();
+                    r.Height = rectangleNoteSize * (blackNote ? 1 : (double)12/7);
+                    r.Width = 100 * (blackNote ? 0.6 : 1);
+                    r.Fill = blackNote ? Brushes.Black : Brushes.White;
+                    r.Stroke = Brushes.Black;
+                    r.StrokeThickness = 0.3;
+                    r.Visibility = Visibility.Visible;
+                    CanvasNotesHigh.Children.Add(r);
+                    Canvas.SetLeft(r, 0);
+                    if (blackNote)
+                    {
+                        Canvas.SetBottom(r, k * rectangleNoteSize);
+                        Canvas.SetZIndex(r, 3);
+                    }
+                    else {
+                        Canvas.SetBottom(r, normalNoteCount * rectangleNoteSize * 12/7);
+                        Canvas.SetZIndex(r, 2);
+                    }
+
+                    TextBlock txtB = new TextBlock();
+                    txtB.Text = NotesConvert.tabNote[idxNote];
+                    if(idxNote == 0)
+                    {
+                        txtB.Text += ' ' + (k / NotesConvert.octaveSize).ToString();
+                        txtB.FontWeight = FontWeights.Bold;
+                    }
+                    txtB.Height = rectangleNoteSize;
+                    txtB.FontSize = rectangleNoteSize - 1;
+                    txtB.VerticalAlignment = VerticalAlignment.Center;
+                    txtB.Foreground = blackNote ? Brushes.White : Brushes.Black;
+                    txtB.Visibility = Visibility.Visible;
+                    CanvasNotesHigh.Children.Add(txtB);
+                    Canvas.SetZIndex(txtB, 3);
+                    if (blackNote)
+                    {
+                        Canvas.SetLeft(txtB, 0);
+                        Canvas.SetBottom(txtB, k * rectangleNoteSize);
+                    }
+                    else
+                    {
+                        Canvas.SetRight(txtB, 0);
+                        Canvas.SetBottom(txtB, normalNoteCount * rectangleNoteSize * 12/7);
+                    }
+
+                    normalNoteCount += (blackNote ? 0 : 1);
+                }
+                for (int k = 0; k < CanvasNotes.Height / rectangleNoteSize / NotesConvert.octaveSize; k++)
+                {
+
+                }
+            }), null);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void DoPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public PartitionMidi CurrentPartition { get; set; }
 
-        public Note CurrentNote { get; set; }
+        public double KeyWidth { get { return columnKeys.ActualWidth; } set { columnKeys.Width = new GridLength(value); } }
+
+        public int OctaveNumber {
+            get { return (int)((CanvasNotes.ActualHeight / rectangleNoteSize - 1) / NotesConvert.octaveSize); }
+            set {
+                CanvasNotes.Height = (value * NotesConvert.octaveSize + 1) * rectangleNoteSize;
+                CanvasNotesHigh.Height = (value * NotesConvert.octaveSize + 1) * rectangleNoteSize;
+            }
+        }
+
+        public int StartOctave { get; set; }
+
+        public Note CurrentNote
+        {
+            get { return _currentNote; }
+            set
+            {
+                if (_currentNote != value)
+                {
+                    _currentNote = value;
+                    DoPropertyChanged(CurrentNotePropertyName);
+                }
+            }
+        }
+        private Note _currentNote;
+        public const string CurrentNotePropertyName = "CurrentNote";
 
         public Channel CurrentChannel { get; set; }
 
