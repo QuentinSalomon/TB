@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace Framework
 {
-    public class UserControlShowPartitionModel : INotifyPropertyChanged
+    public class UserControlShowPartitionModel :  INotifyPropertyChanged
     {
-        public PartitionXylo Partition { get { return FrameworkController.Instance.Sequencer.CurrentPartition; } }
-
-
+        public Sequencer Sequencer { get { return FrameworkController.Instance.Sequencer; } }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void DoPropertyChanged(string propertyName)

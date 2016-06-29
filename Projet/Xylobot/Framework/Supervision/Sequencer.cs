@@ -23,6 +23,7 @@ namespace Framework
         public Sequencer()
         {
             Xylobot = new Xylobot();
+            SpeedPlay = 1.0;
             threadXyloBot = new Thread(ManageXylobot);
             threadXyloBot.Start();
             Errors = new ObservableCollection<string>();
@@ -66,7 +67,7 @@ namespace Framework
         private Playlist _playlist;
         public const string PlaylistPropertyName = "Playlist";
 
-        [ConceptViewVisible(false)]
+        [ConceptViewVisible(true)]
         [IntlConceptName("Framework.Sequencer.CurrentPartition", "CurrentPartition")]
         public PartitionXylo CurrentPartition
         {
@@ -83,7 +84,7 @@ namespace Framework
         private PartitionXylo _currentPartition;
         public const string CurrentPartitionPropertyName = "CurrentPartition";
 
-        [ConceptViewVisible(false)]
+        [ConceptViewVisible(true)]
         [IntlConceptName("Framework.Sequencer.Tempo", "Tempo")]
         public UInt16 Tempo
         {
@@ -101,6 +102,24 @@ namespace Framework
         private UInt16 _tempo;
         public const string TempoPropertyName = "Tempo";
 
+        [ConceptViewVisible(true)]
+        [IntlConceptName("Framework.Sequencer.SpeedPlay", "SpeedPlay")]
+        public double SpeedPlay
+        {
+            get { return _speedPlay; }
+            set
+            {
+                if (_speedPlay != value)
+                {
+                    _speedPlay = value;
+                    DoPropertyChanged(SpeedPlayPropertyName);
+                    _speedPlayChanged = true;
+                }
+            }
+        }
+        private double _speedPlay;
+        public const string SpeedPlayPropertyName = "SpeedPlay";
+
         public ObservableCollection<string> Errors { get; set; }
 
         #endregion
@@ -117,7 +136,8 @@ namespace Framework
                 {
                     case 1:
                         PlayPlaylist(Playlist);
-                        _actionsThread = 0;
+                        if(_actionsThread != -1)
+                            _actionsThread = 0;
                         break;
                     default:
                         break;
@@ -151,6 +171,19 @@ namespace Framework
                             Xylobot.Start();
                     }
                     else {
+                        //Check les changement de tempo et de vitesse de lecture
+                        if (_speedPlayChanged)
+                        {
+                            _speedPlayChanged = false;
+                            Xylobot.SendSpeedFactor(SpeedPlay);
+                        }
+                        //if (_tempoChanged)
+                        //{
+                        //    _tempoChanged = false;
+                        //    Xylobot.SendTempo(Tempo);
+                        //}
+
+                        //Prise des notes à envoyer
                         for (i = 0; i < Xylobot.ArduinoNoteSizeAvaible; i++)
                         {
                             if (k + i >= partition.Notes.Count)
@@ -227,6 +260,20 @@ namespace Framework
                 _pause = !_pause;
         }
 
+        public void PlayNote(Note n)
+        {
+            Stop();
+            List<Note> note = new List<Note>();
+            note.Add(n);
+            Xylobot.SendNotes(note);
+            Xylobot.Start();
+        }
+
+        public void ChangeKeyHitTime(int index, double hitTime)
+        {
+            Xylobot.SendKeyHitTime(index, hitTime);
+        }
+
         public void Stop()
         {
             _stop = true;
@@ -238,6 +285,7 @@ namespace Framework
                 Xylobot.Stop();
             else
                 Xylobot.AbortInit = true;
+            //_pause = false;
             _stop = true;
             _actionsThread = -1;
             threadXyloBot.Join();
@@ -321,7 +369,7 @@ namespace Framework
         #region private
 
         private Thread threadXyloBot;
-        private bool _pause = true, _stop = true;
+        private bool _pause = true, _stop = true, _tempoChanged = false, _speedPlayChanged = false;
         private int _actionsThread=0;
 
         #endregion

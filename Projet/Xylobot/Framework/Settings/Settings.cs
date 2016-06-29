@@ -1,4 +1,5 @@
-﻿using Concept.Model;
+﻿using Common;
+using Concept.Model;
 using Concept.Utils.Wpf;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,16 @@ namespace Framework
     [ConceptLargeImage(typeof(Settings), "/Images/Settings64x64.png")]
     public class Settings :ConceptComponent
     {
+        public Settings()
+        {
+            for (int i = 0; i < Xylobot.numberKeysXylophone; i++)
+            {
+                Key tmp = new Key(Xylobot.defaultTimeHitKey);
+                tmp.Name = "key" + i.ToString();
+                Keys.Add(tmp);
+            }
+        }
+
         #region Propriétés
 
         [ConceptSerialized]
@@ -52,6 +63,11 @@ namespace Framework
         private string _pathSaveFile;
         public const string PathSaveFilePropertyName = "PathSaveFile";
 
+        [ConceptSerialized]
+        [ConceptAutoCreate]
+        [IntlConceptName("Common.PartitionXylo.Keys", "Keys")]
+        public StaticListKey Keys { get; protected set; }
+
         #endregion
 
         #region WPF command
@@ -68,9 +84,7 @@ namespace Framework
                         System.Windows.Forms.FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
                         // Do not allow the user to create new files via the FolderBrowserDialog.
                         dlg.ShowNewFolderButton = false;
-
-                        // Default to the My Documents folder.
-                        //dlg.RootFolder = Environment.SpecialFolder.Personal;
+                        
                         dlg.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
                         if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
@@ -122,4 +136,43 @@ namespace Framework
 
         #endregion
     }
+
+    [IntlConceptName("Framework.Key.Name", "Key")]
+    [ConceptSmallImage(typeof(Key), "/Images/Keys32x32.png")]
+    [ConceptLargeImage(typeof(Key), "/Images/Keys64x64.png")]
+    public class Key : ConceptComponent
+    {
+        public Key()
+        {
+        }
+
+        public Key(double value)
+        {
+            HitTime = value;
+        }
+
+        [ConceptSerialized]
+        [ConceptViewVisible]
+        [IntlConceptName("Framework.DoubleConcept.HitTime", "HitTime")]
+        public double HitTime
+        {
+            get { return _hitTime; }
+            set
+            {
+                if (_hitTime != value)
+                {
+                    _hitTime = value;
+                    DoPropertyChanged(HitTimePropertyName);
+                }
+            }
+        }
+        private double _hitTime;
+        public const string HitTimePropertyName = "HitTime";
+    }
+
+    [IntlConceptName("Framework.Key.Name", "Key")]
+    [ConceptSmallImage(typeof(StaticListKey), "/Images/Keys32x32.png")]
+    [ConceptLargeImage(typeof(StaticListKey), "/Images/Keys64x64.png")]
+    public class StaticListKey : ConceptStaticList<Key>
+    { }
 }

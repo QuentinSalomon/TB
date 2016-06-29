@@ -3,6 +3,7 @@ using Concept.Model;
 using Concept.Utils.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,8 @@ namespace Framework
 
         #endregion
 
-        public static readonly int octaveSize = 12, StartOctaveXylophone = 5;
+        public static readonly int octaveSize = 12, startOctaveXylophone = 5, numberKeysXylophone = 37;
+        public static readonly double defaultTimeHitKey = 9.5;
 
         #region Propriétés
 
@@ -83,7 +85,7 @@ namespace Framework
             List<byte> datas = new List<byte>();
             foreach (Note note in notes)
             {
-                datas.Add((byte)(note.High + (note.Octave - StartOctaveXylophone) * octaveSize));
+                datas.Add((byte)(note.High + (note.Octave - startOctaveXylophone) * octaveSize));
                 foreach (byte data in BitConverter.GetBytes(note.Tick))
                     datas.Add(data);
                 datas.Add(note.Intensity);
@@ -99,6 +101,27 @@ namespace Framework
                 datas.Add(data);
 
             XyloCommunication.SendDatas(SendTypeMessage.Tempo, datas);
+        }
+
+        public void SendSpeedFactor(double speedFactor)
+        {
+            List<byte> datas = new List<byte>();
+            int tmpSpeedFactor = (int)(speedFactor * 100);
+            datas.Add((byte)(tmpSpeedFactor / 100));
+            datas.Add((byte)(tmpSpeedFactor % 100));
+
+            XyloCommunication.SendDatas(SendTypeMessage.SpeedFactor, datas);
+        }
+
+        public void SendKeyHitTime(int index, double hitTime)
+        {
+            List<byte> datas = new List<byte>();
+            int tmpSpeedFactor = (int)(hitTime * 100);
+            datas.Add((byte)index);
+            datas.Add((byte)(tmpSpeedFactor / 100));
+            datas.Add((byte)(tmpSpeedFactor % 100));
+
+            XyloCommunication.SendDatas(SendTypeMessage.SpeedFactor, datas);
         }
 
         #endregion

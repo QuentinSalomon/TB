@@ -12,6 +12,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <concept:ConceptElementNameEditor DockPanel.Dock="Top"/>
@@ -21,5 +25,21 @@
         <Button Content="..." Command="{Binding Path=CommandPathSaveFile}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,5,0" Grid.Row="1"/>
         <concept:StringEditor Title="Default load path" Value="{Binding Path=DefaultPathLoadFile}" Grid.Row="2"/>
         <Button Content="..." Command="{Binding Path=CommandPathLoadFile}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,5,0" Grid.Row="2"/>
+
+        <TextBlock x:Name="TextBlockKeyTitle" Text="DO 5" Foreground="White" FontFamily="Segoe UI Light" FontSize="18" Grid.Row="4" Background="CornflowerBlue" Margin="5"/>
+        <Grid Grid.Row="5" >
+            <StackPanel Orientation="Horizontal">
+                <Border BorderBrush="{x:Null}" Background="Gray" Height="30" Margin="5,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextWrapping="Wrap" Text="Hit time : " Foreground="White" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TextBlockSpeed" TextWrapping="Wrap" Text="9.5" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+                        <TextBlock TextWrapping="Wrap" Text="ms" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+                <Button x:Name="ButtonLessSpeed" Width="30" Height="30" Background="Orange" Click="ButtonLessSpeed_Click"/>
+                <Button x:Name="ButtonMoreSpeed" Width="30" Height="30" Background="ForestGreen" Click="ButtonMoreSpeed_Click"/>
+            </StackPanel>
+            <Button x:Name="ButtonNext" Width="30" HorizontalAlignment="Right" Background="CornflowerBlue" Click="ButtonNext_Click" Margin="0,0,5,0"/>
+        </Grid>
     </Grid>
 </UserControl>

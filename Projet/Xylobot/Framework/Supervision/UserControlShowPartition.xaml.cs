@@ -32,7 +32,7 @@ namespace Framework
         public UserControlShowPartition()
         {
             InitializeComponent();
-            DataContext = new UserControlShowPartitionModel();
+            //DataContext = new UserControlShowPartitionModel();
         }
 
         public void InitKeys()
@@ -81,7 +81,7 @@ namespace Framework
                 txtB.Text = tabNote[idxNote];
                 if (idxNote == 0)
                 {
-                    txtB.Text += ' ' + (k / Xylobot.octaveSize + Xylobot.StartOctaveXylophone).ToString();
+                    txtB.Text += ' ' + (k / Xylobot.octaveSize + Xylobot.startOctaveXylophone).ToString();
                     txtB.FontWeight = FontWeights.Bold;
                 }
                 txtB.Height = rectangleNoteSize;
@@ -157,10 +157,10 @@ namespace Framework
         {
             ReleaseDrawPartition();
 
-            if ((DataContext as UserControlShowPartitionModel).Partition != null)
+            if ((DataContext as UserControlShowPartitionModel).Sequencer.CurrentPartition != null)
             {
                 int maxTick = 0;
-                foreach (Note note in (DataContext as UserControlShowPartitionModel).Partition.Notes)
+                foreach (Note note in (DataContext as UserControlShowPartitionModel).Sequencer.CurrentPartition.Notes)
                 {
                     Rectangle rect = new Rectangle();
                     rect.Width = rectangleNoteSize;
@@ -215,12 +215,16 @@ namespace Framework
 
             InitNotesView();
 
-            UserControlShowPartitionModel viewModel = DataContext as UserControlShowPartitionModel;
-            viewModel.PropertyChanged += MyPropertyChangedEventHandler;
-            viewModel.DoPropertyChanged("UserControlShowPartitionModel");
+            INotifyPropertyChanged viewModel = DataContext as INotifyPropertyChanged;
+            if (viewModel != null)
+                viewModel.PropertyChanged += new PropertyChangedEventHandler(DataContextPropertyChangedEventHandler);
+
+            //UserControlShowPartitionModel viewModel = DataContext as UserControlShowPartitionModel;
+            //viewModel.PropertyChanged += DataContextPropertyChangedEventHandler;
+            //viewModel.DoPropertyChanged("UserControlShowPartitionModel");
         }
 
-        private void MyPropertyChangedEventHandler(object sender, PropertyChangedEventArgs e)
+        private void DataContextPropertyChangedEventHandler(object sender, PropertyChangedEventArgs e)
         {
             ShowPartition();
         }

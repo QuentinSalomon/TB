@@ -36,11 +36,11 @@ namespace Framework
         private string _title;
         public const string TitlePropertyName = "Title";
 
-        #endregion
-
         [ConceptAutoCreate]
         [IntlConceptName("Framework.Playlist.Partitions", "Partitions")]
         public StaticListPartitionXylo Partitions { get; protected set; }
+
+        #endregion
 
         #region WPF command
 

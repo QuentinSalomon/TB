@@ -14,7 +14,7 @@ byte headMessage[HEAD_RECEIVE_MSG_SIZE];
 I2CXylo i2cXylo;
 unsigned long currentTick=4294967295, startTime=0; //0xFFFFFFFF
 bool play=false;
-PushedNote pushedNotes[NOTE_COUNT_XYLO] = {0};
+KeyXylophone keysXylophone[NOTE_COUNT_XYLO] = {0};
 int debug=1;
 
 /*Global*/
@@ -33,6 +33,8 @@ void StartMsg(uint16_t dataSize);
 void StopMsg(uint16_t dataSize);
 void PauseMsg(uint16_t dataSize);
 void TempoMsg(uint16_t dataSize);
+void SpeedFactorMsg(uint16_t dataSize);
+void TimeHitKeyMsg(uint16_t dataSize);
 
 bool ReadHeadMessage();
 bool CheckMessage();
@@ -42,6 +44,8 @@ void ResponseMessage(byte type);
 /****************************************ARDUINO FONCTIONS****************************************/
 void setup() {
   pinMode(13, OUTPUT);
+  for(int i=0; i<NOTE_COUNT_XYLO; i++)
+    keysXylophone[i].hitTime = DEFAULT_TIME_HIT_US;
   /* INIT SERIAL COM */
   // open the serial port:
   //Serial.setTimeout(500);
@@ -98,10 +102,10 @@ void ReleasePush()
 {
   bool needRelease = false;
   for(int i=0;i<NOTE_COUNT_XYLO;i++)
-    if(pushedNotes[i].pushed)
-      if((micros() >= pushedNotes[i].timePushed ? micros() - pushedNotes[i].timePushed : 0xFFFFFFFF - pushedNotes[i].timePushed + micros()) > TIME_HIT_US + pushedNotes[i].intensity){
+    if(keysXylophone[i].pushed)
+      if((micros() >= keysXylophone[i].timePushed ? micros() - keysXylophone[i].timePushed : 0xFFFFFFFF - keysXylophone[i].timePushed + micros()) > keysXylophone[i].hitTime + keysXylophone[i].intensity){
         i2cXylo.PrepareRelease(toneTab[i]);
-        pushedNotes[i].pushed = false;
+        keysXylophone[i].pushed = false;
         needRelease = true;
       }
   if(needRelease)
@@ -123,15 +127,15 @@ void Push()
       byte pitch = currentNote.GetPitch();
       i2cXylo.PreparePush(toneTab[pitch]);
       
-      pushedNotes[pitch].pushed = true;
-      pushedNotes[pitch].timePushed = micros();
-      pushedNotes[pitch].intensity = currentNote.GetIntensity();
+      keysXylophone[pitch].pushed = true;
+      keysXylophone[pitch].timePushed = micros();
+      keysXylophone[pitch].intensity = currentNote.GetIntensity();
       if(!bufferNotes.Current(&currentNote)) //Actualise la note courante, s'il y en a plus on quitte la boucle
         break;
     }
     i2cXylo.ApplyPush();
 
-    if((micros() >= startTime ? micros() - startTime : 0xFFFFFFFF - startTime + micros()) > tempo*tempoFactor ){
+    if((micros() >= startTime ? micros() - startTime : 0xFFFFFFFF - startTime + micros()) > tempo/tempoFactor ){
       currentTick++;
       startTime = micros();        
     }
@@ -184,7 +188,7 @@ void ReadDataMessage() {
   dataSize = headMessage[3];
   dataSize |= headMessage[4] << 8;
   switch (headMessage[2]){
-    case ReceiveType_Tempo : //tempo
+    case ReceiveType_Tempo : //Tempo
       TempoMsg(dataSize);
       break;
     case ReceiveType_Notes : //Notes
@@ -198,6 +202,12 @@ void ReadDataMessage() {
       break;
     case ReceiveType_Pause : //Pause
       PauseMsg(dataSize);
+      break;
+    case ReceiveType_SpeedFactor : //Music speed
+      SpeedFactorMsg(dataSize);
+      break;
+    case ReceiveType_HitTimeKey : //Key hit time
+      TimeHitKeyMsg(dataSize);
       break;
     default:
       break;
@@ -263,6 +273,25 @@ void TempoMsg(uint16_t dataSize)
     if(Serial.available() == dataSize)
       break;
   tempo = Serial.read() + (Serial.read() << 8); 
+  msgSendType = SendType_Ok;
+}
+void SpeedFactorMsg(uint16_t dataSize)
+{
+  while(1)
+    if(Serial.available() == dataSize)
+      break;
+  tempoFactor = Serial.read() + (double)Serial.read()/100; 
+  msgSendType = SendType_Ok;
+}
+
+void TimeHitKeyMsg(uint16_t dataSize)
+{
+  int idxNote;
+  while(1)
+    if(Serial.available() == dataSize)
+      break;
+  idxNote = Serial.read();
+  keysXylophone[idxNote].hitTime = (Serial.read() + (double)Serial.read()/100)*1000;
   msgSendType = SendType_Ok;
 }
 

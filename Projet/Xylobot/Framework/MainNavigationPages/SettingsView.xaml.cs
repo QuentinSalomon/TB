@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,75 @@ namespace Framework
         public SettingsView()
         {
             InitializeComponent();
+        }
+        
+        public int CurrentIdNote {
+            get { return _currentIdNote; }
+            set
+            {
+                Note n;
+                n = IdToNoteTest(CurrentIdNote);
+                TextBlockKeyTitle.Text = n.HighString;
+                TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
+            }
+        }
+        private int _currentIdNote;
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            CurrentIdNote = 0;
+        }
+
+        private void ButtonLessSpeed_Click(object sender, RoutedEventArgs e)
+        {
+            Note n;
+            (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime -= 0.1;
+            TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
+            (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(CurrentIdNote, 
+                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
+            n = IdToNoteTest(CurrentIdNote);
+            (DataContext as SettingsViewModel).Sequencer.PlayNote(n);
+        }
+
+        private void ButtonMoreSpeed_Click(object sender, RoutedEventArgs e)
+        {
+            Note n;
+            (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime += 0.1;
+            TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
+            (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(CurrentIdNote,
+                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
+            n = IdToNoteTest(CurrentIdNote);
+            (DataContext as SettingsViewModel).Sequencer.PlayNote(n);
+        }
+
+
+        private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentIdNote > 0)
+            {
+                CurrentIdNote--;
+            }
+        }
+
+        private void ButtonNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentIdNote < Xylobot.numberKeysXylophone - 1)
+            {
+                CurrentIdNote++;
+            }
+        }
+
+        private static readonly string[] tabNote = new string[]
+        { "DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI" };
+        private static Note IdToNoteTest(int id)
+        {
+            Note note = new Note();
+            note.Octave = (byte)(id / Xylobot.octaveSize + Xylobot.startOctaveXylophone);
+            note.High = (byte)(id % Xylobot.octaveSize);
+            note.HighString = tabNote[id % Xylobot.octaveSize];
+            note.Tick = 0;
+            note.Intensity = 64;
+            return note;
         }
     }
 }

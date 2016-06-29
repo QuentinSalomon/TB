@@ -29,8 +29,9 @@ class Note
     double _intensity;
 };
 
-struct PushedNote
+struct KeyXylophone
 {
+  double hitTime;
   unsigned long timePushed; // temps au quel la note à été poussée
   double intensity;
   bool pushed;

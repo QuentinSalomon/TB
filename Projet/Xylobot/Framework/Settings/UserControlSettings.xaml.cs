@@ -24,5 +24,20 @@ namespace Framework
         {
             InitializeComponent();
         }
+
+        private void ButtonMoreSpeed_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonLessSpeed_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonNext_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

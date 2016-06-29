@@ -27,12 +27,22 @@ namespace Framework
 
         private void ButtonLessSpeed_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as SupervisionViewModel).Sequencer.Xylobot.SendTempo(2000);
+            Sequencer sequencer = (DataContext as SupervisionViewModel).Sequencer;
+            if (sequencer.SpeedPlay > 0.51)
+            {
+                sequencer.SpeedPlay = sequencer.SpeedPlay - 0.1;
+                TextBlockSpeed.Text = sequencer.SpeedPlay.ToString();
+            }
         }
 
         private void ButtonMoreSpeed_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as SupervisionViewModel).Sequencer.Xylobot.SendTempo(4000);
+            Sequencer sequencer = (DataContext as SupervisionViewModel).Sequencer;
+            if (sequencer.SpeedPlay < 2)
+            {
+                sequencer.SpeedPlay = sequencer.SpeedPlay + 0.1;
+                TextBlockSpeed.Text = sequencer.SpeedPlay.ToString();
+            }
         }
 
         private void ImageNext_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

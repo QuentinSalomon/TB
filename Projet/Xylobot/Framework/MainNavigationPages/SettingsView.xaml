@@ -6,10 +6,43 @@
              xmlns:concept="http://www.objectis.ch/concept"
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel>
-        <GroupBox DockPanel.Dock="Top" Header="{Binding Element.DisplayName, ElementName=Editor}">
-            <concept:ConceptEditor x:Name="Editor" DataContext="{Binding Path=Settings, Mode=OneWay}" IsExpanded="True" ExpandLevel="0"/>
-        </GroupBox>
-    </DockPanel>
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <concept:ConceptElementNameEditor DockPanel.Dock="Top"/>
+        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,1" BorderBrush="White" Margin="5,0"/>
+
+        <concept:StringEditor Title="Save path" Value="{Binding Path=Settings.PathSaveFile}" Grid.Row="1" Margin="0,0,30,0"/>
+        <Button Content="..." Command="{Binding Path=Settings.CommandPathSaveFile}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,5,0" Grid.Row="1"/>
+        <concept:StringEditor Title="Default load path" Value="{Binding Path=Settings.DefaultPathLoadFile}" Grid.Row="2" Margin="0,0,30,0"/>
+        <Button Content="..." Command="{Binding Path=Settings.CommandPathLoadFile}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,5,0" Grid.Row="2"/>
+
+        <TextBlock x:Name="TextBlockKeyTitle" Text="DO 5" Foreground="White" FontFamily="Segoe UI Light" FontSize="18" Grid.Row="4" Background="CornflowerBlue" Margin="5"/>
+        <Grid Grid.Row="5" >
+            <StackPanel Orientation="Horizontal">
+                <Border BorderBrush="{x:Null}" Background="Gray" Height="30" Margin="5,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextWrapping="Wrap" Text="Hit time : " Foreground="White" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TextBlockHitTime" TextWrapping="Wrap" Text="9.5" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+                        <TextBlock TextWrapping="Wrap" Text="ms" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+                <Button x:Name="ButtonLessSpeed" Width="30" Height="30" Background="Orange" Click="ButtonLessSpeed_Click"/>
+                <Button x:Name="ButtonMoreSpeed" Width="30" Height="30" Background="ForestGreen" Click="ButtonMoreSpeed_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="ButtonPrevious" Width="30" HorizontalAlignment="Right" Background="CornflowerBlue" Click="ButtonPrevious_Click"/>
+                <Button x:Name="ButtonNext" Width="30" HorizontalAlignment="Right" Background="CornflowerBlue" Click="ButtonNext_Click" Margin="0,0,5,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
 </UserControl>

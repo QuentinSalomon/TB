@@ -59,11 +59,11 @@ namespace Common
         private double _tempo;
         public const string TempoPropertyName = "Tempo";
 
-        #endregion
-
         [ConceptAutoCreate]
         [IntlConceptName("Common.PartitionXylo.Notes", "Notes")]
         public StaticListNote Notes { get; protected set; }
+
+        #endregion
     }
 
     [ConceptSmallImage(typeof(StaticListPartitionXylo), "../../../Images/Partition32x32.png")]

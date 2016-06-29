@@ -10,7 +10,7 @@
 
 #define NOTE_COUNT_XYLO 37
 
-#define TIME_HIT_US 9*1000
+#define DEFAULT_TIME_HIT_US 9.5*1000
 #define TEMPO 4000        //Temps en us entre chaque tick
 
 /*I2C*/
