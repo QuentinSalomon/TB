@@ -33,7 +33,7 @@ namespace Framework
                 _currentIdNote = value;
                 Note n;
                 n = IdToNoteTest(CurrentIdNote);
-                TextBlockKeyTitle.Text = n.HighString + n.Octave;
+                TextBlockKeyTitle.Text = "Note : " + n.HighString + "   \tOctave : " + n.Octave;
                 (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
                 TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
             }

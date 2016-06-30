@@ -6,24 +6,49 @@
              xmlns:concept="http://www.objectis.ch/concept"
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="330">
+    <UserControl.Resources>
+        <local:IndexConverter x:Key="IndexConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Playlist.Title}" Height="30" Background="DeepSkyBlue"/>
         <!--<ListBox x:Name="ListboxErrors" Grid.Row="1" Visibility="Visible"></ListBox>-->
-        <concept:ConceptStaticListEditor CanAdd="False" ConceptList="{Binding Path=Playlist.Partitions}" Grid.Row="1"/>
-        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="2">
-            <Button x:Name="ButtonDeleteAll" Width="60" Background="Red">
-                <TextBlock TextAlignment="Center">Delete<LineBreak/>all</TextBlock>
-            </Button>
-            <Button x:Name="ButtonDeleteSelected" Width="60" Background="Red" Margin="5,0,0,0" >
-                <TextBlock TextAlignment="Center">Delete<LineBreak/>selected</TextBlock>
-            </Button>
-            <Button Content="...Add" Command="{Binding Path=Playlist.CommandAddPartition}" Width="60" Margin="5,0,0,0" Background="Green"/>
-        </StackPanel>
+        <!--<concept:ConceptStaticListEditor CanAdd="False" ConceptList="{Binding Path=Playlist.Partitions}" Grid.Row="1"/>-->
+        <ListBox Name="ListBoxPlaylist" HorizontalContentAlignment="Stretch" SelectionMode="Extended" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Stroke="White" StrokeThickness="2" Fill="Gray" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                         AncestorType={x:Type ListBoxItem}}, 
+                                         Converter={StaticResource IndexConverter}}" Foreground="White" Margin="7,1,0,0"/>
+                        <Image Width="20" Height="20" Source="Framework//Images//Partition32x32.png" Grid.Column="1"/>
+                        <TextBlock Text="{Binding Title}" Grid.Column="2"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Row="2">
+
+            <Border Width="100" Background="Red" MouseLeftButtonDown="BorderRemoveAll_MouseLeftButtonDown" HorizontalAlignment="Left">
+                <TextBlock Text="Remaove all" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="18"/>
+            </Border>
+            <Border Width="100" Background="Orange" MouseLeftButtonDown="BorderRemove_MouseLeftButtonDown" HorizontalAlignment="Center">
+                <TextBlock Text="Remaove" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="18"/>
+            </Border>
+            <Border Width="100" Background="ForestGreen" MouseLeftButtonDown="BorderAdd_MouseLeftButtonDown" HorizontalAlignment="Right">
+                <TextBlock Text="Add" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="18"/>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

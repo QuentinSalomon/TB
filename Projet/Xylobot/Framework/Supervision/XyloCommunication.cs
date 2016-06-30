@@ -214,11 +214,11 @@ namespace Framework
         public static string SetPortName()
         {
             string portName = "COM5";
-            //string defaultPortName = "COM5";
-            //WindowSelectUsbPort windowUsbPort = new WindowSelectUsbPort();
-            //windowUsbPort.Execute(ref portName, defaultPortName);
+            string defaultPortName = "COM5";
+            WindowSelectUsbPort windowUsbPort = new WindowSelectUsbPort();
+            windowUsbPort.Execute(ref portName, defaultPortName);
             return portName;
-        }
+        }   
 
         #endregion
 
