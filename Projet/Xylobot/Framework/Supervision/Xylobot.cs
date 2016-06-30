@@ -116,12 +116,12 @@ namespace Framework
         public void SendKeyHitTime(int index, double hitTime)
         {
             List<byte> datas = new List<byte>();
-            int tmpSpeedFactor = (int)(hitTime * 100);
+            int tmpHitTime = (int)(hitTime * 100);
             datas.Add((byte)index);
-            datas.Add((byte)(tmpSpeedFactor / 100));
-            datas.Add((byte)(tmpSpeedFactor % 100));
+            datas.Add((byte)(tmpHitTime / 100));
+            datas.Add((byte)(tmpHitTime % 100));
 
-            XyloCommunication.SendDatas(SendTypeMessage.SpeedFactor, datas);
+            XyloCommunication.SendDatas(SendTypeMessage.KeyHitTime, datas);
         }
 
         #endregion

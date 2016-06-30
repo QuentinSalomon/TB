@@ -15,7 +15,7 @@ using System.Windows.Media;
 
 namespace Framework
 {
-    public enum SendTypeMessage : byte { Tempo, Notes, Start, Stop, Pause, SpeedFactor }
+    public enum SendTypeMessage : byte { Tempo, Notes, Start, Stop, Pause, SpeedFactor, KeyHitTime }
     
     public enum ReceiveTypeMessage : byte { Ok, TooManyData, ErrorStartByte, ErrorType, ErrorMsgArduino/*Message reçu par l'arduino mauvais*/ }
 

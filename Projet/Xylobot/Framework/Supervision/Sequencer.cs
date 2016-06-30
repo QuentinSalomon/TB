@@ -129,15 +129,32 @@ namespace Framework
         public void ManageXylobot()
         {
             Xylobot.Init();
-            while (_actionsThread != -1)
+            while (_actionsThread != ActionsThread.Terminate)
             {
                 Thread.Sleep(10);
                 switch (_actionsThread)
                 {
-                    case 1:
+                    case ActionsThread.PlayPlaylist:
+                        _actionsThread = ActionsThread.Nothing;
+
                         PlayPlaylist(Playlist);
-                        if(_actionsThread != -1)
-                            _actionsThread = 0;
+                        _stop = false; //reset le stop au cas ou la fonction s'est termninée avvec un stop
+                        break;
+                    case ActionsThread.PlayOneNote:
+                        _actionsThread = ActionsThread.Nothing;
+
+                        List<Note> note = new List<Note>();
+                        note.Add(_noteToPlay);
+                        Xylobot.Stop(); //Vide le buffer de l'arduino
+                        Xylobot.SendNotes(note);    //Charge la note dans le buffer
+                        Xylobot.Start();    //Lance la lecture du buffer
+                        break;
+                    case ActionsThread.ChangeKeyHitTime:
+                        _actionsThread = ActionsThread.Nothing;
+
+                        Xylobot.Stop();
+                        Xylobot.SendKeyHitTime(_indexKey, _keyHitTime);
+                        _actionsThread = ActionsThread.PlayOneNote;
                         break;
                     default:
                         break;
@@ -150,7 +167,7 @@ namespace Framework
             Xylobot.Init();
         }
 
-        public void PlayPartition(PartitionXylo partition)
+        private void PlayPartition(PartitionXylo partition)
         {
             List<Note> notes = new List<Note>();
             int k = 0,i;
@@ -223,7 +240,7 @@ namespace Framework
             }
         }
 
-        public void PlayPlaylist(Playlist playlist)
+        private void PlayPlaylist(Playlist playlist)
         {
             try
             {
@@ -254,24 +271,33 @@ namespace Framework
 
         public void PlayPause()
         {
-            if (_actionsThread == 0)
-                _actionsThread = 1;
+            if (_actionsThread == ActionsThread.Nothing)
+                _actionsThread = ActionsThread.PlayPlaylist;
             else
                 _pause = !_pause;
         }
 
-        public void PlayNote(Note n)
+        //public void PlayNote(Note n)
+        //{
+        //    _noteToPlay = n;
+        //    _actionsThread = ActionsThread.PlayOneNote;
+        //    if(!_stop) //Arrête si une playlist est en cours de lecture
+        //        Stop();
+        //}
+
+        public void ChangeKeyHitTime(Note n, double hitTime)
         {
-            Stop();
-            List<Note> note = new List<Note>();
-            note.Add(n);
-            Xylobot.SendNotes(note);
-            Xylobot.Start();
+            _indexKey = (n.High + (n.Octave - Xylobot.startOctaveXylophone) * Xylobot.octaveSize);
+            _keyHitTime = hitTime;
+            _noteToPlay = n;
+            _actionsThread = ActionsThread.ChangeKeyHitTime;
+            if (!_stop) //Arrête si une playlist est en cours de lecture
+                Stop();
         }
 
-        public void ChangeKeyHitTime(int index, double hitTime)
+        public void InitKeysHitTime(double[] hitTimes)
         {
-            Xylobot.SendKeyHitTime(index, hitTime);
+
         }
 
         public void Stop()
@@ -287,7 +313,7 @@ namespace Framework
                 Xylobot.AbortInit = true;
             //_pause = false;
             _stop = true;
-            _actionsThread = -1;
+            _actionsThread = ActionsThread.Terminate;
             threadXyloBot.Join();
         }
 
@@ -304,8 +330,8 @@ namespace Framework
                     _commandPlayPlaylist = new WpfCommand();
                     _commandPlayPlaylist.Executed += (sender, e) =>
                     {
-                        if (_actionsThread == 0)
-                            _actionsThread = 1;
+                        if (_actionsThread == ActionsThread.Nothing)
+                            _actionsThread = ActionsThread.PlayPlaylist;
                         else
                             _pause = !_pause;
                     };
@@ -368,10 +394,16 @@ namespace Framework
 
         #region private
 
-        private Thread threadXyloBot;
-        private bool _pause = true, _stop = true, _tempoChanged = false, _speedPlayChanged = false;
-        private int _actionsThread=0;
+        private enum ActionsThread { Terminate = -1, Nothing, PlayPlaylist, PlayOneNote, ChangeKeyHitTime }
 
+        private Thread threadXyloBot;
+        private ActionsThread _actionsThread = ActionsThread.Nothing;
+        private bool _pause = true, _stop = true, _tempoChanged = false, _speedPlayChanged = false;
+       
+        private Note _noteToPlay;   //Note à jouer pour PlayOneNote
+
+        int _indexKey;      //Index de la touche pour ChangeKeyHitTime
+        double _keyHitTime; //Temps de frappe pour ChangeKeyHitTime
         #endregion
     }
 }

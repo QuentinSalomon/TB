@@ -29,10 +29,12 @@ namespace Framework
         public int CurrentIdNote {
             get { return _currentIdNote; }
             set
-            {
+            {                
+                _currentIdNote = value;
                 Note n;
                 n = IdToNoteTest(CurrentIdNote);
-                TextBlockKeyTitle.Text = n.HighString;
+                TextBlockKeyTitle.Text = n.HighString + n.Octave;
+                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
                 TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
             }
         }
@@ -43,26 +45,24 @@ namespace Framework
             CurrentIdNote = 0;
         }
 
-        private void ButtonLessSpeed_Click(object sender, RoutedEventArgs e)
+        private void ButtonLessTime_Click(object sender, RoutedEventArgs e)
         {
             Note n;
-            (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime -= 0.1;
+            (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime - 0.1);
             TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
-            (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(CurrentIdNote, 
-                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
             n = IdToNoteTest(CurrentIdNote);
-            (DataContext as SettingsViewModel).Sequencer.PlayNote(n);
+            (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
+                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
         }
 
-        private void ButtonMoreSpeed_Click(object sender, RoutedEventArgs e)
+        private void ButtonMoreTime_Click(object sender, RoutedEventArgs e)
         {
             Note n;
-            (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime += 0.1;
+            (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime + 0.1);
             TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
-            (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(CurrentIdNote,
-                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
             n = IdToNoteTest(CurrentIdNote);
-            (DataContext as SettingsViewModel).Sequencer.PlayNote(n);
+            (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
+                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
         }
 
 
@@ -80,6 +80,11 @@ namespace Framework
             {
                 CurrentIdNote++;
             }
+        }
+
+        private double Truncate(double value)
+        {
+            return (double)Math.Truncate((decimal)(100 * value)) / 100;
         }
 
         private static readonly string[] tabNote = new string[]

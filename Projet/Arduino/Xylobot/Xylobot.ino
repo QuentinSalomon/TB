@@ -206,7 +206,7 @@ void ReadDataMessage() {
     case ReceiveType_SpeedFactor : //Music speed
       SpeedFactorMsg(dataSize);
       break;
-    case ReceiveType_HitTimeKey : //Key hit time
+    case ReceiveType_KeyHitTime : //Key hit time
       TimeHitKeyMsg(dataSize);
       break;
     default:

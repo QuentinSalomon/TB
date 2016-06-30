@@ -32,12 +32,12 @@
                 <Border BorderBrush="{x:Null}" Background="Gray" Height="30" Margin="5,0,0,0">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock TextWrapping="Wrap" Text="Hit time : " Foreground="White" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="TextBlockHitTime" TextWrapping="Wrap" Text="9.5" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TextBlockHitTime" TextWrapping="Wrap" Text="10.5" Width="30" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
                         <TextBlock TextWrapping="Wrap" Text="ms" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Border>
-                <Button x:Name="ButtonLessSpeed" Width="30" Height="30" Background="Orange" Click="ButtonLessSpeed_Click"/>
-                <Button x:Name="ButtonMoreSpeed" Width="30" Height="30" Background="ForestGreen" Click="ButtonMoreSpeed_Click"/>
+                <Button x:Name="ButtonLessTime" Width="30" Height="30" Background="Orange" Click="ButtonLessTime_Click"/>
+                <Button x:Name="ButtonMoreTime" Width="30" Height="30" Background="ForestGreen" Click="ButtonMoreTime_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="ButtonPrevious" Width="30" HorizontalAlignment="Right" Background="CornflowerBlue" Click="ButtonPrevious_Click"/>
