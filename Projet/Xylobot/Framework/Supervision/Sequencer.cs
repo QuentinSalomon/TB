@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace Framework
@@ -120,6 +121,24 @@ namespace Framework
         private double _speedPlay;
         public const string SpeedPlayPropertyName = "SpeedPlay";
 
+        [ConceptViewVisible(true)]
+        [IntlConceptName("Framework.Sequencer.PartititionProgress", "PartititionProgress")]
+        public double PartititionProgress
+        {
+            get { return (double)Xylobot.ArduinoCurrentTick / CurrentPartition.Notes[CurrentPartition.Notes.Count-1].Tick; }
+            private set
+            {
+                //todo : Changer
+                if (_partititionProgress != value)
+                {
+                    _partititionProgress = value;
+                    DoPropertyChanged(PartititionProgressPropertyName);
+                }
+            }
+        }
+        private double _partititionProgress;
+        public const string PartititionProgressPropertyName = "PartititionProgress";
+
         public ObservableCollection<string> Errors { get; set; }
 
         #endregion
@@ -135,10 +154,10 @@ namespace Framework
                 switch (_actionsThread)
                 {
                     case ActionsThread.PlayPlaylist:
-                        _actionsThread = ActionsThread.Nothing;
 
                         PlayPlaylist(Playlist);
-                        _stop = false; //reset le stop au cas ou la fonction s'est termninée avvec un stop
+                        _actionsThread = ActionsThread.Nothing;
+                        _stop = false; //reset le stop au cas ou la fonction s'est termninée avec un stop
                         break;
                     case ActionsThread.PlayOneNote:
                         _actionsThread = ActionsThread.Nothing;
@@ -252,19 +271,21 @@ namespace Framework
                 {
                     if (!_stop)
                     {
-                        CurrentPartition = p;
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                            CurrentPartition = p)); 
                         PlayPartition(p);
                     }
                     else {
-                        //CurrentPartition = null;
                         break;
                     }
                 }
-                CurrentPartition = null;
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                    CurrentPartition = null));
+
             }
             catch (Exception e)
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => this.Errors.Add(e.Message)));
+                Application.Current.Dispatcher.Invoke(new Action(() => this.Errors.Add(e.Message)));
             }
 
         }
@@ -272,18 +293,13 @@ namespace Framework
         public void PlayPause()
         {
             if (_actionsThread == ActionsThread.Nothing)
+            {
+                _pause = false;
                 _actionsThread = ActionsThread.PlayPlaylist;
+            }
             else
                 _pause = !_pause;
         }
-
-        //public void PlayNote(Note n)
-        //{
-        //    _noteToPlay = n;
-        //    _actionsThread = ActionsThread.PlayOneNote;
-        //    if(!_stop) //Arrête si une playlist est en cours de lecture
-        //        Stop();
-        //}
 
         public void ChangeKeyHitTime(Note n, double hitTime)
         {

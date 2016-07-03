@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ocf.Native</name>
+    </assembly>
+    <members>
+        <member name="T:Ocf.Native.OcfMonitoringNative">
+            <summary>
+            Class OcfMonitoringNative
+            </summary>
+        </member>
+        <member name="M:Ocf.Native.OcfMonitoringNative.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ocf.Native.OcfMonitoringNative"/> class.
+            The monitoring native use a Udp connection.
+            </summary>
+            <param name="port">The WCF monitoring server port.</param>
+        </member>
+        <member name="M:Ocf.Native.OcfMonitoringNative.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="P:Ocf.Native.OcfMonitoringNative.Thread">
+            <summary>
+            Gets the thread.
+            </summary>
+            <value>The thread.</value>
+        </member>
+        <member name="T:Ocf.Native.OcfConnectionNativeTcpAesEditor">
+            <summary>
+            Interaction logic for OcfConnectionNativeTcpAesEditor.xaml
+            </summary>
+            <summary>
+            OcfConnectionNativeTcpAesEditor
+            </summary>
+        </member>
+        <member name="M:Ocf.Native.OcfConnectionNativeTcpAesEditor.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Ocf.Native.DynamicInvocationClientChannel.Lock(System.TimeSpan)">
+            <summary>	Locks. </summary>
+            <param name="timeOut">	(optional) the time out. </param>
+            <returns>	true if it succeeds, false if it timeout occurs. </returns>
+        </member>
+        <member name="M:Ocf.Native.DynamicInvocationClientChannel.PerformInvocation(System.TimeSpan)">
+            <summary>	Perform invocation. </summary>
+            <param name="timeOut">	(optional) the time out. </param>
+            <returns>	true if it succeeds, false if it timeout occurs. </returns>
+        </member>
+        <member name="M:Ocf.Native.DynamicInvocationClientChannel.Unlock">
+            <summary>	Unlocks this object. </summary>
+        </member>
+        <member name="P:Ocf.Native.DynamicInvocationClientChannel.InvocationRequest">
+            <summary>	Gets the invocation request. </summary>
+            <returns>	The invocation request. </returns>
+        </member>
+        <member name="P:Ocf.Native.DynamicInvocationClientChannel.InvocationResult">
+            <summary>	Gets the invocation result. </summary>
+            <returns>	The invocation result. </returns>
+        </member>
+        <member name="T:Ocf.Native.OcfConnectionNativeUDPAesEditor">
+            <summary>
+            Interaction logic for OcfConnectionRtsUDPAesEditor.xaml
+            </summary>
+            <summary>
+            OcfConnectionNativeUDPAesEditor
+            </summary>
+        </member>
+        <member name="M:Ocf.Native.OcfConnectionNativeUDPAesEditor.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Ocf.Native.OcfConnectionNativeTcpEditor">
+            <summary>
+            Interaction logic for OcfConnectionRtsTCPEditor.xaml
+            </summary>
+            <summary>
+            OcfConnectionNativeTcpEditor
+            </summary>
+        </member>
+        <member name="M:Ocf.Native.OcfConnectionNativeTcpEditor.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Ocf.Native.OcfConnectionNativeUDPEditor">
+            <summary>
+            Interaction logic for OcfConnectionRtsUDPEditor.xaml
+            </summary>
+            <summary>
+            OcfConnectionNativeUDPEditor
+            </summary>
+        </member>
+        <member name="M:Ocf.Native.OcfConnectionNativeUDPEditor.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Ocf.Native.OcfConnectionNativeSharedMemoryEditor">
+            <summary>
+            Interaction logic for OcfConnectionRtSharedMemoryEditor.xaml
+            </summary>
+            <summary>
+            OcfConnectionNativeSharedMemoryEditor
+            </summary>
+        </member>
+        <member name="M:Ocf.Native.OcfConnectionNativeSharedMemoryEditor.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>

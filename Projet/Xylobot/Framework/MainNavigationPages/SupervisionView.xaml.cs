@@ -59,5 +59,15 @@ namespace Framework
         {
             (DataContext as SupervisionViewModel).Sequencer.Stop();
         }
+
+        private void ButtonPlayPause_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as SupervisionViewModel).Sequencer.PlayPause();
+        }
+
+        private void ButtonStop_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as SupervisionViewModel).Sequencer.Stop();
+        }
     }
 }

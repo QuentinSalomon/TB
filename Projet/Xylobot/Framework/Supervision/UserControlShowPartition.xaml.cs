@@ -172,7 +172,7 @@ namespace Framework
                     rect.Visibility = Visibility.Visible;
                     CanvasNotes.Children.Add(rect);
                     Canvas.SetLeft(rect, note.Tick / 10);
-                    Canvas.SetBottom(rect, (note.Octave * Xylobot.octaveSize + note.High) * rectangleNoteSize);
+                    Canvas.SetBottom(rect, ((note.Octave - Xylobot.startOctaveXylophone) * Xylobot.octaveSize + note.High) * rectangleNoteSize);
 
                     maxTick = maxTick < note.Tick ? note.Tick : maxTick;
                 }
@@ -208,6 +208,8 @@ namespace Framework
             }
         }
 
+        
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ClearKeys();
@@ -215,15 +217,14 @@ namespace Framework
 
             InitNotesView();
 
-            INotifyPropertyChanged viewModel = DataContext as INotifyPropertyChanged;
-            if (viewModel != null)
-                viewModel.PropertyChanged += new PropertyChangedEventHandler(DataContextPropertyChangedEventHandler);
+            ((UserControlShowPartitionModel)DataContext).Sequencer.PropertyChanged += DataContextPropertyChangedEventHandler;
 
             //UserControlShowPartitionModel viewModel = DataContext as UserControlShowPartitionModel;
             //viewModel.PropertyChanged += DataContextPropertyChangedEventHandler;
             //viewModel.DoPropertyChanged("UserControlShowPartitionModel");
         }
 
+        
         private void DataContextPropertyChangedEventHandler(object sender, PropertyChangedEventArgs e)
         {
             ShowPartition();

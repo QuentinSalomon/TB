@@ -11,7 +11,6 @@ namespace Framework
         public SupervisionViewModel()
         {
             UserControlShowPartitionModel = new UserControlShowPartitionModel();
-            //UserControlShowPartitionModel.Partition = Sequencer.CurrentPartition;
         }
 
         public Sequencer Sequencer { get { return FrameworkController.Instance.Sequencer; } }

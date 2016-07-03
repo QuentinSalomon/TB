@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Concept.OcfApi</name>
+    </assembly>
+    <members>
+        <member name="T:Ocf.OcfApi">
+            <summary>
+            Class OcfApi
+            </summary>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfEmbeddedComClient(System.String,Ocf.Embedded.SerialDataBaudRate,System.Int32,Ocf.Embedded.SerialDataLength,System.IO.Ports.Handshake,System.IO.Ports.Parity,System.IO.Ports.StopBits)">
+            <summary>
+            Creates a Ocf embedded client with COM transfer. An ocf client allows to connect to a 
+            remote data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="portName">Name of the port COM.</param>
+            <param name="rate">The rate of the port COM.</param>
+            <param name="timeout">The timeout of the connection.</param>
+            <param name="length">The length of the data.</param>
+            <param name="handShake">The hand shake.</param>
+            <param name="parity">The parity.</param>
+            <param name="stopBits">The stop bits.</param>
+            <returns>A dynamic representing the remote model</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfEmbeddedUdpClient(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates a OCF embedded client with UDP transfert. An ocf client allows to connect to a 
+            remote data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="hostName">Name of the host.</param>
+            <param name="port">The port.</param>
+            <param name="timeout">The timeout.</param>
+            <returns>A dynamic representing the remote model</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfWcfClient(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates the OCF-WCF client for connexion to .Net applications. An ocf client allows to connect to a 
+            remote data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="hostName">Name of the host.</param>
+            <param name="port">The port.</param>
+            <param name="timeout">The timeout.</param>
+            <returns>A dynamic representing the remote model</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfAdsClient(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates a OCF-ADS client for connexion to Beckhoff PLC. An ocf client allows to connect to a 
+            remote data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="netId">The net id.</param>
+            <param name="port">The port.</param>
+            <param name="timeout">The timeout.</param>
+            <returns>A dynamic representing the remote model</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfNativeUdpClient(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates the Ocf-Native client with UDP transfer. An ocf client allows to connect to a 
+            remote data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="hostName">Name of the host.</param>
+            <param name="port">The port.</param>
+            <param name="timeout">The timeout.</param>
+            <returns>A dynamic representing the remote model</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfNativeTcpClient(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates the Ocf-Native client with TCP transfer. An ocf client allows to connect to a 
+            remote data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="hostName">Name of the host.</param>
+            <param name="port">The port.</param>
+            <param name="timeout">The timeout.</param>
+            <returns>A dynamic representing the remote model</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfNativeUdpEncryptedClient(System.String,System.Int32,System.String,System.Int32)">
+            <summary>
+            Creates the Ocf-Native client with UDP transfer with encryption. An ocf client allows to connect to a 
+            remote data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="hostName">Name of the host.</param>
+            <param name="port">The port.</param>
+            <param name="passPhrase">Pass phrase.</param>
+            <param name="timeout">The timeout.</param>
+            <returns>A dynamic representing the remote model</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfNativeTcpEncryptedClient(System.String,System.Int32,System.String,System.Int32)">
+            <summary>
+            Creates the Ocf-Native client with TCP transfer with encryption. An ocf client allows to connect to a 
+            remote data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="hostName">Name of the host.</param>
+            <param name="port">The port.</param>
+            <param name="passPhrase">Pass phrase.</param>
+            <param name="timeout">The timeout.</param>
+            <returns>A dynamic representing the remote model</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfWcfServer(System.Int32,System.Object,Ocf.InvocationAccess,System.Int32)">
+            <summary>
+            Creates the OCF WCF server. An ocf server allows to share a 
+            data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="port">The port.</param>
+            <param name="targetObject">The target object to be reach from the client.</param>       
+            <param name="access">The access.</param>
+            <param name="messageSize">Size of the message.</param>
+            <returns>A dynamic representing the server</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfNativeUdpServer(System.Int32,System.Object,Ocf.InvocationAccess)">
+            <summary>
+            Creates the Ocf Native Upd server. An ocf server allows to share a 
+            data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="port">The port.</param>
+            <param name="targetObject">The target object to be reach from the client.</param>       
+            <param name="access">The access.</param>
+            <param name="messageSize">Size of the message.</param>
+            <returns>A dynamic representing the server</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfNativeUdpEncryptedServer(System.Int32,System.String,System.Object,Ocf.InvocationAccess)">
+            <summary>
+            Creates the Ocf Native Upd server. An ocf server allows to share a 
+            data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="port">The port.</param>
+            <param name="passPhrase">Pass phrase.</param>
+            <param name="targetObject">The target object to be reach from the client.</param>       
+            <param name="access">The access.</param>
+            <param name="messageSize">Size of the message.</param>
+            <returns>A dynamic representing the server</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfNativeTcpServer(System.Int32,System.Object,Ocf.InvocationAccess)">
+            <summary>
+            Creates the Ocf Native Tcp server with encryption. An ocf server allows to share a 
+            data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="port">The port.</param>
+            <param name="targetObject">The target object to be reach from the client.</param>       
+            <param name="access">The access.</param>
+            <param name="messageSize">Size of the message.</param>
+            <returns>A dynamic representing the server</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.CreateOcfNativeTcpEncryptedServer(System.Int32,System.String,System.Object,Ocf.InvocationAccess)">
+            <summary>
+            Creates the Ocf Native Tcp server with encryption. An ocf server allows to share a 
+            data model and invoke dynamically properties and methods.
+            </summary>
+            <param name="port">The port.</param>
+            <param name="passPhrase">Pass phrase.</param>
+            <param name="targetObject">The target object to be reach from the client.</param>       
+            <param name="access">The access.</param>
+            <param name="messageSize">Size of the message.</param>
+            <returns>A dynamic representing the server</returns>
+        </member>
+        <member name="M:Ocf.OcfApi.ExecuteOcfServer(Ocf.OcfApiServer,System.TimeSpan)">
+            <summary>
+            Executes the OCF server. This method must be called cyclically.
+            </summary>
+            <param name="server">The server.</param>
+            <param name="reflector">The reflector.</param>
+        </member>
+        <member name="M:Ocf.OcfApi.ExecuteOcfServer(Ocf.OcfApiServer)">
+            <summary>
+            Executes the OCF server. This method must be called cyclically.
+            </summary>
+            <param name="server">The server.</param>
+            <param name="reflector">The reflector.</param>
+        </member>
+        <member name="M:Ocf.OcfApi.RegisterLicense(System.String,System.String)">
+            <summary>
+            Registers the license to use OcfApi without time limitation.
+            </summary>
+            <param name="companyName">Name of the company.</param>
+            <param name="key">The key.</param>
+        </member>
+        <member name="T:Ocf.OcfApiFeature">
+            <summary>
+            Enum OcfApiFeature
+            </summary>
+        </member>
+        <member name="F:Ocf.OcfApiFeature.ClientOcf">
+            <summary>
+            The client Ocf (ADS, OcfE, Native, WPF)
+            </summary>
+        </member>
+        <!-- Commentaire XML incorrect ignoré pour le membre "F:Ocf.OcfApiFeature.ClientOcfSecured" -->
+        <member name="T:Ocf.OcfApiDuration">
+            <summary>
+            Enum OcfApiDuration
+            </summary>
+        </member>
+        <member name="F:Ocf.OcfApiDuration.Unlimited">
+            <summary>
+            The unlimited
+            </summary>
+        </member>
+        <member name="F:Ocf.OcfApiDuration.Days365">
+            <summary>
+            The 365 days
+            </summary>
+        </member>
+        <member name="F:Ocf.OcfApiDuration.Days180">
+            <summary>
+            The 180 days
+            </summary>
+        </member>
+        <member name="F:Ocf.OcfApiDuration.Days90">
+            <summary>
+            The 90 days
+            </summary>
+        </member>
+        <member name="F:Ocf.OcfApiDuration.Days30">
+            <summary>
+            The 30 days
+            </summary>
+        </member>
+        <member name="F:Ocf.OcfApiDuration.Days14">
+            <summary>
+            The 14 days
+            </summary>
+        </member>
+        <member name="F:Ocf.OcfApiDuration.Minutes5">
+            <summary>
+            The 5 minutes
+            </summary>
+        </member>
+    </members>
+</doc>
