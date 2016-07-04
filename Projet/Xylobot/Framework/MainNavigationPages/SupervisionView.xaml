@@ -18,24 +18,23 @@
 
         <local:UserControlProgressBarMusic Grid.Row="1" Margin="5"/>
 
-        <Rectangle Fill="Gray" Grid.Row="2" Margin="5"/>
-        <Grid Grid.Row="2" Margin="8">
+        <!--<Rectangle Fill="Gray" Grid.Row="2" Margin="5"/>-->
+        <Grid Grid.Row="2" Margin="8" Background="Gray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!--<Image x:Name="ImagePrevious" Source="Framework//Images//Previous32x32.png" Grid.Column="0" HorizontalAlignment="Center"/>-->
-            <Image x:Name="ImagePlay" Source="Framework//Images//Play32x32.png" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,30,0" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown"/>
-            <Image x:Name="ImagePause" Source="Framework//Images//Pause32x32.png" Grid.Column="1" HorizontalAlignment="Center" Margin="30,0,0,0" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown"/>
-            <Image x:Name="ImageStop" Source="Framework//Images//Stop32x32.png" Grid.Column="0" HorizontalAlignment="Center" MouseLeftButtonDown="ImageStop_MouseLeftButtonDown"/>
-            <Image x:Name="ImageNext" Source="Framework//Images//Next32x32.png" Grid.Column="2" HorizontalAlignment="Center" MouseLeftButtonDown="ImageNext_MouseLeftButtonDown"/>
+            <Image x:Name="ImagePlay" Width="20" Height="20" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,30,0" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown" Source="/Framework;component/Images/Play32x32.png"/>
+            <Image x:Name="ImagePause" Width="20" Height="20" Grid.Column="1" HorizontalAlignment="Center" Margin="30,0,0,0" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown" Source="/Framework;component/Images/Pause32x32.png"/>
+            <Image x:Name="ImageStop" Width="20" Height="20" Grid.Column="0" HorizontalAlignment="Center" MouseLeftButtonDown="ImageStop_MouseLeftButtonDown" Source="/Framework;component/Images/Stop32x32.png"/>
+            <Image x:Name="ImageNext" Width="20" Height="20" Grid.Column="2" HorizontalAlignment="Center" MouseLeftButtonDown="ImageNext_MouseLeftButtonDown" Source="/Framework;component/Images/Next32x32.png"/>
         </Grid>
         
         <StackPanel Grid.Row="3" Orientation="Horizontal">
             <Button Content="Play/Pause" Click="ButtonPlayPause_Click" Command="{Binding Path=Sequencer.CommandPlayPlaylist}" Width="70" Height="30" Margin="5,0,0,0"/>
             <Button Content="Stop" Click="ButtonStop_Click" Command="{Binding Path=Sequencer.CommandStop}" Width="70" Height="30" Margin="5,0,0,0"/>
-            <!--<Button Content="Init" Command="{Binding Path=Sequencer.CommandInit}" Width="70" Height="30" Margin="5,0,0,0"/>-->
             <Border BorderBrush="{x:Null}" Background="Gray" Height="30" Margin="5,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock TextWrapping="Wrap" Text="Speed : " Foreground="White" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>

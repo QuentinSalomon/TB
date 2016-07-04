@@ -1,0 +1,164 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:concept="http://www.objectis.ch/concept">
+
+    <DataTemplate x:Key="ItemTemplate">
+        <DockPanel x:Name="DockPanelButton"
+                    HorizontalAlignment="Center" 
+                    Background="Blue"
+                    Width="100" Height="100" Margin="10,10">
+            <Image Source="{Binding Path=(concept:NavigationControl.MenuImageSource)}"
+                                       Visibility="{Binding Source, RelativeSource={RelativeSource self}, Converter={concept:NullableToVisibilityConverter}}"
+                                       Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <!--<TextBlock x:Name="MenuTitleText" Text="{Binding Path=(concept:NavigationControl.MenuTitle)}" TextWrapping="Wrap"
+                       Foreground="{DynamicResource LightBrush}"
+                       HorizontalAlignment="Center" Margin="5" TextAlignment="Center"
+                       FontSize="{DynamicResource SubTitleFontSize}"/>-->
+
+        </DockPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabItem}}}" Value="True">
+                <!--<Setter Property="IsEnabled" Value="False"/>-->
+                <Setter TargetName="DockPanelButton" Property="Background" Value="DarkBlue"/>
+                <!--<Setter TargetName="MenuTitleText" Property="Foreground" Value="{DynamicResource DisableBrush}"/>-->
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <Style x:Key="NavigationControlStyle" TargetType="concept:NavigationControl">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource NavigationBorderBrush}"/>
+        <Setter Property="NavigationBarBackground" Value="Transparent"/> 
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="TabStripPlacement" Value="Top"/>
+        <Setter Property="Transition" Value="None"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type concept:NavigationControl}">
+                    <Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="ColumnDefinition0"/>
+                            <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                            <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border x:Name="HeaderPanel" 
+                                Panel.ZIndex="1"
+                                Grid.Column="0" Grid.Row="0"
+                                BorderThickness="0,0,0,1"
+                                BorderBrush="{TemplateBinding BorderBrush}"  
+                                Background="{TemplateBinding NavigationBarBackground}">
+                            <StackPanel x:Name="NavigationControlPanel" IsItemsHost="True" Orientation="Horizontal" />
+                        </Border>
+
+                        <Border x:Name="ContentPanel" 
+                                Grid.Column="0" Grid.Row="1"
+                                Margin="{TemplateBinding Padding}"
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}"
+                                KeyboardNavigation.DirectionalNavigation="Contained" 
+                                KeyboardNavigation.TabIndex="2" 
+                                KeyboardNavigation.TabNavigation="Local">
+                            <concept:MultiContentDisplayer ItemsSource="{Binding Items, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           SelectedItem="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           ItemTemplate="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           Transition="{Binding Transition, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           CustomTransition="{Binding CustomTransition, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           TransitionDuration="{Binding TransitionDuration, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           IsTouchTransitionEnabled="{Binding IsTouchTransitionEnabled, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           TouchDeltaToStartTransition="{Binding TouchDeltaToStartTransition, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           TouchTransitionPointsNumber="{Binding TouchTransitionPointsNumber, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </Border>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="TabStripPlacement" Value="Left">
+                            <Setter Property="Orientation" TargetName="NavigationControlPanel" Value="Horizontal"/>
+                            <Setter Property="BorderThickness" TargetName="HeaderPanel" Value="0,0,0,1"/>
+                            <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+                            <Setter Property="Grid.Column" TargetName="HeaderPanel" Value="0"/>
+                            <Setter Property="Grid.Row" TargetName="ContentPanel" Value="1"/>
+                            <Setter Property="Grid.Column" TargetName="ContentPanel" Value="0"/>
+                            <Setter Property="Height" TargetName="RowDefinition0" Value="Auto"/>
+                            <Setter Property="Height" TargetName="RowDefinition1" Value="*"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Bottom">
+                            <Setter Property="Orientation" TargetName="NavigationControlPanel" Value="Horizontal"/>
+                            <Setter Property="BorderThickness" TargetName="HeaderPanel" Value="0,1,0,0"/>
+                            <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="1"/>
+                            <Setter Property="Grid.Column" TargetName="HeaderPanel" Value="0"/>
+                            <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+                            <Setter Property="Grid.Column" TargetName="ContentPanel" Value="0"/>
+                            <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                            <Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Left">
+                            <Setter Property="Orientation" TargetName="NavigationControlPanel" Value="Vertical"/>
+                            <Setter Property="BorderThickness" TargetName="HeaderPanel" Value="0,0,1,0"/>
+                            <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+                            <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+                            <Setter Property="Grid.Column" TargetName="HeaderPanel" Value="0"/>
+                            <Setter Property="Grid.Column" TargetName="ContentPanel" Value="1"/>
+                            <Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
+                            <Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
+                            <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                            <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Right">
+                            <Setter Property="Orientation" TargetName="NavigationControlPanel" Value="Vertical"/>
+                            <Setter Property="BorderThickness" TargetName="HeaderPanel" Value="1,0,0,0"/>
+                            <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+                            <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+                            <Setter Property="Grid.Column" TargetName="HeaderPanel" Value="1"/>
+                            <Setter Property="Grid.Column" TargetName="ContentPanel" Value="0"/>
+                            <Setter Property="Width" TargetName="ColumnDefinition0" Value="*"/>
+                            <Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
+                            <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                            <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <UniformGrid IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="TabItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+                    <Setter Property="Visibility" Value="{Binding Visibility}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}" >
+                                <ContentPresenter x:Name="Content" 
+                                                  ContentTemplate="{StaticResource ItemTemplate}" 
+                                                  Content="{TemplateBinding DataContext}" 
+                                                  ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                  ContentSource="DataContext" 
+                                                  HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" 
+                                                  RecognizesAccessKey="True" 
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                  VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource NavigationControlStyle}" TargetType="concept:NavigationControl" />
+
+</ResourceDictionary>

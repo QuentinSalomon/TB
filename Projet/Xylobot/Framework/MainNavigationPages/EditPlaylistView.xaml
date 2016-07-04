@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Playlist.Title}" Height="30" Background="DeepSkyBlue"/>
+        <TextBlock Text="{Binding Path=Playlist.Title}" Height="30" Background="DeepSkyBlue"/>
         <!--<ListBox x:Name="ListboxErrors" Grid.Row="1" Visibility="Visible"></ListBox>-->
         <!--<concept:ConceptStaticListEditor CanAdd="False" ConceptList="{Binding Path=Playlist.Partitions}" Grid.Row="1"/>-->
         <ListBox Name="ListBoxPlaylist" HorizontalContentAlignment="Stretch" SelectionMode="Extended" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}">

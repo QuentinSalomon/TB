@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Framework
@@ -49,6 +50,7 @@ namespace Framework
         {
             while (!IsInit && !AbortInit)
             {
+                Thread.Sleep(1000);
                 try
                 {
                     XyloCommunication.Init();

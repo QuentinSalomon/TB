@@ -122,22 +122,21 @@ namespace Framework
         public const string SpeedPlayPropertyName = "SpeedPlay";
 
         [ConceptViewVisible(true)]
-        [IntlConceptName("Framework.Sequencer.PartititionProgress", "PartititionProgress")]
-        public double PartititionProgress
+        [IntlConceptName("Framework.Sequencer.PartitionProgress", "PartitionProgress")]
+        public double PartitionProgress
         {
-            get { return (double)Xylobot.ArduinoCurrentTick / CurrentPartition.Notes[CurrentPartition.Notes.Count-1].Tick; }
+            get { return _partitionProgress; }
             private set
             {
-                //todo : Changer
-                if (_partititionProgress != value)
+                if (_partitionProgress != value)
                 {
-                    _partititionProgress = value;
-                    DoPropertyChanged(PartititionProgressPropertyName);
+                    _partitionProgress = value;
+                    DoPropertyChanged(PartitionProgressPropertyName);
                 }
             }
         }
-        private double _partititionProgress;
-        public const string PartititionProgressPropertyName = "PartititionProgress";
+        private double _partitionProgress;
+        public const string PartitionProgressPropertyName = "PartitionProgress";
 
         public ObservableCollection<string> Errors { get; set; }
 
@@ -229,6 +228,9 @@ namespace Framework
                         k += i;
                         //Envoie des notes et recupération
                         Xylobot.SendNotes(notes);
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                            PartitionProgress = (double)Xylobot.ArduinoCurrentTick / CurrentPartition.Notes[CurrentPartition.Notes.Count - 1].Tick
+                        ));
                         notes.Clear();
                         Thread.Sleep(50);
                     }
