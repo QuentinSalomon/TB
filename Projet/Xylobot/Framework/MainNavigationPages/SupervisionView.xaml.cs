@@ -62,12 +62,12 @@ namespace Framework
 
         private void ButtonPlayPause_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as SupervisionViewModel).Sequencer.PlayPause();
+            //(DataContext as SupervisionViewModel).Sequencer.PlayPause();
         }
 
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as SupervisionViewModel).Sequencer.Stop();
+            //(DataContext as SupervisionViewModel).Sequencer.Stop();
         }
     }
 }

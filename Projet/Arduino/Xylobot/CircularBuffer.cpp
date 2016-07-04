@@ -57,8 +57,6 @@ byte CircularBuffer::SizeAvailable()
 
 void CircularBuffer::Clear()
 {
-//  for(int i=0; i<BUFFER_SIZE; i++)
-//    _buffer[i] = NULL;
   _iWrite = 0;
   _iRead = 0;
   _full = false;

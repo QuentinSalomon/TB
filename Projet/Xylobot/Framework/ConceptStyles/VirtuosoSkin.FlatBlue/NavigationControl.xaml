@@ -2,14 +2,21 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:concept="http://www.objectis.ch/concept">
 
+    <SolidColorBrush x:Key="ColorsVirtuosoBlue">#FF2672EC</SolidColorBrush>
+    <SolidColorBrush x:Key="ColorsVirtuosoDarkBlue">#FF002060</SolidColorBrush>
+    <SolidColorBrush x:Key="ColorsVirtuosoGreen">#FF00A600</SolidColorBrush>
+    <SolidColorBrush x:Key="ColorsVirtuosoOrange">#FFF59B00</SolidColorBrush>
+    <SolidColorBrush x:Key="ColorsVirtuosoPurple">#FF7030A0</SolidColorBrush>
+    <SolidColorBrush x:Key="ColorsVirtuosoRed">#FFC00000</SolidColorBrush>
+
     <DataTemplate x:Key="ItemTemplate">
         <DockPanel x:Name="DockPanelButton"
                     HorizontalAlignment="Center" 
-                    Background="Blue"
-                    Width="100" Height="100" Margin="10,10">
+                    Background="{DynamicResource ColorsVirtuosoBlue}"
+                    Width="100" Height="50" Margin="5,5">
             <Image Source="{Binding Path=(concept:NavigationControl.MenuImageSource)}"
                                        Visibility="{Binding Source, RelativeSource={RelativeSource self}, Converter={concept:NullableToVisibilityConverter}}"
-                                       Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                       Width="64" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <!--<TextBlock x:Name="MenuTitleText" Text="{Binding Path=(concept:NavigationControl.MenuTitle)}" TextWrapping="Wrap"
                        Foreground="{DynamicResource LightBrush}"
                        HorizontalAlignment="Center" Margin="5" TextAlignment="Center"
@@ -19,16 +26,16 @@
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabItem}}}" Value="True">
                 <!--<Setter Property="IsEnabled" Value="False"/>-->
-                <Setter TargetName="DockPanelButton" Property="Background" Value="DarkBlue"/>
+                <Setter TargetName="DockPanelButton" Property="Background" Value="{DynamicResource ColorsVirtuosoDarkBlue}"/>
                 <!--<Setter TargetName="MenuTitleText" Property="Foreground" Value="{DynamicResource DisableBrush}"/>-->
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 
     <Style x:Key="NavigationControlStyle" TargetType="concept:NavigationControl">
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="LightGray"/>
         <Setter Property="BorderBrush" Value="{DynamicResource NavigationBorderBrush}"/>
-        <Setter Property="NavigationBarBackground" Value="Transparent"/> 
+        <Setter Property="NavigationBarBackground" Value="LightGray"/> 
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="TabStripPlacement" Value="Top"/>

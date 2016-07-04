@@ -27,6 +27,7 @@ namespace Framework
         // TODO : Ajuster la vitesse
         const Int32 BaudRate = 57600, SizeHeadMessage = 5, TimeOut = 3000;
         const int SizeOctave = 12, StartOctaveXylophone = 5;
+
         #endregion
 
         #region Constructor
@@ -34,10 +35,9 @@ namespace Framework
         public XyloCommunication()
         {
             _numMessage = 0;
-            // TODO : rendre configurable
-            PortName = "COM5";
+            _portName = _defaultPortName;
             _serialPort = new SerialPort();
-            _serialPort.PortName = SetPortName();
+            _serialPort.PortName = _portName;
             _serialPort.BaudRate = BaudRate;
             _serialPort.ReadTimeout = TimeOut;
             _serialPort.WriteTimeout = TimeOut;
@@ -52,10 +52,8 @@ namespace Framework
         #region Propriétés
 
         public byte ArduinoNoteSizeAvaible { get; private set; }
-        public UInt32 ArduinoCurrentTick { get; private set; }
 
-        // TODO : a mettre dans un fichier de configuration
-        public string PortName { get; set; }
+        public UInt32 ArduinoCurrentTick { get; private set; }        
 
         #endregion
 
@@ -211,13 +209,11 @@ namespace Framework
         }
 
         // Display Port values and prompt user to enter a port.
-        public static string SetPortName()
+        public bool? SetPortName()
         {
-            string portName = "COM5";
-            string defaultPortName = "COM5";
             WindowSelectUsbPort windowUsbPort = new WindowSelectUsbPort();
-            windowUsbPort.Execute(ref portName, defaultPortName);
-            return portName;
+            windowUsbPort.Execute(ref _portName, _defaultPortName);
+            return windowUsbPort.DialogResult;
         }   
 
         #endregion
@@ -225,6 +221,8 @@ namespace Framework
         #region Private
 
         private SerialPort _serialPort;
+        private string _portName;
+        private const string _defaultPortName = "COM5";
         private byte _numMessage;
 
         #endregion

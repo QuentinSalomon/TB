@@ -32,7 +32,6 @@ namespace Framework
         public UserControlShowPartition()
         {
             InitializeComponent();
-            //DataContext = new UserControlShowPartitionModel();
         }
 
         public void InitKeys()
@@ -157,10 +156,10 @@ namespace Framework
         {
             ReleaseDrawPartition();
 
-            if ((DataContext as UserControlShowPartitionModel).Sequencer.CurrentPartition != null)
+            if ((DataContext as Sequencer).CurrentPartition != null)
             {
                 int maxTick = 0;
-                foreach (Note note in (DataContext as UserControlShowPartitionModel).Sequencer.CurrentPartition.Notes)
+                foreach (Note note in (DataContext as Sequencer).CurrentPartition.Notes)
                 {
                     Rectangle rect = new Rectangle();
                     rect.Width = rectangleNoteSize;
@@ -208,8 +207,6 @@ namespace Framework
             }
         }
 
-        
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ClearKeys();
@@ -217,15 +214,16 @@ namespace Framework
 
             InitNotesView();
 
-            ((UserControlShowPartitionModel)DataContext).Sequencer.PropertyChanged += DataContextPropertyChangedEventHandler;
-
-            //UserControlShowPartitionModel viewModel = DataContext as UserControlShowPartitionModel;
-            //viewModel.PropertyChanged += DataContextPropertyChangedEventHandler;
-            //viewModel.DoPropertyChanged("UserControlShowPartitionModel");
+            //((UserControlShowPartitionModel)DataContext).Sequencer.PropertyChanged += DataContextPropertyChangedEventHandler;
         }
 
         
         private void DataContextPropertyChangedEventHandler(object sender, PropertyChangedEventArgs e)
+        {
+            ShowPartition();
+        }
+
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ShowPartition();
         }

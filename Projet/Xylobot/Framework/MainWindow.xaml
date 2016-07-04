@@ -3,16 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:concept="http://www.objectis.ch/concept"
         xmlns:local="clr-namespace:Framework"
-        Title="MyMachine" Height="400" Width="600">
-      
+        Title="Virtuoso" FontFamily="Segoe UI Light" FontSize="20"  Height="400" Width="600">
+       
     <Grid>
-        <concept:NavigationControl NavigationBarDock="Top" Transition="Fade" Opacity="0.9" OpacityMask="DeepSkyBlue" Margin="2,2,2,2">
+        <concept:NavigationControl NavigationBarDock="Top" Transition="Fade">
 
             <local:HomeView concept:NavigationControl.MenuTitle="Home"
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/Home32x32.png"/>
             <local:SupervisionView concept:NavigationControl.MenuTitle="Supervision" 
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/Supervision32x32.png"
                                 DataContext="{Binding Path=SupervisionViewModel}"/>
+            <local:CurrentPlaylistView concept:NavigationControl.MenuTitle="Current Playlist"
+                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/CurrentPlay64x32.png"/>
             <local:EditPlaylistView concept:NavigationControl.MenuTitle="Playlist" 
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/Playlist32x32.png"
                                 DataContext="{Binding Path=EditPlaylistViewModel}"/>

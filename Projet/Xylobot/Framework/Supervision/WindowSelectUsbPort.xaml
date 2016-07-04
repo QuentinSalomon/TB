@@ -19,9 +19,9 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock x:Name="TextBlockTitle" Text="Select usb port" Margin="0,0,0,5" Background="ForestGreen" Foreground="White" FontFamily="Segoe UI Light" FontSize="18" Grid.ColumnSpan="3"/>
-        <ListBox x:Name="ListBoxPortName" Grid.ColumnSpan="3" Grid.Row="1" Background="Gray"/>
+        <ListBox x:Name="ListBoxPortName" Grid.ColumnSpan="3" Grid.Row="1" Background="Gray" SelectionChanged="ListBoxPortName_SelectionChanged"/>
 
         <Button Content="Cancel" Grid.Row="2" Grid.Column="2" Click="ButtonCancel_Click" IsCancel="True"/>
-        <Button Content="Ok" Grid.Row="2" Grid.Column="1" Click="ButtonOk_Click"/>
+        <Button x:Name="ButtonOk" Content="Ok" IsEnabled="False" Grid.Row="2" Grid.Column="1" Click="ButtonOk_Click"/>
     </Grid>
 </Window>

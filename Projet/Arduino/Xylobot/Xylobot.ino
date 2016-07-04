@@ -12,7 +12,7 @@ byte headMessage[HEAD_RECEIVE_MSG_SIZE];
 
 /*I2C*/
 I2CXylo i2cXylo;
-unsigned long currentTick=4294967295, startTime=0; //0xFFFFFFFF
+unsigned long currentTick=0xFFFFFFFF, startTime=0;
 bool play=false;
 KeyXylophone keysXylophone[NOTE_COUNT_XYLO] = {0};
 int debug=1;
@@ -126,6 +126,9 @@ void Push()
       bufferNotes.Consume(&currentNote); //si le tick est celui de la note courante, on consume la note
       byte pitch = currentNote.GetPitch();
       i2cXylo.PreparePush(toneTab[pitch]);
+
+      if(currentTick > 50000)
+        currentTick = 0;
       
       keysXylophone[pitch].pushed = true;
       keysXylophone[pitch].timePushed = micros();

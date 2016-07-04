@@ -79,6 +79,10 @@
       <DependentUpon>UserControlEditPlaylist.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrameworkController.cs" />
+    <Compile Include="MainNavigationPages\CurrentPlaylistView.xaml.cs">
+      <DependentUpon>CurrentPlaylistView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainNavigationPages\CurrentPlaylistViewModel.cs" />
     <Compile Include="MainNavigationPages\EditPlaylistView.xaml.cs">
       <DependentUpon>EditPlaylistView.xaml</DependentUpon>
     </Compile>
@@ -156,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditPlaylist\UserControlEditPlaylist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainNavigationPages\CurrentPlaylistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -262,6 +270,9 @@
   <ItemGroup>
     <Resource Include="Images\Keys32x32.png" />
     <Resource Include="Images\Keys64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CurrentPlay64x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

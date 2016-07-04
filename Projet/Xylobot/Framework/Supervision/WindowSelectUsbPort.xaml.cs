@@ -56,5 +56,10 @@ namespace Framework
         {
             DialogResult = false;
         }
+
+        private void ListBoxPortName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ButtonOk.IsEnabled = true;
+        }
     }
 }

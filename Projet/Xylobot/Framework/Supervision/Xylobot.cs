@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Framework
 {
@@ -46,11 +47,12 @@ namespace Framework
 
         #region Methods
 
-        public void Init()
+        public bool Init()
         {
-            while (!IsInit && !AbortInit)
+            int i = 0;
+            Application.Current.Dispatcher.Invoke(new Action(() => AbortInit = XyloCommunication.SetPortName() != true));
+            while (!IsInit && !AbortInit && i++ <= 10)
             {
-                Thread.Sleep(1000);
                 try
                 {
                     XyloCommunication.Init();
@@ -58,10 +60,12 @@ namespace Framework
                 }
                 catch (Exception)
                 {
-                    //IsInit = false;
                     continue;
                 }
+
+                Thread.Sleep(1000);
             }
+            return IsInit;
         }
 
         public void Start()

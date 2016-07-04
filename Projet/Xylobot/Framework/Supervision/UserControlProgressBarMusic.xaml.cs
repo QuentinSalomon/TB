@@ -38,5 +38,15 @@ namespace Framework
                 EllipseProgress.Margin = new Thickness(value-5, 0, 0, 0);
                 Progression = value;
             } }
+
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (DataContext != null)
+            {
+                double progress = (double)(DataContext as double?) * this.ActualWidth;
+                RectangleProgress.Width = progress;
+                EllipseProgress.Margin = new Thickness(progress - 5, 0, 0, 0);
+            }
+        }
     }
 }

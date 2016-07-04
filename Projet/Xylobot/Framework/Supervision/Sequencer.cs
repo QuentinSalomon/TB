@@ -33,8 +33,7 @@ namespace Framework
         #endregion
 
         #region Propriétés
-
-        [ConceptViewVisible(false)]
+        
         [IntlConceptName("Framework.Sequencer.Xylobot", "Xylobot")]
         public Xylobot Xylobot
         {
@@ -50,8 +49,7 @@ namespace Framework
         }
         private Xylobot _xylobot;
         public const string XylobotPropertyName = "Xylobot";
-
-        [ConceptViewVisible(false)]
+        
         [IntlConceptName("Framework.Sequencer.Playlist", "Playlist")]
         public Playlist Playlist
         {
@@ -67,8 +65,7 @@ namespace Framework
         }
         private Playlist _playlist;
         public const string PlaylistPropertyName = "Playlist";
-
-        [ConceptViewVisible(true)]
+        
         [IntlConceptName("Framework.Sequencer.CurrentPartition", "CurrentPartition")]
         public PartitionXylo CurrentPartition
         {
@@ -84,8 +81,7 @@ namespace Framework
         }
         private PartitionXylo _currentPartition;
         public const string CurrentPartitionPropertyName = "CurrentPartition";
-
-        [ConceptViewVisible(true)]
+        
         [IntlConceptName("Framework.Sequencer.Tempo", "Tempo")]
         public UInt16 Tempo
         {
@@ -102,8 +98,7 @@ namespace Framework
         }
         private UInt16 _tempo;
         public const string TempoPropertyName = "Tempo";
-
-        [ConceptViewVisible(true)]
+        
         [IntlConceptName("Framework.Sequencer.SpeedPlay", "SpeedPlay")]
         public double SpeedPlay
         {
@@ -120,8 +115,7 @@ namespace Framework
         }
         private double _speedPlay;
         public const string SpeedPlayPropertyName = "SpeedPlay";
-
-        [ConceptViewVisible(true)]
+        
         [IntlConceptName("Framework.Sequencer.PartitionProgress", "PartitionProgress")]
         public double PartitionProgress
         {
@@ -180,17 +174,20 @@ namespace Framework
             }
         }
 
-        public void Init()
+        private void Init()
         {
             Xylobot.Init();
+            if(!Xylobot.IsInit)
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                    Errors.Add("Init USB failed.")));
         }
 
         private void PlayPartition(PartitionXylo partition)
         {
             List<Note> notes = new List<Note>();
-            int k = 0,i;
+            int k = 0, i;
             try {
-                while (k < partition.Notes.Count)
+                while (Xylobot.ArduinoCurrentTick < partition.Notes[partition.Notes.Count - 1].Tick || k < partition.Notes.Count)
                 {
                     if (_stop)
                     {
@@ -206,17 +203,11 @@ namespace Framework
                             Xylobot.Start();
                     }
                     else {
-                        //Check les changement de tempo et de vitesse de lecture
-                        if (_speedPlayChanged)
-                        {
-                            _speedPlayChanged = false;
-                            Xylobot.SendSpeedFactor(SpeedPlay);
-                        }
-                        //if (_tempoChanged)
-                        //{
-                        //    _tempoChanged = false;
-                        //    Xylobot.SendTempo(Tempo);
-                        //}
+                        //Application des changement pour la lecture de la partition
+                        ApplyChange();
+
+                        if (Xylobot.ArduinoCurrentTick < 500)
+                            ;
 
                         //Prise des notes à envoyer
                         for (i = 0; i < Xylobot.ArduinoNoteSizeAvaible; i++)
@@ -226,38 +217,17 @@ namespace Framework
                             notes.Add(partition.Notes[k + i]);
                         }
                         k += i;
-                        //Envoie des notes et recupération
                         Xylobot.SendNotes(notes);
-                        Application.Current.Dispatcher.Invoke(new Action(() =>
-                            PartitionProgress = (double)Xylobot.ArduinoCurrentTick / CurrentPartition.Notes[CurrentPartition.Notes.Count - 1].Tick
-                        ));
+
+                        ActualiseProgress();
+
                         notes.Clear();
                         Thread.Sleep(50);
                     }
                 }
-
-                //Attente de la fin de la pratition en cours avant de lancer la suivante
-                while(Xylobot.ArduinoCurrentTick < partition.Notes[partition.Notes.Count-1].Tick)
-                {
-                    if (_stop)
-                    {
-                        Xylobot.Stop();
-                        break;
-                    }
-                    else if (_pause)
-                    {
-                        Xylobot.Pause();
-                        while (_pause && !_stop)
-                            Thread.Sleep(50);
-                        if (!_stop)
-                            Xylobot.Start();
-                    }
-                    Xylobot.SendNotes(notes);
-                    Thread.Sleep(50);
-                }
             }
             catch (Exception e) {
-                Errors.Add(e.Message);
+                Application.Current.Dispatcher.Invoke(new Action(() => this.Errors.Add(e.Message)));
             }
         }
 
@@ -333,6 +303,27 @@ namespace Framework
             _stop = true;
             _actionsThread = ActionsThread.Terminate;
             threadXyloBot.Join();
+        }
+
+        private void ApplyChange()
+        {
+            if (_speedPlayChanged)
+            {
+                _speedPlayChanged = false;
+                Xylobot.SendSpeedFactor(SpeedPlay);
+            }
+            //if (_tempoChanged)
+            //{
+            //    _tempoChanged = false;
+            //    Xylobot.SendTempo(Tempo);
+            //}
+        }
+
+        private void ActualiseProgress()
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+                PartitionProgress = (double)Xylobot.ArduinoCurrentTick / CurrentPartition.Notes[CurrentPartition.Notes.Count - 1].Tick
+            ));
         }
 
         #endregion
