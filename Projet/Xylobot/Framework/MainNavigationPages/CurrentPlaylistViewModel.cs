@@ -8,5 +8,6 @@ namespace Framework
 {
     public class CurrentPlaylistViewModel
     {
+        public Playlist Playlist { get { return FrameworkController.Instance.Playlist; } }
     }
 }

@@ -10,39 +10,61 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <concept:StringEditor Title="Save path" Value="{Binding Path=Settings.PathSaveFile}" Grid.Row="1" Margin="0,0,30,0"/>
-        <Button Content="..." Command="{Binding Path=Settings.CommandPathSaveFile}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,5,0" Grid.Row="1"/>
-        <concept:StringEditor Title="Default load path" Value="{Binding Path=Settings.DefaultPathLoadFile}" Grid.Row="2" Margin="0,0,30,0"/>
-        <Button Content="..." Command="{Binding Path=Settings.CommandPathLoadFile}" HorizontalAlignment="Right" Width="20" Height="20" Margin="0,0,5,0" Grid.Row="2"/>
-
-        <Border BorderBrush="{x:Null}" Height="30" Grid.Row="4" Margin="0">
-            <TextBlock x:Name="TextBlockKeyTitle" Text="DO 5" Foreground="White" Background="CornflowerBlue" VerticalAlignment="Center" Margin="5"/>
-        </Border>
-        <Grid Grid.Row="5" >
-            <StackPanel Orientation="Horizontal">
-                <Border BorderBrush="{x:Null}" Background="Gray" Height="30" Margin="5,0,0,0">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock TextWrapping="Wrap" Text="Hit time : " Foreground="White" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="TextBlockHitTime" TextWrapping="Wrap" Text="10.5" Width="30" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
-                        <TextBlock TextWrapping="Wrap" Text="ms" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-                <Button x:Name="ButtonLessTime" Width="30" Height="30" Background="Orange" Click="ButtonLessTime_Click"/>
-                <Button x:Name="ButtonMoreTime" Width="30" Height="30" Background="ForestGreen" Click="ButtonMoreTime_Click"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="ButtonPrevious" Width="30" HorizontalAlignment="Right" Background="CornflowerBlue" Click="ButtonPrevious_Click"/>
-                <Button x:Name="ButtonNext" Width="30" HorizontalAlignment="Right" Background="CornflowerBlue" Click="ButtonNext_Click" Margin="0,0,5,0"/>
-            </StackPanel>
+        <Grid  Grid.Row="1" Margin="5,0,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="32"/>
+            </Grid.ColumnDefinitions>
+            <concept:StringEditor Title="Save path" Value="{Binding Path=Settings.PathSaveFile}" Height="32"/>
+            <Button Content="..." Command="{Binding Path=Settings.CommandPathSaveFile}" Width="32" Height="32" Grid.Column="1"/>
         </Grid>
+        <Grid  Grid.Row="2" Margin="5,0,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="32"/>
+            </Grid.ColumnDefinitions>
+            <concept:StringEditor Title="Default load path" Value="{Binding Path=Settings.DefaultPathLoadFile}" Height="32"/>
+            <Button Content="..." Command="{Binding Path=Settings.CommandPathLoadFile}" Width="32" Height="32" Grid.Column="1"/>
+        </Grid>
+
+
+        <TextBlock x:Name="TextBlockKeyTitle" Text="DO 5" Foreground="White" Background="CornflowerBlue" VerticalAlignment="Center" Margin="0,0,0,3" Grid.Row="4"/>
+        <Grid Grid.Row="5" >
+        <StackPanel Orientation="Horizontal">
+            <Border BorderBrush="{x:Null}" Background="Gray" Height="30" Margin="5,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock TextWrapping="Wrap" Text="Hit time : " Foreground="White" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TextBlockHitTime" TextWrapping="Wrap" Text="10.5" Width="30" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+                    <TextBlock TextWrapping="Wrap" Text="ms" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+            <Button x:Name="ButtonLessTime" Width="30" Height="30" Background="Orange" Click="ButtonLessTime_Click">
+                <Image Source="/Framework;component/Images/Down32x32.png"/>
+            </Button>
+            <Button x:Name="ButtonMoreTime" Width="30" Height="30" Background="ForestGreen" Click="ButtonMoreTime_Click">
+                <Image Source="/Framework;component/Images/Up32x32.png"/>
+            </Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="ButtonPrevious" Width="32" HorizontalAlignment="Right" Background="CornflowerBlue" Click="ButtonPrevious_Click" Height="32" VerticalAlignment="Top">
+                <Image Source="/Framework;component/Images/Previous32x32.png"/>
+            </Button>
+            <Button x:Name="ButtonNext" Width="32" HorizontalAlignment="Right" Background="CornflowerBlue" Click="ButtonNext_Click" Margin="5,0,5,0">
+                <Image Source="/Framework;component/Images/Next32x32.png"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+        <Button x:Name="ButtonMute" Grid.Row="7" Width="32" Background="Orange" HorizontalAlignment="Right" Margin="0,0,5,0" Click="ButtonMute_Click">
+            <Image Source="/Framework;component/Images/Mute32x32.png"/>
+        </Button>
     </Grid>
 </UserControl>

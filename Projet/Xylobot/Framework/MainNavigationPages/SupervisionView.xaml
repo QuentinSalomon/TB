@@ -17,19 +17,19 @@
         <local:UserControlShowPartition KeyWidth="140" DataContext="{Binding Path=Sequencer}" OctaveNumber="3" Margin="5,5,5,0"/>
 
         <local:UserControlProgressBarMusic DataContext="{Binding Path=Sequencer.PartitionProgress}" Grid.Row="1" Margin="5"/>
-        
-        <Grid Grid.Row="2" Margin="8" Background="Gray">
+
+        <local:UserControlMusicManager Grid.Row="2" DataContext="{Binding Path=Sequencer}"/>
+        <!--<Grid Grid.Row="2" Margin="8" Background="Gray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <!--<Image x:Name="ImagePrevious" Source="Framework//Images//Previous32x32.png" Grid.Column="0" HorizontalAlignment="Center"/>-->
-            <Image x:Name="ImagePlay" Width="20" Height="20" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,30,0" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown" Source="/Framework;component/Images/Play32x32.png"/>
-            <Image x:Name="ImagePause" Width="20" Height="20" Grid.Column="1" HorizontalAlignment="Center" Margin="30,0,0,0" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown" Source="/Framework;component/Images/Pause32x32.png"/>
+            <Image x:Name="ImagePlay" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,30,0" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown" Source="/Framework;component/Images/Play32x32.png"/>
+            <Image x:Name="ImagePause" Grid.Column="1" HorizontalAlignment="Center" Margin="30,0,0,0" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown" Source="/Framework;component/Images/Pause32x32.png"/>
             <Image x:Name="ImageStop" Width="20" Height="20" Grid.Column="0" HorizontalAlignment="Center" MouseLeftButtonDown="ImageStop_MouseLeftButtonDown" Source="/Framework;component/Images/Stop32x32.png"/>
             <Image x:Name="ImageNext" Width="20" Height="20" Grid.Column="2" HorizontalAlignment="Center" MouseLeftButtonDown="ImageNext_MouseLeftButtonDown" Source="/Framework;component/Images/Next32x32.png"/>
-        </Grid>
+        </Grid>-->
         
         <StackPanel Grid.Row="3" Orientation="Horizontal">
             <Button Content="Play/Pause" Click="ButtonPlayPause_Click" Command="{Binding Path=Sequencer.CommandPlayPlaylist}" Width="70" Height="30" Margin="5,0,0,0"/>

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:concept="http://www.objectis.ch/concept"
         xmlns:local="clr-namespace:Framework"
-        Title="Virtuoso" FontFamily="Segoe UI Light" FontSize="20"  Height="400" Width="600">
+        Title="Virtuoso" FontFamily="Segoe UI Light" FontSize="20" Foreground="White" Icon="/Framework;component/Images/Xylophone64x64.png" Height="400" Width="600">
        
     <Grid>
         <concept:NavigationControl NavigationBarDock="Top" Transition="Fade">
@@ -14,7 +14,8 @@
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/Supervision32x32.png"
                                 DataContext="{Binding Path=SupervisionViewModel}"/>
             <local:CurrentPlaylistView concept:NavigationControl.MenuTitle="Current Playlist"
-                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/CurrentPlay64x32.png"/>
+                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/CurrentPlay64x32.png"
+                                DataContext="{Binding Path=CurrentPlaylistViewModel}"/>
             <local:EditPlaylistView concept:NavigationControl.MenuTitle="Playlist" 
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/Playlist32x32.png"
                                 DataContext="{Binding Path=EditPlaylistViewModel}"/>

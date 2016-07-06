@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Framework.UserControlMusicManager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Framework"
+             mc:Ignorable="d" 
+             d:DesignHeight="32" d:DesignWidth="300">
+    <Grid Background="#FF4F4F4F">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image x:Name="ImagePlay" HorizontalAlignment="Center" MouseLeftButtonDown="ImagePlay_MouseLeftButtonDown" Source="/Framework;component/Images/Play32x32.png"/>
+            <Image x:Name="ImagePause" HorizontalAlignment="Center" MouseLeftButtonDown="ImagePause_MouseLeftButtonDown" Source="/Framework;component/Images/Pause32x32.png"/>
+        </StackPanel>
+        <Image x:Name="ImageStop" Grid.Column="0" Margin="3" HorizontalAlignment="Left" MouseLeftButtonDown="ImageStop_MouseLeftButtonDown" Source="/Framework;component/Images/Stop32x32.png"/>
+        <Image x:Name="ImageNext" Grid.Column="2" Margin="3" HorizontalAlignment="Right" MouseLeftButtonDown="ImageNext_MouseLeftButtonDown" Source="/Framework;component/Images/Next32x32.png"/>
+    </Grid>
+</UserControl>

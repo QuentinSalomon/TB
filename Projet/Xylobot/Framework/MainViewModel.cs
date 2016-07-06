@@ -12,6 +12,7 @@ namespace Framework
 
         public MainViewModel()
         {
+            CurrentPlaylistViewModel = new CurrentPlaylistViewModel();
             EditPlaylistViewModel = new EditPlaylistViewModel();
             SupervisionViewModel = new SupervisionViewModel();
             SettingsViewModel = new SettingsViewModel();
@@ -19,6 +20,7 @@ namespace Framework
 
         #endregion
 
+        public CurrentPlaylistViewModel CurrentPlaylistViewModel { get; set; }
         public EditPlaylistViewModel EditPlaylistViewModel { get; private set; }
         public SupervisionViewModel SupervisionViewModel { get; private set; }
         public SettingsViewModel SettingsViewModel { get; private set; }

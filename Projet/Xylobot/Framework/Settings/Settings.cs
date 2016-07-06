@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Framework
 {
-    [ConceptView(typeof(UserControlSettings))]
     [IntlConceptName("Framework.Settings.Name", "Settings")]
     [ConceptSmallImage(typeof(Settings), "/Images/Settings32x32.png")]
     [ConceptLargeImage(typeof(Settings), "/Images/Settings64x64.png")]

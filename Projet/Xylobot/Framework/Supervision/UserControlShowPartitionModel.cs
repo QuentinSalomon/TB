@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+//todo : Delete fichier
 namespace Framework
 {
     public class UserControlShowPartitionModel :  INotifyPropertyChanged
@@ -13,7 +13,7 @@ namespace Framework
         public Sequencer Sequencer { get { return FrameworkController.Instance.Sequencer; } }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        //todo : protected
+        
         public void DoPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

@@ -75,9 +75,6 @@
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="EditPlaylist\Playlist.cs" />
-    <Compile Include="EditPlaylist\UserControlEditPlaylist.xaml.cs">
-      <DependentUpon>UserControlEditPlaylist.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FrameworkController.cs" />
     <Compile Include="MainNavigationPages\CurrentPlaylistView.xaml.cs">
       <DependentUpon>CurrentPlaylistView.xaml</DependentUpon>
@@ -117,10 +114,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Settings\Settings.cs" />
-    <Compile Include="Settings\UserControlSettings.xaml.cs">
-      <DependentUpon>UserControlSettings.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Supervision\Sequencer.cs" />
+    <Compile Include="Supervision\UserControlMusicManager.xaml.cs">
+      <DependentUpon>UserControlMusicManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Supervision\UserControlProgressBarMusic.xaml.cs">
       <DependentUpon>UserControlProgressBarMusic.xaml</DependentUpon>
     </Compile>
@@ -136,6 +133,9 @@
     </Compile>
     <Compile Include="Supervision\XyloCommunication.cs" />
     <Compile Include="Supervision\Xylobot.cs" />
+    <Compile Include="VirutosoComponents\UserControlThreeButtons.xaml.cs">
+      <DependentUpon>UserControlThreeButtons.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -156,10 +156,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ConceptStyles\VirtuosoSkin.FlatBlue\TextBlocks.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EditPlaylist\UserControlEditPlaylist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,7 +183,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Settings\UserControlSettings.xaml">
+    <Page Include="Supervision\UserControlMusicManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -212,6 +208,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\TextBlockStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VirutosoComponents\UserControlThreeButtons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,6 +273,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\CurrentPlay64x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Down32x32.png" />
+    <Resource Include="Images\Up32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Mute32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

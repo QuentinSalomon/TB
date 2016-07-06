@@ -92,6 +92,7 @@ void loop() {
       ResponseMessage(msgSendType);
       modeSerial = 0;
       break;
+      
     default:
       break;
   }
@@ -126,15 +127,16 @@ void Push()
       bufferNotes.Consume(&currentNote); //si le tick est celui de la note courante, on consume la note
       byte pitch = currentNote.GetPitch();
       i2cXylo.PreparePush(toneTab[pitch]);
-
-      if(currentTick > 50000)
-        currentTick = 0;
       
       keysXylophone[pitch].pushed = true;
       keysXylophone[pitch].timePushed = micros();
       keysXylophone[pitch].intensity = currentNote.GetIntensity();
       if(!bufferNotes.Current(&currentNote)) //Actualise la note courante, s'il y en a plus on quitte la boucle
         break;
+      if(currentTick + 10000 < currentNote.GetTick()){
+        currentTick = currentNote.GetTick() - 100;
+        //pinMode(13, OUTPUT);
+      }
     }
     i2cXylo.ApplyPush();
 

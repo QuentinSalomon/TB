@@ -166,6 +166,7 @@ namespace Framework
 
                         Xylobot.Stop();
                         Xylobot.SendKeyHitTime(_indexKey, _keyHitTime);
+                        Xylobot.Keys[_indexKey].HitTime = _keyHitTime;
                         _actionsThread = ActionsThread.PlayOneNote;
                         break;
                     default:
@@ -206,9 +207,6 @@ namespace Framework
                         //Application des changement pour la lecture de la partition
                         ApplyChange();
 
-                        if (Xylobot.ArduinoCurrentTick < 500)
-                            ;
-
                         //Prise des notes à envoyer
                         for (i = 0; i < Xylobot.ArduinoNoteSizeAvaible; i++)
                         {
@@ -217,6 +215,8 @@ namespace Framework
                             notes.Add(partition.Notes[k + i]);
                         }
                         k += i;
+                        if (k == 1251)
+                            ;
                         Xylobot.SendNotes(notes);
 
                         ActualiseProgress();
@@ -235,9 +235,9 @@ namespace Framework
         {
             try
             {
-                Xylobot.Stop(); //Stop l'execution en cours pour jouer la playlist
                 _pause = false;
                 _stop = false;
+                Xylobot.Stop(); //Stop l'execution en cours pour jouer la playlist
                 Xylobot.Start();//Start la musique
                 foreach (PartitionXylo p in playlist.Partitions)
                 {
@@ -278,14 +278,19 @@ namespace Framework
             _indexKey = (n.High + (n.Octave - Xylobot.startOctaveXylophone) * Xylobot.octaveSize);
             _keyHitTime = hitTime;
             _noteToPlay = n;
-            _actionsThread = ActionsThread.ChangeKeyHitTime;
             if (!_stop) //Arrête si une playlist est en cours de lecture
                 Stop();
+            _actionsThread = ActionsThread.ChangeKeyHitTime;
         }
 
         public void InitKeysHitTime(double[] hitTimes)
         {
 
+        }
+
+        public void Mute()
+        {
+            _muteChanged = true;
         }
 
         public void Stop()
@@ -312,11 +317,23 @@ namespace Framework
                 _speedPlayChanged = false;
                 Xylobot.SendSpeedFactor(SpeedPlay);
             }
-            //if (_tempoChanged)
-            //{
-            //    _tempoChanged = false;
-            //    Xylobot.SendTempo(Tempo);
-            //}
+            if (_tempoChanged)
+            {
+                _tempoChanged = false;
+                Xylobot.SendTempo(Tempo);
+            }
+            if (_muteChanged)
+            {
+                int i;
+                if (!_isMute)
+                    for (i = 0; i < Xylobot.numberKeysXylophone; i++)
+                        Xylobot.SendKeyHitTime(i, 3);
+                else
+                    for (i = 0; i < Xylobot.numberKeysXylophone; i++)
+                        Xylobot.SendKeyHitTime(i, Xylobot.Keys[i].HitTime);
+                _muteChanged = false;
+                _isMute = !_isMute;
+            }
         }
 
         private void ActualiseProgress()
@@ -407,7 +424,7 @@ namespace Framework
 
         private Thread threadXyloBot;
         private ActionsThread _actionsThread = ActionsThread.Nothing;
-        private bool _pause = true, _stop = true, _tempoChanged = false, _speedPlayChanged = false;
+        private bool _pause = true, _stop = true, _tempoChanged = false, _speedPlayChanged = false, _muteChanged = false, _isMute = false;
        
         private Note _noteToPlay;   //Note à jouer pour PlayOneNote
 

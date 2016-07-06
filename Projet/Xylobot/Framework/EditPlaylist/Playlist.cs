@@ -11,7 +11,6 @@ using System.Windows.Forms;
 
 namespace Framework
 {
-    //[ConceptView(typeof(UserControlEditPlaylist))]
     [IntlConceptName("Framework.Playlist.Name", "Playlist principal")]
     [ConceptSmallImage(typeof(Playlist), "/Images/Playlist32x32.png")]
     [ConceptLargeImage(typeof(Playlist), "/Images/Playlist64x64.png")]

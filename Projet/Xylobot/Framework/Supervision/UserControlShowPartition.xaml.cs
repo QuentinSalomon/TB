@@ -27,7 +27,13 @@ namespace Framework
         {1,3,6,8,10};
         public static readonly string[] tabNote = new string[]
         { "DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI" };
-        const int rectangleNoteSize = 15;
+        double rectangleNoteSize = 15;
+
+        public double KeyWidth { get { return columnKeys.ActualWidth; } set { columnKeys.Width = new GridLength(value); } }
+
+        public int OctaveNumber { get; set; }
+
+        #region Public Methods
 
         public UserControlShowPartition()
         {
@@ -140,18 +146,6 @@ namespace Framework
             BindingOperations.SetBinding(LineRed, Line.Y2Property, bnd);
         }
 
-        public double KeyWidth { get { return columnKeys.ActualWidth; } set { columnKeys.Width = new GridLength(value); } }
-
-        public int OctaveNumber
-        {
-            get { return (int)((CanvasNotes.ActualHeight / rectangleNoteSize - 1) / Xylobot.octaveSize); }
-            set
-            {
-                CanvasNotes.Height = (value * Xylobot.octaveSize + 1) * rectangleNoteSize;
-                CanvasKeys.Height = (value * Xylobot.octaveSize + 1) * rectangleNoteSize;
-            }
-        }
-
         public void ShowPartition()
         {
             ReleaseDrawPartition();
@@ -193,6 +187,10 @@ namespace Framework
             }
         }
 
+        #endregion
+
+        #region private Methods
+
         private void ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             if (sender == ScrollViewerKeys)
@@ -209,23 +207,23 @@ namespace Framework
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            rectangleNoteSize = ScrollViewerKeys.ActualHeight / Xylobot.numberKeysXylophone;
+            CanvasNotes.Height = ScrollViewerKeys.ActualHeight;
+            CanvasKeys.Height = ScrollViewerKeys.ActualHeight;
+
             ClearKeys();
             InitKeys();
 
             InitNotesView();
 
-            //((UserControlShowPartitionModel)DataContext).Sequencer.PropertyChanged += DataContextPropertyChangedEventHandler;
+            ((Sequencer)DataContext).PropertyChanged += DataContextPropertyChangedEventHandler;
         }
-
         
         private void DataContextPropertyChangedEventHandler(object sender, PropertyChangedEventArgs e)
         {
-            ShowPartition();
+            //ShowPartition();
         }
 
-        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            ShowPartition();
-        }
+        #endregion
     }
 }

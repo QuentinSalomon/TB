@@ -24,6 +24,12 @@ namespace Framework
             XyloCommunication = new XyloCommunication();
             IsInit = false;
             AbortInit = false;
+            Keys = new Key[numberKeysXylophone];
+            for (int i = 0; i < numberKeysXylophone; i++)
+            {
+                Keys[i] = new Key();
+                Keys[i].HitTime = defaultTimeHitKey;
+            }
         }
 
         #endregion
@@ -131,5 +137,7 @@ namespace Framework
         }
 
         #endregion
+
+        public Key[] Keys { get; set; }
     }
 }

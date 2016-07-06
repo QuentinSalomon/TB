@@ -9,6 +9,34 @@
              d:DesignHeight="300" d:DesignWidth="330">
     <UserControl.Resources>
         <local:IndexConverter x:Key="IndexConverter"/>
+        <Style  TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="Orange"/>
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                    <Setter Property="Background" Value="#FF595959"></Setter>
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="#FF7F7F7F"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="DataTemplateListBox">
+            <Grid Margin="0,2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image Width="20" Height="20" Source="/Framework;component/Images/Note32x32.png"/>
+                <Ellipse Stroke="White" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                         AncestorType={x:Type ListBoxItem}}, 
+                                         Converter={StaticResource IndexConverter}}"  Foreground="White" FontSize="18" Grid.Column="1" Margin="5,0,0,2"/>
+                <TextBlock Text="{Binding Title}" Foreground="White" Grid.Column="2"/>
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -19,29 +47,11 @@
         <TextBlock Text="{Binding Path=Playlist.Title}" Height="30" Background="DeepSkyBlue"/>
         <!--<ListBox x:Name="ListboxErrors" Grid.Row="1" Visibility="Visible"></ListBox>-->
         <!--<concept:ConceptStaticListEditor CanAdd="False" ConceptList="{Binding Path=Playlist.Partitions}" Grid.Row="1"/>-->
-        <ListBox Name="ListBoxPlaylist" HorizontalContentAlignment="Stretch" SelectionMode="Extended" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30" />
-                            <ColumnDefinition Width="30" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse Stroke="White" StrokeThickness="2" Fill="Gray" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                         AncestorType={x:Type ListBoxItem}}, 
-                                         Converter={StaticResource IndexConverter}}" Foreground="White" Margin="7,1,0,0"/>
-                        <Image Width="20" Height="20" Source="Framework//Images//Partition32x32.png" Grid.Column="1"/>
-                        <TextBlock Text="{Binding Title}" Grid.Column="2"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ListBox Name="ListBoxPlaylist" AlternationCount="2" HorizontalContentAlignment="Stretch" SelectionMode="Extended" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{StaticResource DataTemplateListBox}"/>
         <Grid Grid.Row="2">
 
             <Border Width="100" Background="Red" MouseLeftButtonDown="BorderRemoveAll_MouseLeftButtonDown" HorizontalAlignment="Left">
-                <TextBlock Text="Remaove all" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="18"/>
+                <TextBlock Text="Clear" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="18"/>
             </Border>
             <Border Width="100" Background="Orange" MouseLeftButtonDown="BorderRemove_MouseLeftButtonDown" HorizontalAlignment="Center">
                 <TextBlock Text="Remaove" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="18"/>
