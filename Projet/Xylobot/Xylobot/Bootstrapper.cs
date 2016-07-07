@@ -29,19 +29,17 @@ namespace Xylobot
             return new MainWindow() { DataContext = new MainViewModel() };
         }
 
-        protected override void LoadCustomSkins()
-        {
-            base.LoadCustomSkins();
-            LoadSkin();
-        }
+        //protected override void LoadCustomSkins()
+        //{
+        //    base.LoadCustomSkins();
+        //    LoadSkin();
+        //}
 
-        private static void LoadSkin()
-        {
-            ConceptStyle.AddSkin("VirtuosoSkin.FlatBlue", "Flat Blue");
-            //ConceptStyle.AddSkinColor(ConceptSkinColor, new Color() { R = 0, G = 63, B = 128 });
+        //private static void LoadSkin()
+        //{
+        //    ConceptStyle.AddSkin("ConceptSkin.Chrome", "Flat Blue");
 
-            ConceptStyle.ApplySkin("VirtuosoSkin.FlatBlue");
-            //ConceptStyle.ApplySkinColor(ConceptSkinColor);
-        }
+        //    ConceptStyle.ApplySkin("ConceptSkin.Chrome");
+        //}
     }
 }

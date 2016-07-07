@@ -90,7 +90,7 @@ namespace Framework
                     txtB.FontWeight = FontWeights.Bold;
                 }
                 txtB.Height = rectangleNoteSize;
-                txtB.FontSize = rectangleNoteSize - 1;
+                txtB.FontSize = rectangleNoteSize * 0.9;
                 txtB.VerticalAlignment = VerticalAlignment.Center;
                 txtB.Visibility = Visibility.Visible;
                 CanvasKeys.Children.Add(txtB);

@@ -6,8 +6,7 @@
         Title="Virtuoso" FontFamily="Segoe UI Light" FontSize="20" Foreground="White" Icon="/Framework;component/Images/Xylophone64x64.png" Height="400" Width="600">
        
     <Grid>
-        <concept:NavigationControl NavigationBarDock="Top" Transition="Fade">
-
+        <concept:NavigationControl NavigationBarDock="Top" Background="#FFD7D7D7" Transition="Fade">
             <local:HomeView concept:NavigationControl.MenuTitle="Home"
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/Home32x32.png"/>
             <local:SupervisionView concept:NavigationControl.MenuTitle="Supervision" 

@@ -147,15 +147,15 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ConceptStyles\VirtuosoSkin.FlatBlue.xaml">
+    <Page Include="ConceptStyles\ConceptSkin.Chrome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ConceptStyles\VirtuosoSkin.FlatBlue\NavigationControl.xaml">
+    <Page Include="ConceptStyles\ConceptSkin.Chrome\NavigationControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ConceptStyles\VirtuosoSkin.FlatBlue\TextBlocks.xaml">
+    <Page Include="ConceptStyles\ConceptSkin.Chrome\TextBlockStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,14 +200,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Supervision\WindowSelectUsbPort.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\TextBlockStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
