@@ -151,11 +151,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ConceptStyles\ConceptSkin.Chrome\ButtonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConceptStyles\ConceptSkin.Chrome\ListBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ConceptStyles\ConceptSkin.Chrome\NavigationControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ConceptStyles\ConceptSkin.Chrome\TextBlockStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConceptStyles\ConceptSkin.Chrome\WindowStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -272,6 +284,19 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Mute32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Clear32x32.png" />
+    <Resource Include="Images\Remove32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Import32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Back32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Edit32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

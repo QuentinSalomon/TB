@@ -7,42 +7,33 @@
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
-    <Grid>
+    <Grid Margin="7">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <local:UserControlShowPartition KeyWidth="140" DataContext="{Binding Path=Sequencer}" OctaveNumber="3" Margin="5,5,5,0"/>
+        <local:UserControlShowPartition KeyWidth="140" DataContext="{Binding Path=Sequencer}" OctaveNumber="3"/>
 
-        <local:UserControlProgressBarMusic DataContext="{Binding Path=Sequencer.PartitionProgress}" Grid.Row="1" Margin="5"/>
+        <local:UserControlProgressBarMusic DataContext="{Binding Path=Sequencer.PartitionProgress}" Grid.Row="1"/>
 
-        <local:UserControlMusicManager Grid.Row="2" DataContext="{Binding Path=Sequencer}"/>
-        <!--<Grid Grid.Row="2" Margin="8" Background="Gray">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Image x:Name="ImagePlay" Visibility="Visible" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,30,0" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown" Source="/Framework;component/Images/Play32x32.png"/>
-            <Image x:Name="ImagePause" Grid.Column="1" HorizontalAlignment="Center" Margin="30,0,0,0" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown" Source="/Framework;component/Images/Pause32x32.png"/>
-            <Image x:Name="ImageStop" Width="20" Height="20" Grid.Column="0" HorizontalAlignment="Center" MouseLeftButtonDown="ImageStop_MouseLeftButtonDown" Source="/Framework;component/Images/Stop32x32.png"/>
-            <Image x:Name="ImageNext" Width="20" Height="20" Grid.Column="2" HorizontalAlignment="Center" MouseLeftButtonDown="ImageNext_MouseLeftButtonDown" Source="/Framework;component/Images/Next32x32.png"/>
-        </Grid>-->
-        
-        <StackPanel Grid.Row="3" Orientation="Horizontal">
-            <Button Content="Play/Pause" Click="ButtonPlayPause_Click" Command="{Binding Path=Sequencer.CommandPlayPlaylist}" Width="70" Height="30" Margin="5,0,0,0"/>
-            <Button Content="Stop" Click="ButtonStop_Click" Command="{Binding Path=Sequencer.CommandStop}" Width="70" Height="30" Margin="5,0,0,0"/>
-            <Border BorderBrush="{x:Null}" Background="Gray" Height="30" Margin="5,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock TextWrapping="Wrap" Text="Speed : " Foreground="White" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="TextBlockSpeed" TextWrapping="Wrap" Text="1.0" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
-                    <TextBlock TextWrapping="Wrap" Text="x" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
+        <local:UserControlMusicManager Grid.Row="2" DataContext="{Binding Path=Sequencer}" />
+       
+        <StackPanel Grid.Row="3" Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Button x:Name="ButtonMoreSpeed" Width="50" Height="50" Background="{DynamicResource ColorsVirtuosoGreen}" Style="{DynamicResource ButtonStyle}" Click="ButtonMoreSpeed_Click" VerticalAlignment="Bottom">
+                <Image Source="/Framework;component/Images/Up32x32.png" Width="32"/>
+            </Button>
+            <Button x:Name="ButtonLessSpeed" Width="50" Height="50" Background="{DynamicResource ColorsVirtuosoOrange}" Style="{DynamicResource ButtonStyle}" Click="ButtonLessSpeed_Click" VerticalAlignment="Bottom">
+                <Image Source="/Framework;component/Images/Down32x32.png" Width="32"/>
+            </Button>
+            <Border BorderBrush="{x:Null}" Background="Gray" Height="50" VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
+                    <TextBlock Text="Speed : " Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TextBlockSpeed" Text="1.0" Width="25" Style="{DynamicResource TextBlockNormalStyle}" Foreground="Aqua" VerticalAlignment="Center"/>
+                    <TextBlock TextWrapping="Wrap" Text="x" Style="{DynamicResource TextBlockNormalStyle}" Foreground="Aqua" VerticalAlignment="Center" Margin="0,0,5,0"/>
                 </StackPanel>
             </Border>
-            <Button x:Name="ButtonLessSpeed" Width="30" Height="30" Background="Orange" Click="ButtonLessSpeed_Click"/>
-            <Button x:Name="ButtonMoreSpeed" Width="30" Height="30" Background="ForestGreen" Click="ButtonMoreSpeed_Click"/>
         </StackPanel>
     </Grid>
 </UserControl>

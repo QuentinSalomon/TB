@@ -17,8 +17,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock x:Name="TextBlockTitle" Text="{Binding Path=CurrentPartition.Title}" Margin="0,0,0,5" Background="ForestGreen" Foreground="White" FontFamily="Segoe UI Light" FontSize="18" Grid.ColumnSpan="2"/>
-
+        <TextBlock Text="{Binding Path=CurrentPartition.Title}" Style="{DynamicResource TextBlockTitleStyle}" Height="35" Background="{DynamicResource ColorsVirtuosoGreen}" Grid.ColumnSpan="2"  Margin="0,0,0,5"/>
+        
         <Rectangle x:Name="RectangleTest" Fill="White" Grid.Row="1" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="0.3"/>
         <ScrollViewer x:Name="ScrollViewerKeys" HorizontalScrollBarVisibility="Disabled" ScrollChanged="ScrollChanged" VerticalScrollBarVisibility="Hidden" Grid.Row="1">
             <Canvas x:Name="CanvasKeys" Width="100"/>

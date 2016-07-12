@@ -5,6 +5,7 @@ using Concept.Utils.Wpf;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,23 @@ namespace Framework
     /// <summary>
     /// Interaction logic for CurrentPlaylistView.xaml
     /// </summary>
-    public partial class CurrentPlaylistView : UserControl
+    public partial class CurrentPlaylistView : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
         public CurrentPlaylistView()
         {
             InitializeComponent();
+            ListBoxImageSource = new BitmapImage(new Uri(@"/Framework;component/Images/Note32x32.png", UriKind.RelativeOrAbsolute));
         }
 
         private void BorderAdd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -60,5 +73,15 @@ namespace Framework
         {
             ((CurrentPlaylistViewModel)DataContext).Playlist.Clear();
         }
+
+        public ImageSource ListBoxImageSource {
+            get { return _listBoxImageSource; }
+            set
+            {
+                _listBoxImageSource = value;
+                OnPropertyChanged("ListBoxImageSourceProperty");
+            }
+        }
+        private ImageSource _listBoxImageSource;
     }
 }

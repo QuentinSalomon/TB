@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="350">
+             d:DesignHeight="600" d:DesignWidth="450">
     <UserControl.Resources>
         <local:IndexConverter x:Key="IndexConverter"/>
         <Style  TargetType="{x:Type ListBoxItem}">
@@ -28,42 +28,63 @@
                     <ColumnDefinition Width="30" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Image Width="20" Height="20" Source="/Framework;component/Images/Note32x32.png"/>
-                <Ellipse Stroke="White" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Image Width="20" Height="20" Margin="0,0,0,0" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ListBoxImageSource}"/>
+                <Ellipse Stroke="White" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
                                          AncestorType={x:Type ListBoxItem}}, 
-                                         Converter={StaticResource IndexConverter}}"  Foreground="White" FontSize="18" Grid.Column="1" Margin="5,0,0,2"/>
-                <TextBlock Text="{Binding Title}" Foreground="White" Grid.Column="2"/>
+                                         Converter={StaticResource IndexConverter}}" Foreground="White" FontSize="18" Grid.Column="1" Margin="0,0,0,2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Title}" Style="{DynamicResource TextBlockNormalStyle}" Grid.Column="2"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid Margin="7,0,7,7">
+    <Grid Margin="7">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="90"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Path=Playlist.Title}" Height="30" Background="DeepSkyBlue"/>
-        <ListBox Name="ListBoxPlaylist" AlternationCount="2" HorizontalContentAlignment="Stretch" SelectionMode="Extended" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{StaticResource DataTemplateListBox}"/>
+        <TextBlock Text="{Binding Path=Playlist.Title}" Style="{DynamicResource TextBlockTitleStyle}" Height="35" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,0,5"/>
+        <ListBox Name="ListBoxPlaylist" AlternationCount="2" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{DynamicResource DataTemplateListBox}" Background="White"/>
         <local:UserControlProgressBarMusic DataContext="{Binding Path=Sequencer.PartitionProgress}" Grid.Row="2"/>
-        <local:UserControlMusicManager DataContext="{Binding Path=Sequencer}" Grid.Row="3" Margin="0,0,0,5"/>
+        <local:UserControlMusicManager DataContext="{Binding Path=Sequencer}" Grid.Row="3"/>
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="145*"/>
+                <ColumnDefinition Width="146*"/>
+                <ColumnDefinition Width="51*"/>
+                <ColumnDefinition Width="94*"/>
             </Grid.ColumnDefinitions>
-            <Border Background="Red" MouseLeftButtonDown="BorderClear_MouseLeftButtonDown" Grid.Column="0" Margin="0,0,4,0">
-                <TextBlock Text="Clear" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="18"/>
-            </Border>
-            <Border Background="Orange" MouseLeftButtonDown="BorderRemove_MouseLeftButtonDown" Grid.Column="1" Margin="2,0,2,0">
-                <TextBlock Text="Remove" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="18"/>
-            </Border>
-            <Border Background="ForestGreen" MouseLeftButtonDown="BorderAdd_MouseLeftButtonDown" Grid.Column="2" Margin="4,0,0,0">
-                <TextBlock Text="Add" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="18"/>
-            </Border>
+            <Button x:Name="ButtonClear" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoRed}" Grid.Column="0" Margin="0,10,4,0">
+                <Grid Width="{Binding ElementName=ButtonClear, Path=ActualWidth}" Height="{Binding ElementName=ButtonClear, Path=ActualHeight}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+                        <Image Source="/Framework;component/Images/Clear32x32.png" Width="32"/>
+                        <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
+                    </StackPanel>
+                    <TextBlock x:Name="TextBlock1" Text="Clear" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="ButtonRemove" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoOrange}" Grid.Column="1" Margin="2,10,2,0">
+                <Grid Width="{Binding ElementName=ButtonClear, Path=ActualWidth}" Height="{Binding ElementName=ButtonClear, Path=ActualHeight}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+                        <Image Source="/Framework;component/Images/Remove32x32.png" Width="32"/>
+                        <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
+                    </StackPanel>
+                    <TextBlock Text="Remove" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="ButtonAdd" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Grid.Column="2" Margin="4,10,0,0" Command="{Binding Path=Playlist.CommandAddPartition}" Grid.ColumnSpan="2">
+                <Grid Width="{Binding ElementName=ButtonClear, Path=ActualWidth}" Height="{Binding ElementName=ButtonClear, Path=ActualHeight}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+                        <Image Source="/Framework;component/Images/Add32x32.png" Width="32"/>
+                        <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
+                    </StackPanel>
+                    <TextBlock Text="Add" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
+                </Grid>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

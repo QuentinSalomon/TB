@@ -87,7 +87,7 @@ void loop() {
       break;
       
     case 3:
-      while(Serial.available())
+      while(Serial.available()) //Vide le Buffer d'entrée
         Serial.read();
       ResponseMessage(msgSendType);
       modeSerial = 0;
@@ -102,7 +102,7 @@ void loop() {
 void ReleasePush()
 {
   bool needRelease = false;
-  for(int i=0;i<NOTE_COUNT_XYLO;i++)
+  for(int i=0;i<NOTE_COUNT_XYLO;i++) //Check toutes les notes poussées et les préparent pour le release si besoin
     if(keysXylophone[i].pushed)
       if((micros() >= keysXylophone[i].timePushed ? micros() - keysXylophone[i].timePushed : 0xFFFFFFFF - keysXylophone[i].timePushed + micros()) > keysXylophone[i].hitTime + keysXylophone[i].intensity){
         i2cXylo.PrepareRelease(toneTab[i]);
@@ -133,10 +133,12 @@ void Push()
       keysXylophone[pitch].intensity = currentNote.GetIntensity();
       if(!bufferNotes.Current(&currentNote)) //Actualise la note courante, s'il y en a plus on quitte la boucle
         break;
+/****************************DEBUG***************************************/
       if(currentTick + 10000 < currentNote.GetTick()){
         currentTick = currentNote.GetTick() - 100;
-        //pinMode(13, OUTPUT);
+        digitalWrite(13, HIGH);
       }
+/**************************END DEBUG*************************************/
     }
     i2cXylo.ApplyPush();
 

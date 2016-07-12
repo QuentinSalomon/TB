@@ -80,6 +80,28 @@ namespace Framework
         }
         private WpfCommand _commandAddPartition;
 
-        #endregion
+        public WpfCommand CommandClearPartition
+        {
+            get
+            {
+                if (_commandClearPartition == null)
+                {
+                    _commandClearPartition = new WpfCommand();
+                    _commandClearPartition.Executed += (sender, e) =>
+                    {
+                        Partitions.Clear();
+                    };
+
+                    _commandClearPartition.CanExecuteChecking += (sender, e) =>
+                    {
+                        e.CanExecute = true;
+                    };
+                }
+                return _commandClearPartition;
+            }
+        }
+        private WpfCommand _commandClearPartition;
+
+    #endregion
     }
 }

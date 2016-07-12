@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:concept="http://www.objectis.ch/concept"
         xmlns:local="clr-namespace:Framework"
-        Title="Virtuoso" FontFamily="Segoe UI Light" FontSize="20" Foreground="White" Icon="/Framework;component/Images/Xylophone64x64.png" Height="400" Width="600">
-       
+        Title="Virtuoso" Height="400" Width="600">
+    <!--Icon="/Framework;component/Images/Xylophone64x64.png" WindowStyle="None" ResizeMode="NoResize"  
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" BorderThickness="0">-->
     <Grid>
-        <concept:NavigationControl NavigationBarDock="Top" Background="#FFD7D7D7" Transition="Fade">
+        <concept:NavigationControl NavigationBarDock="Top" Background="#FFF0F0F0" Transition="Fade">
             <local:HomeView concept:NavigationControl.MenuTitle="Home"
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/Home32x32.png"/>
             <local:SupervisionView concept:NavigationControl.MenuTitle="Supervision" 

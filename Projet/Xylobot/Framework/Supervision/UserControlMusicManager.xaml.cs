@@ -25,12 +25,7 @@ namespace Framework
             InitializeComponent();
         }
 
-        private void ImagePlay_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ((Sequencer)DataContext).PlayPause();
-        }
-
-        private void ImagePause_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ImagePlayPause_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ((Sequencer)DataContext).PlayPause();
         }
