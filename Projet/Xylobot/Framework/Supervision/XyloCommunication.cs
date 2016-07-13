@@ -25,7 +25,7 @@ namespace Framework
         
         const byte StartByte = 255;
         // TODO : Ajuster la vitesse
-        const Int32 BaudRate = 57600, SizeHeadMessage = 5, TimeOut = 3000;
+        const Int32 BaudRate = 115200, SizeHeadMessage = 5, TimeOut = 3000;
         const int SizeOctave = 12, StartOctaveXylophone = 5;
 
         #endregion
@@ -221,6 +221,8 @@ namespace Framework
         {
             WindowSelectUsbPort windowUsbPort = new WindowSelectUsbPort();
             windowUsbPort.Execute(ref _portName, _defaultPortName);
+            if (windowUsbPort.DialogResult == true)
+                _serialPort.PortName = _portName;
             return windowUsbPort.DialogResult;
         }   
 

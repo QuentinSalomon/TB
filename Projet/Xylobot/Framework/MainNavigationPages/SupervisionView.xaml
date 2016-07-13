@@ -6,13 +6,14 @@
              xmlns:concept="http://www.objectis.ch/concept" 
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400">
+             d:DesignHeight="600
+             " d:DesignWidth="400">
     <Grid Margin="7">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
             <RowDefinition Height="60"/>
+            <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
         <local:UserControlShowPartition KeyWidth="140" DataContext="{Binding Path=Sequencer}" OctaveNumber="3"/>
 
@@ -21,13 +22,13 @@
         <local:UserControlMusicManager Grid.Row="2" DataContext="{Binding Path=Sequencer}" />
        
         <StackPanel Grid.Row="3" Orientation="Horizontal" FlowDirection="RightToLeft">
-            <Button x:Name="ButtonMoreSpeed" Width="50" Height="50" Background="{DynamicResource ColorsVirtuosoGreen}" Style="{DynamicResource ButtonStyle}" Click="ButtonMoreSpeed_Click" VerticalAlignment="Bottom">
+            <Button x:Name="ButtonMoreSpeed" Width="70" Height="70" Background="{DynamicResource ColorsVirtuosoGreen}" Style="{DynamicResource ButtonStyle}" Click="ButtonMoreSpeed_Click" VerticalAlignment="Bottom">
                 <Image Source="/Framework;component/Images/Up32x32.png" Width="32"/>
             </Button>
-            <Button x:Name="ButtonLessSpeed" Width="50" Height="50" Background="{DynamicResource ColorsVirtuosoOrange}" Style="{DynamicResource ButtonStyle}" Click="ButtonLessSpeed_Click" VerticalAlignment="Bottom">
+            <Button x:Name="ButtonLessSpeed" Width="70" Height="70" Background="{DynamicResource ColorsVirtuosoOrange}" Style="{DynamicResource ButtonStyle}" Click="ButtonLessSpeed_Click" VerticalAlignment="Bottom">
                 <Image Source="/Framework;component/Images/Down32x32.png" Width="32"/>
             </Button>
-            <Border BorderBrush="{x:Null}" Background="Gray" Height="50" VerticalAlignment="Bottom">
+            <Border BorderBrush="{x:Null}" Background="Gray" Height="70" VerticalAlignment="Bottom">
                 <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
                     <TextBlock Text="Speed : " Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Center"/>
                     <TextBlock x:Name="TextBlockSpeed" Text="1.0" Width="25" Style="{DynamicResource TextBlockNormalStyle}" Foreground="Aqua" VerticalAlignment="Center"/>

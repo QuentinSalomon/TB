@@ -166,7 +166,7 @@ namespace Framework
             if (ShowPlaylists == true)
             {
                 ListPlaylist.Clear();
-                string path = @"C:\Users\quentin\Desktop\TB\TB\Projet\Partitions\XML\";
+                string path = FrameworkController.Instance.Settings.DefaultPathLoadFile;//@"C:\Users\quentin\Desktop\TB\TB\Projet\Partitions\XML\";
                 foreach (string s in Directory.GetDirectories(path))
                     ListPlaylist.Add(new ListBoxItemPlaylist(s.Remove(0, path.Length), path));
                 ListBoxPlaylist.ItemsSource = ListPlaylist;

@@ -4,7 +4,7 @@
     
     <Style x:Key="TextBlockTitleStyle" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="Segoe UI Light"/>
-        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="FontSize" Value="35"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
 

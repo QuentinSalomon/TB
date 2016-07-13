@@ -6,7 +6,7 @@
              xmlns:concept="http://www.objectis.ch/concept"
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="330" Loaded="UserControl_Loaded">
+             d:DesignHeight="700" d:DesignWidth="400" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:IndexConverter x:Key="IndexConverter"/>
         <Style  TargetType="{x:Type ListBoxItem}">
@@ -43,14 +43,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="90"/>
+            <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
 
         <DockPanel Margin="0,0,0,5">
-            <Button x:Name="ButtonBackToPlaylists" Width="35" Height="35" Style="{DynamicResource ButtonStyle}" Click="ButtonBackToPlaylists_Click" DockPanel.Dock="Left" Visibility="Collapsed" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,5,0">
+            <Button x:Name="ButtonBackToPlaylists" Width="{Binding ElementName=ButtonBackToPlaylists, Path=ActualHeight}" Height="{Binding ElementName=TextBlockTitle, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonBackToPlaylists_Click" DockPanel.Dock="Left" Visibility="Collapsed" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,5,0">
                 <Image Source="/Framework;component/Images/Back32x32.png" Margin="5"/>
             </Button>
-            <TextBlock x:Name="TextBlockTitle" Text="Title" DockPanel.Dock="Right" Style="{DynamicResource TextBlockTitleStyle}" Height="35" Background="{DynamicResource ColorsVirtuosoGreen}"/>
+            <TextBlock x:Name="TextBlockTitle" Text="Title" DockPanel.Dock="Right" Style="{DynamicResource TextBlockTitleStyle}" Background="{DynamicResource ColorsVirtuosoGreen}"/>
         </DockPanel>
         
         <ListBox Name="ListBoxPlaylist" AlternationCount="2" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{DynamicResource DataTemplateListBox}" Background="White"/>

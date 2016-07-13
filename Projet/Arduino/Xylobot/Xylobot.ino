@@ -265,6 +265,7 @@ void StopMsg(uint16_t dataSize)
 {
   play=false;
   bufferNotes.Clear();
+  currentTick = 0;
   msgSendType = SendType_Ok;
 }
 void PauseMsg(uint16_t dataSize)

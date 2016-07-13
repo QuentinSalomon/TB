@@ -8,9 +8,9 @@
         Title="WindowSelectUsbPort" Height="300" Width="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -18,10 +18,11 @@
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock x:Name="TextBlockTitle" Text="Select usb port" Margin="0,0,0,5" Background="ForestGreen" Foreground="White" FontFamily="Segoe UI Light" FontSize="18" Grid.ColumnSpan="3"/>
+        <TextBlock Text="Select usb port" Style="{DynamicResource TextBlockTitleStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,0,5" Grid.ColumnSpan="3"/>
+        
         <ListBox x:Name="ListBoxPortName" Grid.ColumnSpan="3" Grid.Row="1" Background="Gray" SelectionChanged="ListBoxPortName_SelectionChanged"/>
 
-        <Button Content="Cancel" Grid.Row="2" Grid.Column="2" Click="ButtonCancel_Click" IsCancel="True"/>
-        <Button x:Name="ButtonOk" Content="Ok" IsEnabled="False" Grid.Row="2" Grid.Column="1" Click="ButtonOk_Click"/>
+        <Button Content="Cancel" Style="{DynamicResource ButtonStyle}" Grid.Row="2" Grid.Column="2" Click="ButtonCancel_Click" IsCancel="True"/>
+        <Button x:Name="ButtonOk" Style="{DynamicResource ButtonStyle}" Content="Ok" IsEnabled="False" Grid.Row="2" Grid.Column="1" Click="ButtonOk_Click"/>
     </Grid>
 </Window>

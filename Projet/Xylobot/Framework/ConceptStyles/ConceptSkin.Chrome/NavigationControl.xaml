@@ -14,7 +14,7 @@
         <DockPanel x:Name="DockPanelButton"
                     HorizontalAlignment="Center" 
                     Background="{DynamicResource ColorsVirtuosoBlue}"
-                    Width="100" Height="50" Margin="5,5">
+                    Width="130" Height="100" Margin="5,5">
             <Image Source="{Binding Path=(concept:NavigationControl.MenuImageSource)}"
                                        Visibility="{Binding Source, RelativeSource={RelativeSource self}, Converter={concept:NullableToVisibilityConverter}}"
                                        Width="64" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
