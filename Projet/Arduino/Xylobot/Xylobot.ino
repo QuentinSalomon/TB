@@ -59,9 +59,7 @@ void setup() {
 void loop() {
   /*****I2C*****/
   if(play)
-  {  
     Push();
-  }
   else
     startTime = micros(); //Actualise le temps si on est en pause
   ReleasePush();

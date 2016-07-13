@@ -41,6 +41,17 @@ namespace Framework
 
         #endregion
 
+
+        public void AddPartition(PartitionXylo partition)
+        {
+            bool existInPlaylist = false;
+            foreach (PartitionXylo p in Partitions)
+                if (p.Title == partition.Title)
+                    existInPlaylist = true;
+            if (!existInPlaylist)
+                Partitions.Add(partition);
+        }
+
         #region WPF command
 
         public WpfCommand CommandAddPartition
@@ -57,7 +68,7 @@ namespace Framework
                         OpenFileDialog fileDlg = new OpenFileDialog();
 
                         fileDlg.InitialDirectory = FrameworkController.Instance.Settings.DefaultPathLoadFile;
-                        fileDlg.Filter = "txt files (*.xml)|*.xml";
+                        fileDlg.Filter = "xml files (*.xml)|*.xml";
                         fileDlg.RestoreDirectory = true;
                         if (fileDlg.ShowDialog() == DialogResult.OK)
                         {
@@ -66,7 +77,7 @@ namespace Framework
                             if (messages.Count > 0)
                                 ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
                             else
-                                Partitions.Add(p);
+                                AddPartition(p);
                         }
                     };
 
@@ -80,27 +91,27 @@ namespace Framework
         }
         private WpfCommand _commandAddPartition;
 
-        public WpfCommand CommandClearPartition
+        public WpfCommand CommandClearPartitions
         {
             get
             {
-                if (_commandClearPartition == null)
+                if (_commandClearPartitions == null)
                 {
-                    _commandClearPartition = new WpfCommand();
-                    _commandClearPartition.Executed += (sender, e) =>
+                    _commandClearPartitions = new WpfCommand();
+                    _commandClearPartitions.Executed += (sender, e) =>
                     {
                         Partitions.Clear();
                     };
 
-                    _commandClearPartition.CanExecuteChecking += (sender, e) =>
+                    _commandClearPartitions.CanExecuteChecking += (sender, e) =>
                     {
                         e.CanExecute = true;
                     };
                 }
-                return _commandClearPartition;
+                return _commandClearPartitions;
             }
         }
-        private WpfCommand _commandClearPartition;
+        private WpfCommand _commandClearPartitions;
 
     #endregion
     }

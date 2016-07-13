@@ -65,7 +65,7 @@ namespace Framework
             {
                 _serialPort.Open();
                 _serialPort.DiscardOutBuffer();
-                //Stop la communication i2c et récupère la place dans le buffer circulaire de l'arduino
+                //Stop la communication i2c et récupère la place dans le buffer circulaire de l'Arduino
                 SendMessage(SendTypeMessage.Stop);
             }
             catch (Exception e)
@@ -74,7 +74,7 @@ namespace Framework
             }
         }
 
-        public ReceiveTypeMessage Read()
+        private ReceiveTypeMessage Read()
         {
             int tmp;
             byte[] tick = new byte[sizeof(UInt32)];
@@ -116,48 +116,13 @@ namespace Framework
             }
         }
 
-        public void SendNotes(List<Note> notes)
-        {
-            ushort noteSize = (sizeof(UInt32) + 2*sizeof(byte)); //envoie le tick (UINT32), la hauteur(byte) et l'intensité(byte)
-            if (notes.Count > ArduinoNoteSizeAvaible)
-                throw new Exception("trop de notes");
-            try
-            {
-                do
-                {
-                    int i = 0;
-                    byte[] msg = new byte[SizeHeadMessage + notes.Count * noteSize];
-                    ushort dataSize = (ushort)(notes.Count * noteSize);
-                    byte[] headMsg = HeaderMessage(dataSize, (byte)SendTypeMessage.Notes);
-                    for (i = 0; i < SizeHeadMessage; i++)
-                        msg[i] = headMsg[i];
-                    foreach (Note note in notes)
-                    {
-                        msg[i++] = (byte)(note.High + (note.Octave - StartOctaveXylophone) * SizeOctave);
-                        foreach (byte data in BitConverter.GetBytes(note.Tick))
-                            msg[i++] = data;
-                        msg[i++] = note.Intensity;
-                    }
-                    //Envoie
-                    _serialPort.DiscardOutBuffer();
-                    _serialPort.Write(msg, 0, msg.Length);
-
-                } while (Read() != ReceiveTypeMessage.Ok);
-            }
-            catch (TimeoutException e)
-            {
-                throw e;
-            }
-            _numMessage++;
-        }
-
         public void SendDatas(SendTypeMessage typeMessage, List<byte> datas)
         {
             try
             {
                 do
                 {
-                    int i = 0;
+                    int i = 0, countSend = 0;
                     byte[] msg = new byte[SizeHeadMessage + datas.Count];
                     ushort dataSize = (ushort)(datas.Count);
                     byte[] headMsg = HeaderMessage(dataSize, (byte)typeMessage);
@@ -168,6 +133,9 @@ namespace Framework
                     //Envoie
                     _serialPort.DiscardOutBuffer();
                     _serialPort.Write(msg, 0, msg.Length);
+
+                    if (countSend++ > 9)
+                        throw new Exception("Send-receive message fail too many times.");
 
                 } while (Read() != ReceiveTypeMessage.Ok);
             }
@@ -183,10 +151,15 @@ namespace Framework
             byte[] msg = HeaderMessage(0, (byte)typeMessage);
             try
             {
-                do {
+                do
+                {
+                    int countSend = 0;
                     _serialPort.DiscardOutBuffer();
                     _serialPort.DiscardInBuffer();
                     _serialPort.Write(msg, 0, msg.Length);
+
+                    if (countSend++ > 9)
+                        throw new Exception("Send-receive message fail too many times.");
                 } while (Read() != ReceiveTypeMessage.Ok);
             }
             catch (TimeoutException e)
@@ -197,7 +170,7 @@ namespace Framework
             _numMessage++;
         }
 
-        public byte[] HeaderMessage(ushort dataSize, byte type)
+        private byte[] HeaderMessage(ushort dataSize, byte type)
         {
             byte[] header = new byte[SizeHeadMessage];
             header[0] = StartByte;
@@ -208,7 +181,42 @@ namespace Framework
             return header;
         }
 
-        // Display Port values and prompt user to enter a port.
+        //public void SendNotes(List<Note> notes)
+        //{
+        //    ushort noteSize = (sizeof(UInt32) + 2*sizeof(byte)); //envoie le tick (UINT32), la hauteur(byte) et l'intensité(byte)
+        //    if (notes.Count > ArduinoNoteSizeAvaible)
+        //        throw new Exception("trop de notes");
+        //    try
+        //    {
+        //        do
+        //        {
+        //            int i = 0, countSend = 0;
+        //            byte[] msg = new byte[SizeHeadMessage + notes.Count * noteSize];
+        //            ushort dataSize = (ushort)(notes.Count * noteSize);
+        //            byte[] headMsg = HeaderMessage(dataSize, (byte)SendTypeMessage.Notes);
+        //            for (i = 0; i < SizeHeadMessage; i++)
+        //                msg[i] = headMsg[i];
+        //            foreach (Note note in notes)
+        //            {
+        //                msg[i++] = (byte)(note.High + (note.Octave - StartOctaveXylophone) * SizeOctave);
+        //                foreach (byte data in BitConverter.GetBytes(note.Tick))
+        //                    msg[i++] = data;
+        //                msg[i++] = note.Intensity;
+        //            }
+        //            //Envoie
+        //            _serialPort.DiscardOutBuffer();
+        //            _serialPort.Write(msg, 0, msg.Length);
+        //            if (countSend++ > 9)
+        //                throw new Exception("Send-receive message fail too many times.");
+        //        } while (Read() != ReceiveTypeMessage.Ok);
+        //    }
+        //    catch (TimeoutException e)
+        //    {
+        //        throw e;
+        //    }
+        //    _numMessage++;
+        //}
+        
         public bool? SetPortName()
         {
             WindowSelectUsbPort windowUsbPort = new WindowSelectUsbPort();

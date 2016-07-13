@@ -89,6 +89,7 @@
     <Compile Include="EditPartition\NotesConvert.cs" />
     <Compile Include="EditPartition\PartitionMidi.cs" />
     <Compile Include="EditPartition\PartitionXylo.cs" />
+    <Compile Include="EditPartition\Tempo.cs" />
     <Compile Include="EditPartition\UserControlNote.xaml.cs">
       <DependentUpon>UserControlNote.xaml</DependentUpon>
     </Compile>

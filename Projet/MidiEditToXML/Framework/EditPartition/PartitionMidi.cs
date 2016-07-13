@@ -110,11 +110,12 @@ namespace Framework
                         ChannelMessage msg = ((ChannelMessage)midiEvent.MidiMessage);
                         if (msg.Command == ChannelCommand.NoteOn)
                         {
-                            if (msg.Data2 < 0)
-                                ;
+                            //Data1 = id de la note.
+                            //Data2 = intensité de la note.
                             Note tmpNote = NotesConvert.IdToNote(msg.Data1, msg.Data2, tick);
                             tmpNote.Name = Title + "_" + (numNote++).ToString();
-                            if (Channels.Count - msg.MidiChannel <= 0) {
+                            if (Channels.Count - msg.MidiChannel <= 0)
+                            {
                                 int nbChannel = Channels.Count;
                                 for (int i = 0; i <= msg.MidiChannel - nbChannel; i++)
                                 {
@@ -124,6 +125,38 @@ namespace Framework
                                 }
                             }
                             Channels[msg.MidiChannel].Notes.Add(tmpNote);
+                        }
+                    }
+                    else if (midiEvent.MidiMessage.MessageType == MessageType.Meta)
+                    {
+                        int tick = midiEvent.AbsoluteTicks;
+                        MetaMessage msg = ((MetaMessage)midiEvent.MidiMessage);
+                        if (msg.MetaType == MetaType.Tempo)
+                        {
+                            int tempo = 0;
+
+                            // If this platform uses little endian byte order.
+                            if (BitConverter.IsLittleEndian)
+                            {
+                                int d = msg.Length - 1;
+
+                                // Pack tempo.
+                                for (int i = 0; i < msg.Length; i++)
+                                {
+                                    tempo |= msg[d] << (8 * i);
+                                    d--;
+                                }
+                            }
+                            // Else this platform uses big endian byte order.
+                            else
+                            {
+                                // Pack tempo.
+                                for (int i = 0; i < msg.Length; i++)
+                                {
+                                    tempo |= msg[i] << (8 * i);
+                                }
+                            }
+                            Tempos.Add(new Tempo(tick, tempo));
                         }
                     }
                 }
@@ -136,5 +169,10 @@ namespace Framework
         [ConceptAutoCreate]
         [IntlConceptName("Framework.PartitionMidi.Channels", "Channels")]
         public StaticListChannel Channels { get; protected set; }
+
+        [ConceptViewVisible]
+        [ConceptAutoCreate]
+        [IntlConceptName("Framework.PartitionMidi.Tempos", "Tempos")]
+        public StaticListTempo Tempos { get; protected set; }
     }
 }

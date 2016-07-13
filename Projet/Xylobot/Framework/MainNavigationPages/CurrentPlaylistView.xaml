@@ -8,10 +8,12 @@
              d:DesignHeight="600" d:DesignWidth="450">
     <UserControl.Resources>
         <local:IndexConverter x:Key="IndexConverter"/>
-        <Style  TargetType="{x:Type ListBoxItem}">
+        <Style TargetType="{x:Type ListBoxItem}">
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="Orange"/>
+                    <Trigger.Setters>
+                        <Setter Property="Background" Value="Black"/>
+                    </Trigger.Setters>
                 </Trigger>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">
                     <Setter Property="Background" Value="#FF595959"></Setter>
@@ -22,7 +24,7 @@
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="DataTemplateListBox">
-            <Grid Margin="0,2">
+            <Grid x:Name="GridListBoxItem">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20" />
                     <ColumnDefinition Width="30" />
@@ -30,13 +32,23 @@
                 </Grid.ColumnDefinitions>
                 <Image Width="20" Height="20" Margin="0,0,0,0" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ListBoxImageSource}"/>
                 <Ellipse Stroke="White" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                         AncestorType={x:Type ListBoxItem}}, 
-                                         Converter={StaticResource IndexConverter}}" Foreground="White" FontSize="18" Grid.Column="1" Margin="0,0,0,2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, 
+                                        Converter={StaticResource IndexConverter}}" 
+                                        Foreground="White" FontSize="18" 
+                                        Grid.Column="1" Margin="0,0,0,2" 
+                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding Title}" Style="{DynamicResource TextBlockNormalStyle}" Grid.Column="2"/>
             </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource=
+                    {RelativeSource Mode=FindAncestor, AncestorType=
+                    {x:Type ListBoxItem}},Path=IsSelected}" Value="True">
+                    <Setter TargetName="GridListBoxItem" Property="Background" Value="{DynamicResource ColorsVirtuosoDarkBlue}"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
     </UserControl.Resources>
+    
     <Grid Margin="7">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -46,9 +58,13 @@
             <RowDefinition Height="90"/>
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Path=Playlist.Title}" Style="{DynamicResource TextBlockTitleStyle}" Height="35" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,0,5"/>
-        <ListBox Name="ListBoxPlaylist" AlternationCount="2" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{DynamicResource DataTemplateListBox}" Background="White"/>
+
+        <ListBox Name="ListBoxPlaylist" SelectionMode="Single" AlternationCount="2" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{StaticResource DataTemplateListBox}" Background="White"/>
+        
         <local:UserControlProgressBarMusic DataContext="{Binding Path=Sequencer.PartitionProgress}" Grid.Row="2"/>
+        
         <local:UserControlMusicManager DataContext="{Binding Path=Sequencer}" Grid.Row="3"/>
+        
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="145*"/>
@@ -56,7 +72,7 @@
                 <ColumnDefinition Width="51*"/>
                 <ColumnDefinition Width="94*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="ButtonClear" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoRed}" Grid.Column="0" Margin="0,10,4,0">
+            <Button x:Name="ButtonClear" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoRed}" Grid.Column="0" Margin="0,10,4,0" Command="{Binding Path=Playlist.CommandClearPartitions}">
                 <Grid Width="{Binding ElementName=ButtonClear, Path=ActualWidth}" Height="{Binding ElementName=ButtonClear, Path=ActualHeight}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
                         <Image Source="/Framework;component/Images/Clear32x32.png" Width="32"/>
@@ -66,7 +82,7 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="ButtonRemove" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoOrange}" Grid.Column="1" Margin="2,10,2,0">
+            <Button x:Name="ButtonRemove" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoOrange}" Grid.Column="1" Margin="2,10,2,0" Click="ButtonRemove_Click">
                 <Grid Width="{Binding ElementName=ButtonClear, Path=ActualWidth}" Height="{Binding ElementName=ButtonClear, Path=ActualHeight}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
                         <Image Source="/Framework;component/Images/Remove32x32.png" Width="32"/>
