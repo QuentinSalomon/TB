@@ -46,7 +46,12 @@ namespace Framework
                 dlg.InitialDirectory = FileManagement.PathSaveFile;
                 dlg.Filter = "xml files (*.xml)|*.xml";
                 if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string[] tabString = dlg.FileName.Split('\\');
+                    string title = tabString[tabString.Length - 1];
+                    partitionXylo.Title = title.Split('.')[0];
                     partitionXylo.SaveToFile(dlg.FileName);
+                }
             }
         }
 

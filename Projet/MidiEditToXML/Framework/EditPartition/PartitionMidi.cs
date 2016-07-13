@@ -75,6 +75,9 @@ namespace Framework
                         notes.Add(new Note(n));
                 }
             notes.Sort(CompareNoteByTick);
+
+            AdjustingMonoTempo(notes);
+            
             foreach (Note n in notes)
                 partitionXylo.Notes.Add(n);
             partitionXylo.Tempo = Tempo;
@@ -92,6 +95,48 @@ namespace Framework
                 return 0;
         }
 
+        private void AdjustingMonoTempo(List<Note> notes)
+        {
+            int[] tmpTempoTicks = new int[Tempos.Count];
+
+            double tempoFactor;
+            int i, j = 0;
+            //sauvegarde les ticks des tempos
+            for (i=0; i<Tempos.Count; i++)
+                tmpTempoTicks[i] = Tempos[i].Tick;
+            //Avance jusqu'à la note du deuxième tempo
+            while (notes[j].Tick < Tempos[1].Tick)
+                j++;
+
+            //Corrige le tick des notes en fonction des tempos jusqu'à l'avant dernier tempo
+            for (i = 1; i < Tempos.Count - 1; i++)
+            {
+                tempoFactor = Tempo / Tempos[i].Value;
+
+                while (notes[j].Tick < tmpTempoTicks[i + 1])
+                {
+                    notes[j].Tick = (int)((notes[j].Tick - tmpTempoTicks[i]) * tempoFactor) + tmpTempoTicks[i];
+                    j++;
+                }
+                int tickOffset = tmpTempoTicks[i + 1];
+                tmpTempoTicks[i + 1] = (int)((tmpTempoTicks[i + 1] - tmpTempoTicks[i]) * tempoFactor) + tmpTempoTicks[i];
+                tickOffset = tmpTempoTicks[i + 1] - tickOffset;
+
+                for (int k = Tempos.Count-1; k > i; k--)
+                    tmpTempoTicks[k] += tickOffset;
+                for (int k = notes.Count-1; k >= j; k--)
+                    notes[k].Tick += tickOffset;
+            }
+
+            //Corrige les dernières notes
+            tempoFactor = Tempo / Tempos[i].Value;
+            while (j < notes.Count)
+            {
+                notes[j].Tick = (int)((notes[j].Tick - Tempos[i].Tick) * tempoFactor) + Tempos[i].Tick;
+                j++;
+            }
+        }
+
         public void Load(string filename)
         {
             Clear();
@@ -99,7 +144,7 @@ namespace Framework
             string[] tabString = filename.Split('\\');
             string title = tabString[tabString.Length - 1];
             Title = title.Split('.')[0];
-            int numNote = 0;
+            int numNote = 0, numTempo = 0;
             foreach (Track t in sequence)
             {
                 foreach (MidiEvent midiEvent in t.Iterator())
@@ -156,11 +201,14 @@ namespace Framework
                                     tempo |= msg[i] << (8 * i);
                                 }
                             }
-                            Tempos.Add(new Tempo(tick, tempo));
+                            Tempo tmpTempo = new Tempo(tick, tempo);
+                            tmpTempo.Name = "Tempo" + (numTempo++).ToString();
+                            Tempos.Add(tmpTempo);
                         }
                     }
                 }
             }
+            Tempo = Tempos[0].Value;
         }
 
         #endregion
