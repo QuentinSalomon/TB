@@ -1,0 +1,10 @@
+﻿
+h3.CardTitleText<%id%>{
+  margin: 0;
+  color: #37474F;
+  text-align: center;
+}
+
+.StringFrom<%id%>{
+  text-align: center;
+}

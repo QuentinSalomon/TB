@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="Supervision\XyloCommunication.cs" />
     <Compile Include="Supervision\Xylobot.cs" />
+    <Compile Include="WebRender\WebMaterialShowListRender.cs" />
     <Compile Include="WebServer\WebClasseVirutoso.cs" />
     <Compile Include="WebServer\WebServer.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -332,6 +333,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\HomeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="WebRender\Files\MaterialList.css" />
+    <Content Include="WebRender\Files\MaterialList.html" />
+    <Content Include="WebRender\Files\MaterialList.js" />
+    <Content Include="WebRender\Files\MaterialListCallBack.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
