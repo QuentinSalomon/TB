@@ -193,6 +193,7 @@ namespace Framework
                     if (_stop)
                     {
                         Xylobot.Stop();
+                        ActualiseProgress();
                         break;
                     }
                     else if (_pause)
@@ -215,6 +216,7 @@ namespace Framework
                             notes.Add(partition.Notes[k + i]);
                         }
                         k += i;
+                        //todo : delete (debug)
                         if (k == 1251)
                             ;
                         Xylobot.SendNotes(notes);

@@ -6,7 +6,33 @@
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+    <Grid Margin="7">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.55*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Image Grid.ColumnSpan="2" Source="/Framework;component/Images/HomeImage.png"/>
+        <!--<Image Source="/Framework;component/Images/LogoHeig.png" Width="100" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>-->
+
+        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Text="Woopsa" Source="/Framework;component/Images/Woopsa32x32.png" Grid.Row="1" Margin="0,5,5,5"/>
+        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoOrange}" Text="Concept Hmi" Source="/Framework;component/Images/Concept32x32.png" Grid.Row="1" Grid.Column="1" Margin="5,5,0,5"/>
+
+        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoRed}" Text="Art &amp; technologie" Source="/Framework;component/Images/Woopsa32x32.png" Grid.Row="2" Margin="0,5,5,5"/>
+        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoPurple}" Text="Web page" Source="/Framework;component/Images/QrCode32x32.png" Grid.Row="2" Grid.Column="1" Margin="5,5,0,5"/>
+
+        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoYellow}" Text="Smartphone" Source="/Framework;component/Images/Smartphone32x32.png" Grid.Row="3" Margin="0,5,5,5"/>
+        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoGreen}" Text="Wifi" Source="/Framework;component/Images/Wifi32x32.png" Grid.Row="3" Grid.Column="1" Margin="5,5,0,5"/>
+
+        <Border Background="{DynamicResource ColorsVirtuosoDarkBlue}" Grid.Row="5" Grid.ColumnSpan="2">
+            <TextBlock Text="Quentin Salomon" Style="{DynamicResource TextBlockNormalStyle}" HorizontalAlignment="Right"/>
+        </Border>
     </Grid>
 </UserControl>

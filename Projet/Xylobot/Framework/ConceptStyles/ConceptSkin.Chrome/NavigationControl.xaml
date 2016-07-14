@@ -4,11 +4,13 @@
                     xmlns:local="clr-namespace:Framework">
 
     <SolidColorBrush x:Key="ColorsVirtuosoBlue">#FF2672EC</SolidColorBrush>
+    <SolidColorBrush x:Key="ColorsVirtuosoMiddleBlue">#FF0070C0</SolidColorBrush>
     <SolidColorBrush x:Key="ColorsVirtuosoDarkBlue">#FF002060</SolidColorBrush>
     <SolidColorBrush x:Key="ColorsVirtuosoGreen">#FF00A600</SolidColorBrush>
     <SolidColorBrush x:Key="ColorsVirtuosoOrange">#FFF59B00</SolidColorBrush>
     <SolidColorBrush x:Key="ColorsVirtuosoPurple">#FF7030A0</SolidColorBrush>
     <SolidColorBrush x:Key="ColorsVirtuosoRed">#FFC00000</SolidColorBrush>
+    <SolidColorBrush x:Key="ColorsVirtuosoYellow">#FFEEB500</SolidColorBrush>
 
     <DataTemplate x:Key="ItemTemplate">
         <DockPanel x:Name="DockPanelButton"

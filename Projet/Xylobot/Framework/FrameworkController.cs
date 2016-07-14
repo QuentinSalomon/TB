@@ -30,17 +30,19 @@ namespace Framework
         public void Load()
         {
             Playlist = new Playlist() { Title = "Playlist Principal" };
-            //Xylobot = new Xylobot();
             Settings = new Settings();
             Sequencer = new Sequencer();
             Sequencer.Playlist = Playlist;
-            //Sequencer.Xylobot = Xylobot;
+
+            WebServer = new VirtuosoWebServer(Sequencer, Playlist);
+
             LoadConfiguration();
         }
 
         public void Unload()
         {
             SaveConfiguration();
+            WebServer.Close();
             Sequencer.Finish();
         }
 
@@ -52,6 +54,7 @@ namespace Framework
         public Xylobot Xylobot { get; private set; }
         public Settings Settings { get; private set; }
         public Sequencer Sequencer { get; private set; }
+        public VirtuosoWebServer WebServer { get; private set; }
 
         #endregion
 

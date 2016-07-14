@@ -68,14 +68,33 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WebCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\WebCore.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMaterial, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\WebMaterial.dll</HintPath>
+    </Reference>
+    <Reference Include="WebProgressBarRender, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\WebProgressBarRender.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Woopsa, Version=1.1.9.18627, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Woopsa.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="EditPlaylist\Playlist.cs" />
     <Compile Include="FrameworkController.cs" />
+    <Compile Include="Home\UserControlHome.xaml.cs">
+      <DependentUpon>UserControlHome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainNavigationPages\CurrentPlaylistView.xaml.cs">
       <DependentUpon>CurrentPlaylistView.xaml</DependentUpon>
     </Compile>
@@ -133,6 +152,8 @@
     </Compile>
     <Compile Include="Supervision\XyloCommunication.cs" />
     <Compile Include="Supervision\Xylobot.cs" />
+    <Compile Include="WebServer\WebClasseVirutoso.cs" />
+    <Compile Include="WebServer\WebServer.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -165,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ConceptStyles\ConceptSkin.Chrome\WindowStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Home\UserControlHome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -290,6 +315,23 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Edit32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Concept32x32.png" />
+    <Resource Include="Images\Wifi32x32.png" />
+    <Resource Include="Images\Woopsa32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\QrCode32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Smartphone32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LogoHeig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\HomeImage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
