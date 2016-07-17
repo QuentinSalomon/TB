@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using WebCore;
 
-namespace WebMaterial
+namespace Framework
 {
     public class WebMaterialShowListRender : WebPropertyRender
     {
@@ -19,7 +19,7 @@ namespace WebMaterial
 
         public override void BuildControl(WebPageBuilder pagebuilder)
         {
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebMaterial.Render.WebMaterialShowListRender.Files.MaterialList.html")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebRender.WebMaterialShowListRender.Files.MaterialList.html")))
             {
                 string tmp = file.ReadToEnd();
                 tmp = tmp.Replace("<%title%>", PropDescription.PropertyInfo.Name);
@@ -28,7 +28,7 @@ namespace WebMaterial
                 pagebuilder.ApendHtml(tmp);
             }
 
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebMaterial.Render.WebMaterialShowListRender.Files.MaterialString.css")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebRender.WebMaterialShowListRender.Files.MaterialString.css")))
             {
                 string tmp = file.ReadToEnd();
                 tmp = tmp.Replace("<%id%>", id.ToString());
@@ -41,14 +41,14 @@ namespace WebMaterial
                 pagebuilder.ApendCss(tmp);
             }
 
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebMaterial.Render.WebMaterialShowListRender.Files.MaterialString.js")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebRender.WebMaterialShowListRender.Files.MaterialString.js")))
             {
                 string tmp = file.ReadToEnd();
 
                 pagebuilder.ApendJs(tmp);
             }
 
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebMaterial.Render.WebMaterialShowListRender.Files.MaterialStringCallBack.js")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebRender.WebMaterialShowListRender.Files.MaterialStringCallBack.js")))
             {
                 string tmp = file.ReadToEnd();
                

@@ -335,10 +335,10 @@
     <Resource Include="Images\HomeImage.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WebRender\Files\MaterialList.css" />
-    <Content Include="WebRender\Files\MaterialList.html" />
-    <Content Include="WebRender\Files\MaterialList.js" />
-    <Content Include="WebRender\Files\MaterialListCallBack.js" />
+    <EmbeddedResource Include="WebRender\Files\MaterialList.css" />
+    <EmbeddedResource Include="WebRender\Files\MaterialList.html" />
+    <EmbeddedResource Include="WebRender\Files\MaterialList.js" />
+    <EmbeddedResource Include="WebRender\Files\MaterialListCallBack.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
