@@ -11,7 +11,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Image x:Name="Image" Width="64" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5"/>
+        <Image x:Name="Image" Width="128" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5"/>
         <TextBlock x:Name="TextBlock" Text="Text Here" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30" Grid.Row="1"/>
     </Grid>
 </UserControl>

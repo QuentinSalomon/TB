@@ -42,5 +42,11 @@ namespace Framework
             get { return TextBlock.Text; }
             set { TextBlock.Text = value; }
         }
+
+        public double ImageWidth
+        {
+            get { return Image.ActualWidth; }
+            set { Image.Width = value; }
+        }
     }
 }

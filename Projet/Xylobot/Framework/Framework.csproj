@@ -340,6 +340,17 @@
     <EmbeddedResource Include="WebRender\Files\MaterialList.js" />
     <EmbeddedResource Include="WebRender\Files\MaterialListCallBack.js" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Concept128x128.png" />
+    <Resource Include="Images\Woopsa128x128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\QrCode128x128.png" />
+    <Resource Include="Images\Wifi128x128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Smartphone128x128.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
