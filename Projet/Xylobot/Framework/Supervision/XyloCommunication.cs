@@ -24,7 +24,6 @@ namespace Framework
         #region const
         
         const byte StartByte = 255;
-        // TODO : Ajuster la vitesse
         const Int32 BaudRate = 115200, SizeHeadMessage = 5, TimeOut = 3000;
         const int SizeOctave = 12, StartOctaveXylophone = 5;
 
@@ -120,9 +119,10 @@ namespace Framework
         {
             try
             {
+                int countSend = 0;
                 do
                 {
-                    int i = 0, countSend = 0;
+                    int i = 0;
                     byte[] msg = new byte[SizeHeadMessage + datas.Count];
                     ushort dataSize = (ushort)(datas.Count);
                     byte[] headMsg = HeaderMessage(dataSize, (byte)typeMessage);
@@ -151,9 +151,9 @@ namespace Framework
             byte[] msg = HeaderMessage(0, (byte)typeMessage);
             try
             {
+                int countSend = 0;
                 do
                 {
-                    int countSend = 0;
                     _serialPort.DiscardOutBuffer();
                     _serialPort.DiscardInBuffer();
                     _serialPort.Write(msg, 0, msg.Length);
@@ -181,42 +181,6 @@ namespace Framework
             return header;
         }
 
-        //public void SendNotes(List<Note> notes)
-        //{
-        //    ushort noteSize = (sizeof(UInt32) + 2*sizeof(byte)); //envoie le tick (UINT32), la hauteur(byte) et l'intensité(byte)
-        //    if (notes.Count > ArduinoNoteSizeAvaible)
-        //        throw new Exception("trop de notes");
-        //    try
-        //    {
-        //        do
-        //        {
-        //            int i = 0, countSend = 0;
-        //            byte[] msg = new byte[SizeHeadMessage + notes.Count * noteSize];
-        //            ushort dataSize = (ushort)(notes.Count * noteSize);
-        //            byte[] headMsg = HeaderMessage(dataSize, (byte)SendTypeMessage.Notes);
-        //            for (i = 0; i < SizeHeadMessage; i++)
-        //                msg[i] = headMsg[i];
-        //            foreach (Note note in notes)
-        //            {
-        //                msg[i++] = (byte)(note.High + (note.Octave - StartOctaveXylophone) * SizeOctave);
-        //                foreach (byte data in BitConverter.GetBytes(note.Tick))
-        //                    msg[i++] = data;
-        //                msg[i++] = note.Intensity;
-        //            }
-        //            //Envoie
-        //            _serialPort.DiscardOutBuffer();
-        //            _serialPort.Write(msg, 0, msg.Length);
-        //            if (countSend++ > 9)
-        //                throw new Exception("Send-receive message fail too many times.");
-        //        } while (Read() != ReceiveTypeMessage.Ok);
-        //    }
-        //    catch (TimeoutException e)
-        //    {
-        //        throw e;
-        //    }
-        //    _numMessage++;
-        //}
-        
         public bool? SetPortName()
         {
             WindowSelectUsbPort windowUsbPort = new WindowSelectUsbPort();

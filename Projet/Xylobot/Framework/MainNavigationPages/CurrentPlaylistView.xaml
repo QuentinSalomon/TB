@@ -24,7 +24,7 @@
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="DataTemplateListBox">
-            <Grid x:Name="GridListBoxItem">
+            <Grid x:Name="GridListBoxItem" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20" />
                     <ColumnDefinition Width="30" />
@@ -59,7 +59,7 @@
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Path=Playlist.Title}" Style="{DynamicResource TextBlockTitleStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,0,5"/>
 
-        <ListBox Name="ListBoxPlaylist" SelectionMode="Single" AlternationCount="2" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{StaticResource DataTemplateListBox}" Background="White"/>
+        <ListBox HorizontalContentAlignment="Stretch" Name="ListBoxPlaylist" SelectionMode="Single" AlternationCount="2" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{StaticResource DataTemplateListBox}" Background="White"/>
         
         <local:UserControlProgressBarMusic DataContext="{Binding Path=Sequencer.PartitionProgress}" Grid.Row="2"/>
         
@@ -67,7 +67,6 @@
         
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -91,7 +90,7 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="ButtonAdd" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Grid.Column="2" Margin="4,10,0,0" Command="{Binding Path=Playlist.CommandAddPartition}" Grid.ColumnSpan="2">
+            <!--<Button x:Name="ButtonAdd" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Grid.Column="2" Margin="4,10,0,0" Command="{Binding Path=Playlist.CommandAddPartition}" Grid.ColumnSpan="2">
                 <Grid Width="{Binding ElementName=ButtonClear, Path=ActualWidth}" Height="{Binding ElementName=ButtonClear, Path=ActualHeight}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
                         <Image Source="/Framework;component/Images/Add32x32.png" Width="32"/>
@@ -99,7 +98,7 @@
                     </StackPanel>
                     <TextBlock Text="Add" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
                 </Grid>
-            </Button>
+            </Button>-->
         </Grid>
     </Grid>
 </UserControl>

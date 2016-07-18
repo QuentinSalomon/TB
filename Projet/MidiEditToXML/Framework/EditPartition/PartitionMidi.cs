@@ -201,7 +201,7 @@ namespace Framework
                                     tempo |= msg[i] << (8 * i);
                                 }
                             }
-                            Tempo tmpTempo = new Tempo(tick, tempo);
+                            Tempo tmpTempo = new Tempo(tick, (double)tempo / sequence.Division / 1000);
                             tmpTempo.Name = "Tempo" + (numTempo++).ToString();
                             Tempos.Add(tmpTempo);
                         }

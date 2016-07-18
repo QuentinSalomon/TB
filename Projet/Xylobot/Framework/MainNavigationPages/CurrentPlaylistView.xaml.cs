@@ -56,7 +56,10 @@ namespace Framework
         private void ButtonRemove_Click(object sender, RoutedEventArgs e)
         {
             if (ListBoxPlaylist.SelectedIndex != -1)
-                ((CurrentPlaylistViewModel)DataContext).Playlist.RemoveAt(ListBoxPlaylist.SelectedIndex);
+            {
+                ((CurrentPlaylistViewModel)DataContext).Playlist.Partitions.RemoveAt(ListBoxPlaylist.SelectedIndex);
+                ListBoxPlaylist.Refresh();
+            }
         }
     }
 }

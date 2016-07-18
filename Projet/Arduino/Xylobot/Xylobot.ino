@@ -41,6 +41,20 @@ bool CheckMessage();
 void ReadDataMessage();
 void ResponseMessage(byte type);
 
+void DebugBlink(byte status)
+{
+  for(;;)
+  {
+    for (byte i = 0; i < status; i++)
+    {
+      digitalWrite(13, 1);
+      delay(100);
+      digitalWrite(13, 0);
+      delay(100);
+    }
+    delay(1000);
+  }
+}
 /****************************************ARDUINO FONCTIONS****************************************/
 void setup() {
   pinMode(13, OUTPUT);
@@ -140,6 +154,7 @@ void Push()
     }
     i2cXylo.ApplyPush();
 
+    // TODO a simplifier par : micros() - startTime
     if((micros() >= startTime ? micros() - startTime : 0xFFFFFFFF - startTime + micros()) > tempo/tempoFactor ){
       currentTick++;
       startTime = micros();        
@@ -245,7 +260,9 @@ void NotesMsg(uint16_t dataSize)
       
       tmpTick = 0;
       for(j=0;j<4;j++)
-        tmpTick |= (noteBytes[j+1] << (j*8));  
+        tmpTick |= (((uint32_t)noteBytes[j+1]) << (j*8));  // TODO : a verifier
+      if(tmpTick > 100000000)
+        DebugBlink(3);
       tmpNote.SetPitch(noteBytes[0]);
       tmpNote.SetTick(tmpTick);
       tmpNote.SetIntensity(((int)noteBytes[5]-64)*500/64); //Intensité changeant de +-0.5 ms le temps de frappe

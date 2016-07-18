@@ -19,7 +19,7 @@ namespace Framework
 
         public override void BuildControl(WebPageBuilder pagebuilder)
         {
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebRender.WebMaterialShowListRender.Files.MaterialList.html")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialList.html")))
             {
                 string tmp = file.ReadToEnd();
                 tmp = tmp.Replace("<%title%>", PropDescription.PropertyInfo.Name);
@@ -28,7 +28,7 @@ namespace Framework
                 pagebuilder.ApendHtml(tmp);
             }
 
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebRender.WebMaterialShowListRender.Files.MaterialString.css")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialString.css")))
             {
                 string tmp = file.ReadToEnd();
                 tmp = tmp.Replace("<%id%>", id.ToString());
@@ -41,14 +41,14 @@ namespace Framework
                 pagebuilder.ApendCss(tmp);
             }
 
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebRender.WebMaterialShowListRender.Files.MaterialString.js")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialString.js")))
             {
                 string tmp = file.ReadToEnd();
 
                 pagebuilder.ApendJs(tmp);
             }
 
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("WebRender.WebMaterialShowListRender.Files.MaterialStringCallBack.js")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialStringCallBack.js")))
             {
                 string tmp = file.ReadToEnd();
                

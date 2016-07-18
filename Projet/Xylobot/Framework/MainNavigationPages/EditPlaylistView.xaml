@@ -46,43 +46,27 @@
             <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
 
-        <DockPanel Margin="0,0,0,5">
-            <Button x:Name="ButtonBackToPlaylists" Width="{Binding ElementName=ButtonBackToPlaylists, Path=ActualHeight}" Height="{Binding ElementName=TextBlockTitle, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonBackToPlaylists_Click" DockPanel.Dock="Left" Visibility="Collapsed" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,5,0">
-                <Image Source="/Framework;component/Images/Back32x32.png" Margin="5"/>
-            </Button>
-            <TextBlock x:Name="TextBlockTitle" Text="Title" DockPanel.Dock="Right" Style="{DynamicResource TextBlockTitleStyle}" Background="{DynamicResource ColorsVirtuosoGreen}"/>
-        </DockPanel>
-        
-        <ListBox Name="ListBoxPlaylist" AlternationCount="2" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{DynamicResource DataTemplateListBox}" Background="White"/>
+        <TextBlock x:Name="TextBlockTitle" Text="Title" DockPanel.Dock="Right" Style="{DynamicResource TextBlockTitleStyle}" Background="{DynamicResource ColorsVirtuosoGreen}"/>
 
-        <Grid x:Name="GridEditAPlaylist" Grid.Row="2" Visibility="Collapsed">
+        <ListBox Name="ListBoxPlaylist" AlternationCount="2" Grid.Row="1" SelectionChanged="ListBoxPlaylist_SelectionChanged" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{DynamicResource DataTemplateListBox}" Background="White"/>
+
+        <Grid x:Name="GridButtons" Height="120" Grid.Row="2" Visibility="Visible">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="ButtonRemovePartition" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoOrange}" Click="ButtonRemovePartition_Click" Grid.Column="0" Margin="0,10,4,0">
-                <Grid Width="{Binding ElementName=ButtonRemovePartition, Path=ActualWidth}" Height="{Binding ElementName=ButtonRemovePartition, Path=ActualHeight}">
+            <Button  x:Name="ButtonBackToPlaylists" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Click="ButtonBackToPlaylists_Click" Grid.Column="0" Margin="2,10,2,0">
+                <Grid Width="{Binding ElementName=ButtonBackToPlaylists, Path=ActualWidth}" Height="{Binding ElementName=ButtonBackToPlaylists, Path=ActualHeight}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-                        <Image Source="/Framework;component/Images/Remove32x32.png" Width="32"/>
-                        <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
-                    </StackPanel>
-                    <TextBlock Text="Remove" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
-                </Grid>
-            </Button>
-
-            <Button  x:Name="ButtonAddPartition" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Click="ButtonAddPartition_Click" Grid.Column="1" Margin="2,10,2,0">
-                <Grid Width="{Binding ElementName=ButtonAddPartition, Path=ActualWidth}" Height="{Binding ElementName=ButtonAddPartition, Path=ActualHeight}">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-                        <Image Source="/Framework;component/Images/Add32x32.png" Width="32"/>
+                        <Image Source="/Framework;component/Images/Back32x32.png" Width="32"/>
                         <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
                     </StackPanel>
                     <TextBlock Text="Add" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
                 </Grid>
             </Button>
 
-            <Button x:Name="ButtonLoadToPlayPartition" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoBlue}" Click="ButtonLoadToPlayPartition_Click" Grid.Column="2" Margin="4,10,0,0">
+            <Button x:Name="ButtonLoadToPlayPartition" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoBlue}" Click="ButtonLoadToPlayPartition_Click" Grid.Column="1" Margin="4,10,0,0">
                 <Grid Width="{Binding ElementName=ButtonLoadToPlayPartition, Path=ActualWidth}" Height="{Binding ElementName=ButtonLoadToPlayPartition, Path=ActualHeight}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
                         <Image Source="/Framework;component/Images/Import32x32.png" Width="32"/>
@@ -93,42 +77,5 @@
             </Button>
         </Grid>
 
-        <Grid x:Name="GridPlaylists" Grid.Row="2" Visibility="Visible">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Button x:Name="ButtonRemovePlaylist" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoOrange}" Click="ButtonRemovePlaylist_Click" Grid.Column="0" Margin="0,10,4,0">
-                <Grid Width="{Binding ElementName=ButtonRemovePlaylist, Path=ActualWidth}" Height="{Binding ElementName=ButtonRemovePlaylist, Path=ActualHeight}">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-                        <Image Source="/Framework;component/Images/Remove32x32.png" Width="32"/>
-                        <Image Source="/Framework;component/Images/Playlist32x32.png" Width="32"/>
-                    </StackPanel>
-                    <TextBlock Text="remove" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
-                </Grid>
-            </Button>
-
-            <Button  x:Name="ButtonEditPlaylist" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Click="ButtonEditPlaylist_Click" Grid.Column="1" Margin="2,10,2,0">
-                <Grid Width="{Binding ElementName=ButtonEditPlaylist, Path=ActualWidth}" Height="{Binding ElementName=ButtonEditPlaylist, Path=ActualHeight}">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-                        <Image Source="/Framework;component/Images/Edit32x32.png" Width="32"/>
-                        <Image Source="/Framework;component/Images/Playlist32x32.png" Width="32"/>
-                    </StackPanel>
-                    <TextBlock Text="Edit" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
-                </Grid>
-            </Button>
-
-            <Button x:Name="ButtonAddToPlayPlaylist" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoBlue}" Click="ButtonAddToPlayPlaylist_Click" Grid.Column="2" Margin="4,10,0,0">
-                <Grid Width="{Binding ElementName=ButtonAddToPlayPlaylist, Path=ActualWidth}" Height="{Binding ElementName=ButtonAddToPlayPlaylist, Path=ActualHeight}">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-                        <Image Source="/Framework;component/Images/Import32x32.png" Width="32"/>
-                        <Image Source="/Framework;component/Images/Playlist32x32.png" Width="32"/>
-                    </StackPanel>
-                    <TextBlock Text="Load to play" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
-                </Grid>
-            </Button>
-        </Grid>
     </Grid>
 </UserControl>

@@ -24,12 +24,6 @@ namespace Framework
             XyloCommunication = new XyloCommunication();
             IsInit = false;
             AbortInit = false;
-            Keys = new Key[numberKeysXylophone];
-            for (int i = 0; i < numberKeysXylophone; i++)
-            {
-                Keys[i] = new Key();
-                Keys[i].HitTime = defaultTimeHitKey;
-            }
         }
 
         #endregion
@@ -104,12 +98,13 @@ namespace Framework
             }
 
             XyloCommunication.SendDatas(SendTypeMessage.Notes, datas);
+
         }
 
-        public void SendTempo(UInt16 tempo)
+        public void SendTempo(ushort tempoMircoSec)
         {
             List<byte> datas = new List<byte>();
-            foreach (byte data in BitConverter.GetBytes(tempo))
+            foreach (byte data in BitConverter.GetBytes(tempoMircoSec))
                 datas.Add(data);
 
             XyloCommunication.SendDatas(SendTypeMessage.Tempo, datas);
@@ -137,7 +132,5 @@ namespace Framework
         }
 
         #endregion
-
-        public Key[] Keys { get; set; }
     }
 }

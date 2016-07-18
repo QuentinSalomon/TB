@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:concept="http://www.objectis.ch/concept"
         xmlns:local="clr-namespace:Framework"
-        Title="Virtuoso" Height="400" Width="600">
+        Title="Virtuoso" >
     <!--Icon="/Framework;component/Images/Xylophone64x64.png" WindowStyle="None" ResizeMode="NoResize"  
         WindowStartupLocation="CenterScreen" WindowState="Maximized" BorderThickness="0">-->
-    <Grid>
+    <Viewbox>
+    <Grid Width="768" Height="1366">
         <concept:NavigationControl NavigationBarDock="Top" Background="#FFF0F0F0" Transition="Fade">
             <local:HomeView concept:NavigationControl.MenuTitle="Home"
                                 concept:NavigationControl.MenuImageSource="/Framework;component/Images/Home32x32.png"/>
@@ -24,4 +25,5 @@
                                 DataContext="{Binding Path=SettingsViewModel}"/>
         </concept:NavigationControl>
     </Grid>
+    </Viewbox>
 </Window>

@@ -28,6 +28,7 @@ namespace Framework
         public static readonly string[] tabNote = new string[]
         { "DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI" };
         double rectangleNoteSize = 15;
+        double factorSpaceNote = 2;
 
         public double KeyWidth { get { return columnKeys.ActualWidth; } set { columnKeys.Width = new GridLength(value); } }
 
@@ -164,12 +165,12 @@ namespace Framework
                     rect.DataContext = note;
                     rect.Visibility = Visibility.Visible;
                     CanvasNotes.Children.Add(rect);
-                    Canvas.SetLeft(rect, note.Tick / 10);
+                    Canvas.SetLeft(rect, note.Tick / factorSpaceNote + LineRed.X1);
                     Canvas.SetBottom(rect, ((note.Octave - Xylobot.startOctaveXylophone) * Xylobot.octaveSize + note.High) * rectangleNoteSize);
 
                     maxTick = maxTick < note.Tick ? note.Tick : maxTick;
                 }
-                CanvasNotes.Width = maxTick / 10 + 50;
+                CanvasNotes.Width = maxTick / factorSpaceNote + 50;
             }
         }
 
@@ -185,6 +186,11 @@ namespace Framework
             {
                 CanvasNotes.Children.Remove(ChildsToRemove[i]);
             }
+        }
+
+        public void ScrollPartition()
+        {
+            ScrollViewerNotes.ScrollToHorizontalOffset(((Sequencer)DataContext).PartitionProgress * CanvasNotes.ActualWidth);
         }
 
         #endregion
@@ -221,7 +227,10 @@ namespace Framework
         
         private void DataContextPropertyChangedEventHandler(object sender, PropertyChangedEventArgs e)
         {
-            //ShowPartition();
+            if (e.PropertyName == Sequencer.CurrentPartitionPropertyName)
+                ShowPartition();
+            else if (e.PropertyName == Sequencer.PartitionProgressPropertyName)
+                ScrollPartition();
         }
 
         #endregion

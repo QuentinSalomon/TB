@@ -37,7 +37,7 @@ namespace Framework
 
         private void ImageNext_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //((Sequencer)DataContext).NextPartition();
+            ((Sequencer)DataContext).Next();
         }
     }
 }

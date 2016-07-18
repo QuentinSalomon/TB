@@ -140,7 +140,7 @@ namespace Framework
 
         public void ManageXylobot()
         {
-            Xylobot.Init();
+            Init();
             while (_actionsThread != ActionsThread.Terminate)
             {
                 Thread.Sleep(10);
@@ -148,7 +148,7 @@ namespace Framework
                 {
                     case ActionsThread.PlayPlaylist:
 
-                        PlayPlaylist(Playlist);
+                        PlayPlaylist();
                         _actionsThread = ActionsThread.Nothing;
                         _stop = false; //reset le stop au cas ou la fonction s'est termninée avec un stop
                         break;
@@ -166,7 +166,6 @@ namespace Framework
 
                         Xylobot.Stop();
                         Xylobot.SendKeyHitTime(_indexKey, _keyHitTime);
-                        Xylobot.Keys[_indexKey].HitTime = _keyHitTime;
                         _actionsThread = ActionsThread.PlayOneNote;
                         break;
                     default:
@@ -181,6 +180,9 @@ namespace Framework
             if(!Xylobot.IsInit)
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                     Errors.Add("Init USB failed.")));
+            else
+                for (int i = 0; i < Xylobot.numberKeysXylophone; i++)
+                    Xylobot.SendKeyHitTime(i, FrameworkController.Instance.Settings.Keys[i].HitTime);
         }
 
         private void PlayPartition(PartitionXylo partition)
@@ -188,10 +190,12 @@ namespace Framework
             List<Note> notes = new List<Note>();
             int k = 0, i;
             try {
+                Xylobot.SendTempo((ushort)(partition.Tempo * 1000)); //tempo ms à micros
                 while (Xylobot.ArduinoCurrentTick < partition.Notes[partition.Notes.Count - 1].Tick || k < partition.Notes.Count)
                 {
-                    if (_stop)
+                    if (_stop || _next)
                     {
+                        _next = false;
                         Xylobot.Stop();
                         ActualiseProgress();
                         break;
@@ -216,9 +220,7 @@ namespace Framework
                             notes.Add(partition.Notes[k + i]);
                         }
                         k += i;
-                        //todo : delete (debug)
-                        if (k == 1251)
-                            ;
+
                         Xylobot.SendNotes(notes);
 
                         ActualiseProgress();
@@ -233,21 +235,25 @@ namespace Framework
             }
         }
 
-        private void PlayPlaylist(Playlist playlist)
+        private void PlayPlaylist()
         {
             try
             {
                 _pause = false;
                 _stop = false;
-                Xylobot.Stop(); //Stop l'execution en cours pour jouer la playlist
-                Xylobot.Start();//Start la musique
-                foreach (PartitionXylo p in playlist.Partitions)
+                _next = false;
+                while(Playlist.Partitions.Count > 0)
                 {
+                    Xylobot.Stop(); //Fait un reset avant la prochaine partition
                     if (!_stop)
                     {
+                        Xylobot.Start();//Start la musique
                         Application.Current.Dispatcher.Invoke(new Action(() =>
-                            CurrentPartition = p)); 
-                        PlayPartition(p);
+                            CurrentPartition = Playlist.Partitions[0])); 
+                        PlayPartition(Playlist.Partitions[0]);
+                        if (!_stop)
+                            Application.Current.Dispatcher.Invoke(new Action(() => 
+                                Playlist.Partitions.RemoveAt(0)));
                     }
                     else {
                         break;
@@ -259,7 +265,7 @@ namespace Framework
             }
             catch (Exception e)
             {
-                Application.Current.Dispatcher.Invoke(new Action(() => this.Errors.Add(e.Message)));
+                Application.Current.Dispatcher.Invoke(new Action(() => Errors.Add(e.Message)));
             }
 
         }
@@ -285,11 +291,6 @@ namespace Framework
             _actionsThread = ActionsThread.ChangeKeyHitTime;
         }
 
-        public void InitKeysHitTime(double[] hitTimes)
-        {
-
-        }
-
         public void Mute()
         {
             _muteChanged = true;
@@ -298,6 +299,12 @@ namespace Framework
         public void Stop()
         {
             _stop = true;
+        }
+
+        public void Next()
+        {
+            if(Playlist.Partitions.Count > 0)
+                _next = true;
         }
 
         public void Finish()
@@ -324,18 +331,18 @@ namespace Framework
                 _tempoChanged = false;
                 Xylobot.SendTempo(Tempo);
             }
-            if (_muteChanged)
-            {
-                int i;
-                if (!_isMute)
-                    for (i = 0; i < Xylobot.numberKeysXylophone; i++)
-                        Xylobot.SendKeyHitTime(i, 3);
-                else
-                    for (i = 0; i < Xylobot.numberKeysXylophone; i++)
-                        Xylobot.SendKeyHitTime(i, Xylobot.Keys[i].HitTime);
-                _muteChanged = false;
-                _isMute = !_isMute;
-            }
+            //if (_muteChanged)
+            //{
+            //    int i;
+            //    if (!_isMute)
+            //        for (i = 0; i < Xylobot.numberKeysXylophone; i++)
+            //            Xylobot.SendKeyHitTime(i, 3);
+            //    else
+            //        for (i = 0; i < Xylobot.numberKeysXylophone; i++)
+            //            Xylobot.SendKeyHitTime(i, Xylobot.Keys[i].HitTime);
+            //    _muteChanged = false;
+            //    _isMute = !_isMute;
+            //}
         }
 
         private void ActualiseProgress()
@@ -426,12 +433,13 @@ namespace Framework
 
         private Thread threadXyloBot;
         private ActionsThread _actionsThread = ActionsThread.Nothing;
-        private bool _pause = true, _stop = true, _tempoChanged = false, _speedPlayChanged = false, _muteChanged = false, _isMute = false;
+        private bool _pause = true, _stop = true, _next = false, _tempoChanged = false, _speedPlayChanged = false, _muteChanged = false, _isMute = false;
        
         private Note _noteToPlay;   //Note à jouer pour PlayOneNote
 
         int _indexKey;      //Index de la touche pour ChangeKeyHitTime
         double _keyHitTime; //Temps de frappe pour ChangeKeyHitTime
+
         #endregion
     }
 }

@@ -1,6 +1,4 @@
-﻿<script src="jquery-1.12.2.min.js"></script>
-<script src="woopsa-client.min.js"></script>
-<script>
+﻿<script>
     var parent = document.getElementById("p");
     var myArray = [<%values%>];
 

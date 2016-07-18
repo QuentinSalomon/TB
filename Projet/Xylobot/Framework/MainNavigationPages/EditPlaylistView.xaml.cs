@@ -73,16 +73,16 @@ namespace Framework
                     {
                         ListBoxImageSource = new BitmapImage(new Uri(@"/Framework;component/Images/Playlist32x32.png", UriKind.RelativeOrAbsolute));
                         ButtonBackToPlaylists.Visibility = Visibility.Collapsed;
-                        GridPlaylists.Visibility = Visibility.Visible;
-                        GridEditAPlaylist.Visibility = Visibility.Collapsed;
+                        //GridPlaylists.Visibility = Visibility.Visible;
+                        //GridButtons.Visibility = Visibility.Collapsed;
                         TextBlockTitle.Text = "Playlists";
                     }
                     else
                     {
                         ListBoxImageSource = new BitmapImage(new Uri(@"/Framework;component/Images/Note32x32.png", UriKind.RelativeOrAbsolute));
                         ButtonBackToPlaylists.Visibility = Visibility.Visible;
-                        GridEditAPlaylist.Visibility = Visibility.Visible;
-                        GridPlaylists.Visibility = Visibility.Collapsed;
+                        //GridButtons.Visibility = Visibility.Visible;
+                        //GridPlaylists.Visibility = Visibility.Collapsed;
                         TextBlockTitle.Text = (ListBoxPlaylist.SelectedItem as ListBoxItemPlaylist).Title;
                     }
                     ActualizeListBox();
@@ -102,13 +102,14 @@ namespace Framework
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            ListBoxPlaylist.ItemsSource = ListPlaylist;
             ActualizeListBox();
             ShowPlaylists = true;
         }
 
         #region Click Methods
 
-        private void ButtonAddPartition_Click(object sender, RoutedEventArgs e)
+        private void ButtonBack_Click(object sender, RoutedEventArgs e)
         {
             PartitionXylo p = new PartitionXylo();
             var messages = new MessageCollection();
@@ -135,7 +136,19 @@ namespace Framework
 
         private void ButtonLoadToPlayPartition_Click(object sender, RoutedEventArgs e)
         {
+            if (ListBoxPlaylist.SelectedIndex != -1)
+            {
+                PartitionXylo p = new PartitionXylo();
+                var messages = new MessageCollection();
+                ListBoxItemPlaylist item = ((ListBoxItemPlaylist)ListBoxPlaylist.SelectedItem);
 
+                p.LoadFromFile(item.Path + item.Title, PluginClassManager.AllFactories, messages);
+                p.Name = item.Title.Split('.')[0];
+                if (messages.Count > 0)
+                    ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
+                else
+                    ((EditPlaylistViewModel)DataContext).Playlist.AddPartition(p);
+            }
         }
 
         private void ButtonRemovePlaylist_Click(object sender, RoutedEventArgs e)
@@ -165,37 +178,46 @@ namespace Framework
         {
             if (ShowPlaylists == true)
             {
+                string path = FrameworkController.Instance.Settings.DefaultPathLoadFile;
+
                 ListPlaylist.Clear();
-                string path = FrameworkController.Instance.Settings.DefaultPathLoadFile;//@"C:\Users\quentin\Desktop\TB\TB\Projet\Partitions\XML\";
                 foreach (string s in Directory.GetDirectories(path))
                     ListPlaylist.Add(new ListBoxItemPlaylist(s.Remove(0, path.Length), path));
-                ListBoxPlaylist.ItemsSource = ListPlaylist;
             }
             else if (ShowPlaylists == false)
             {
-                CurrentPlaylist.Clear();
-                var messages = new MessageCollection();
                 ListBoxItemPlaylist playlistInfos = ListBoxPlaylist.SelectedItem as ListBoxItemPlaylist;
+                string path = playlistInfos.Path + playlistInfos.Title + "\\";
 
-                string[] filePaths = Directory.GetFiles(playlistInfos.Path + playlistInfos.Title + "\\", "*.xml");
-                foreach (string file in filePaths)
-                {
-                    PartitionXylo p = new PartitionXylo();
-                    p.LoadFromFile(file, PluginClassManager.AllFactories, messages);
-                    p.Name = file;
-                    if (messages.Count > 0)
-                        ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
-                    else
-                        CurrentPlaylist.Partitions.Add(p);
-                }
-                ListBoxPlaylist.ItemsSource = CurrentPlaylist.Partitions;
+                ListPlaylist.Clear();
+                foreach (string file in Directory.GetFiles(path, "*.xml"))
+                    ListPlaylist.Add(new ListBoxItemPlaylist(file.Remove(0, path.Length), path));
             }
+        }
+
+        private void ListBoxPlaylist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListBoxPlaylist.SelectedIndex != -1 && ShowPlaylists == true)
+                ShowPlaylists = false;
         }
     }
 
     public class ListBoxItemPlaylist
     {
         public ListBoxItemPlaylist(string title, string path)
+        {
+            Title = title;
+            Path = path;
+        }
+
+        public string Path { get; set; }
+
+        public string Title { get; set; }
+    }
+
+    public class ListBoxItemPartition
+    {
+        public ListBoxItemPartition(string title, string path)
         {
             Title = title;
             Path = path;

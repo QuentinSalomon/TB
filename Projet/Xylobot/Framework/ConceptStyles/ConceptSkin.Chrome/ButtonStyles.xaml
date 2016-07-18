@@ -5,7 +5,6 @@
     <Style x:Key="ButtonStyle" TargetType="Button">
         <Setter Property="FontFamily" Value="Segoe UI Light"/>
         <Setter Property="FontSize" Value="30"/>
-        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -18,20 +17,10 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style x:Key="ButtonFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Border>
-                        <Rectangle Margin="2"
-                     StrokeThickness="1"
-                     Stroke="#60000000"
-                     StrokeDashArray="1 2" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                <Setter Property="Background" Value="Gray"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

@@ -34,8 +34,8 @@ namespace Framework
                 Note n;
                 n = IdToNoteTest(CurrentIdNote);
                 TextBlockKeyTitle.Text = "Note : " + n.HighString + "   \tOctave : " + n.Octave;
-                //(DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
-                TextBlockHitTime.Text = Truncate((DataContext as SettingsViewModel).Sequencer.Xylobot.Keys[CurrentIdNote].HitTime).ToString();
+                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
+                //TextBlockHitTime.Text = Truncate((DataContext as SettingsViewModel).Sequencer.Xylobot.Keys[CurrentIdNote].HitTime).ToString();
             }
         }
         private int _currentIdNote;
@@ -48,8 +48,8 @@ namespace Framework
         private void ButtonLessTime_Click(object sender, RoutedEventArgs e)
         {
             Note n;
-            (DataContext as SettingsViewModel).Sequencer.Xylobot.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime - 0.1);
-            TextBlockHitTime.Text = (DataContext as SettingsViewModel).Sequencer.Xylobot.Keys[CurrentIdNote].HitTime.ToString();
+            (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime - 0.1);
+            TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
             n = IdToNoteTest(CurrentIdNote);
             (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
                 (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
@@ -58,8 +58,8 @@ namespace Framework
         private void ButtonMoreTime_Click(object sender, RoutedEventArgs e)
         {
             Note n;
-            (DataContext as SettingsViewModel).Sequencer.Xylobot.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime + 0.1);
-            TextBlockHitTime.Text = (DataContext as SettingsViewModel).Sequencer.Xylobot.Keys[CurrentIdNote].HitTime.ToString();
+            (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime + 0.1);
+            TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
             n = IdToNoteTest(CurrentIdNote);
             (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
                 (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
@@ -68,17 +68,13 @@ namespace Framework
         private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentIdNote > 0)
-            {
                 CurrentIdNote--;
-            }
         }
 
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentIdNote < Xylobot.numberKeysXylophone - 1)
-            {
                 CurrentIdNote++;
-            }
         }
 
         private double Truncate(double value)

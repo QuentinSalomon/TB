@@ -23,9 +23,11 @@
         <ScrollViewer x:Name="ScrollViewerKeys" HorizontalScrollBarVisibility="Disabled" ScrollChanged="ScrollChanged" VerticalScrollBarVisibility="Hidden" Grid.Row="1">
             <Canvas x:Name="CanvasKeys" Width="100"/>
         </ScrollViewer>
-        <ScrollViewer x:Name="ScrollViewerNotes" HorizontalScrollBarVisibility="Auto" ScrollChanged="ScrollChanged"  VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+        <Grid>
+        <ScrollViewer x:Name="ScrollViewerNotes" HorizontalScrollBarVisibility="Hidden" ScrollChanged="ScrollChanged"  VerticalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="1">
             <Canvas x:Name="CanvasNotes"></Canvas>
         </ScrollViewer>
         <Line x:Name="LineRed" Stroke="Red" StrokeThickness="2" Grid.Row="1" Grid.Column="1"/>
+        </Grid>
     </Grid>
 </UserControl>

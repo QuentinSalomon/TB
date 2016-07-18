@@ -34,7 +34,8 @@ namespace Framework
 
             if (ListBoxPortName.Items.Count > 0)
             {
-                portName = ListBoxPortName.SelectedItem as string;
+                if(ListBoxPortName.SelectedItem != null)
+                    portName = ListBoxPortName.SelectedItem as string;
                 if (portName == "" || !(portName.ToLower()).StartsWith("com"))
                     portName = defaultPortName;
             }

@@ -68,7 +68,6 @@ namespace Framework
             render.ValMax = 1;
 
             WebMaterialShowListRender render2;
-
             //render2 = Find(nameof(VirutosoWebController.Partitions)) as WebMaterialShowListRender;
             //render2.List = model.Partitions;
         }
