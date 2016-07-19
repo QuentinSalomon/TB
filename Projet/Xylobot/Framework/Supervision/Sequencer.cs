@@ -220,7 +220,7 @@ namespace Framework
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                                    IsPlaying = false));
                         Xylobot.Pause();
-                        while (_pause && !_stop)
+                        while (_pause && !_stop && !_next)
                             Thread.Sleep(50);
                         if(!_stop)
                             Xylobot.Start();

@@ -152,7 +152,6 @@
     <Compile Include="Supervision\UserControlShowPartition.xaml.cs">
       <DependentUpon>UserControlShowPartition.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Supervision\UserControlShowPartitionModel.cs" />
     <Compile Include="Supervision\WindowSelectUsbPort.xaml.cs">
       <DependentUpon>WindowSelectUsbPort.xaml</DependentUpon>
     </Compile>

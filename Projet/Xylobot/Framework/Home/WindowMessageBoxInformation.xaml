@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Framework"
         mc:Ignorable="d"
-        Title="WindowMessageBoxAutoClosed" SizeToContent="WidthAndHeight" MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        Title="WindowMessageBoxAutoClosed" SizeToContent="WidthAndHeight" BorderBrush="Black" BorderThickness="2" MouseLeftButtonDown="Window_MouseLeftButtonDown"
         ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <StackPanel Orientation="Horizontal" Margin="5" Height="auto" Width="300">
         <Image x:Name="Image" Height="32" Width="32" VerticalAlignment="Top" Margin="5" Source="/Framework;component/Images/Home32x32.png"/>

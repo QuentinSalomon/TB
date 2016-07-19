@@ -16,18 +16,16 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Border Grid.Column="1" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown">
-            <StackPanel Orientation="Horizontal" Margin="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <!--<Image x:Name="ImagePlay" HorizontalAlignment="Center" Source="/Framework;component/Images/Play32x32.png"/>
-                <Image x:Name="ImagePause" HorizontalAlignment="Center" Source="/Framework;component/Images/Pause32x32.png"/>-->
+            <StackPanel Orientation="Horizontal" Margin="7" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image HorizontalAlignment="Center" Source="{Binding Path=IsPlaying, Converter={StaticResource IsPlayingToImageConverter}}"></Image>
             </StackPanel>
         </Border>
         <Grid Grid.Column="0" MouseLeftButtonDown="ImageStop_MouseLeftButtonDown">
-            <Image x:Name="ImageStop" Margin="3" HorizontalAlignment="Center" Source="/Framework;component/Images/Stop32x32.png"/>
+            <Image x:Name="ImageStop" Margin="7" HorizontalAlignment="Center" Source="/Framework;component/Images/Stop32x32.png"/>
             <Rectangle Width="1" Fill="LightGray" HorizontalAlignment="Right"/>
         </Grid>
         <Grid Grid.Column="2" MouseLeftButtonDown="ImageNext_MouseLeftButtonDown">
-            <Image x:Name="ImageNext" Grid.Column="2" Margin="3" HorizontalAlignment="Center" Source="/Framework;component/Images/Next32x32.png"/>
+            <Image x:Name="ImageNext" Grid.Column="2" Margin="7" HorizontalAlignment="Center" Source="/Framework;component/Images/Next32x32.png"/>
             <Rectangle Width="1" Fill="LightGray" HorizontalAlignment="Left"/>
         </Grid>
     </Grid>
