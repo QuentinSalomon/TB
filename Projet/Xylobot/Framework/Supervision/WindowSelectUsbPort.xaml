@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Framework"
         mc:Ignorable="d"
-        Title="WindowSelectUsbPort" Height="300" Width="300">
+        Title="WindowSelectUsbPort" Height="300" Width="300" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

@@ -6,28 +6,20 @@
              xmlns:concept="http://www.objectis.ch/concept"
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
-    <Grid>
+             d:DesignHeight="300" d:DesignWidth="500" Loaded="UserControl_Loaded">
+    <Grid Margin="7">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="32"/>
             <RowDefinition Height="32"/>
             <RowDefinition Height="32"/>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <Grid  Grid.Row="1" Margin="5,0,5,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="32"/>
-            </Grid.ColumnDefinitions>
-            <concept:StringEditor Title="Save path" Value="{Binding Path=Settings.PathSaveFile}" Height="32"/>
-            <Button Content="..." Command="{Binding Path=Settings.CommandPathSaveFile}" Width="32" Height="32" Grid.Column="1"/>
-        </Grid>
-        <Grid  Grid.Row="2" Margin="5,0,5,0">
+        <Grid Grid.Row="0" Margin="5,0,5,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="32"/>
@@ -36,35 +28,41 @@
             <Button Content="..." Command="{Binding Path=Settings.CommandPathLoadFile}" Width="32" Height="32" Grid.Column="1"/>
         </Grid>
 
-
-        <TextBlock x:Name="TextBlockKeyTitle" Style="{DynamicResource TextBlockTitleStyle}" Text="DO 5" Foreground="White" Background="CornflowerBlue" VerticalAlignment="Center" Margin="0,0,0,3" Grid.Row="4"/>
-        <Grid Grid.Row="5" >
-        <StackPanel Orientation="Horizontal">
-            <Border BorderBrush="{x:Null}" Background="Gray" Height="30" Margin="5,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock TextWrapping="Wrap" Text="Hit time : " Foreground="White" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="TextBlockHitTime" TextWrapping="Wrap" Text="10.5" Width="30" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
-                    <TextBlock TextWrapping="Wrap" Text="ms" Foreground="Aqua" FontFamily="Segoe UI Light" FontSize="18" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Border>
-            <Button x:Name="ButtonLessTime" Width="30" Height="30" Background="Orange" Click="ButtonLessTime_Click">
-                <Image Source="/Framework;component/Images/Down32x32.png"/>
-            </Button>
-            <Button x:Name="ButtonMoreTime" Width="30" Height="30" Background="ForestGreen" Click="ButtonMoreTime_Click">
-                <Image Source="/Framework;component/Images/Up32x32.png"/>
-            </Button>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="ButtonPrevious" Width="32" HorizontalAlignment="Right" Background="CornflowerBlue" Click="ButtonPrevious_Click" Height="32" VerticalAlignment="Top">
-                <Image Source="/Framework;component/Images/Previous32x32.png"/>
-            </Button>
-            <Button x:Name="ButtonNext" Width="32" HorizontalAlignment="Right" Background="CornflowerBlue" Click="ButtonNext_Click" Margin="5,0,5,0">
-                <Image Source="/Framework;component/Images/Next32x32.png"/>
-            </Button>
-        </StackPanel>
-    </Grid>
-        <Button x:Name="ButtonMute" Grid.Row="7" Width="32" Background="Orange" HorizontalAlignment="Right" Margin="0,0,5,0" Click="ButtonMute_Click">
+        <Border Grid.Row="2" Background="{DynamicResource ColorsVirtuosoMiddleBlue}">
+            <TextBlock x:Name="TextBlockKeyTitle" Style="{DynamicResource TextBlockTitleStyle}" Text="DO 5" VerticalAlignment="Center"/>
+        </Border>
+        <Grid Grid.Row="3" >
+            <StackPanel Orientation="Horizontal">
+                <Border Background="Gray">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextWrapping="Wrap" Text="Hit time : " Style="{DynamicResource TextBlockTitleStyle}" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TextBlockHitTime" TextWrapping="Wrap" Text="10.5" Width="60" Style="{DynamicResource TextBlockTitleStyle}" Foreground="Aqua" VerticalAlignment="Center"/>
+                        <TextBlock TextWrapping="Wrap" Text="ms" Style="{DynamicResource TextBlockTitleStyle}" Foreground="Aqua" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+                <Button x:Name="ButtonLessTime" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoOrange}" Click="ButtonLessTime_Click">
+                    <Image Source="/Framework;component/Images/Down32x32.png" Margin="5"/>
+                </Button>
+                <Button x:Name="ButtonMoreTime" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}"  Click="ButtonMoreTime_Click">
+                    <Image Source="/Framework;component/Images/Up32x32.png" Margin="5"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="ButtonPrevious" HorizontalAlignment="Right" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Click="ButtonPrevious_Click">
+                    <Image Source="/Framework;component/Images/Previous32x32.png" Margin="5"/>
+                </Button>
+                <Button x:Name="ButtonNext" HorizontalAlignment="Right" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Click="ButtonNext_Click" Margin="5,0,0,0">
+                    <Image Source="/Framework;component/Images/Next32x32.png" Margin="5"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        
+        <Button x:Name="ButtonMute" Grid.Row="5" Width="32" Background="Orange" HorizontalAlignment="Right" Margin="0,0,5,0" Visibility="Hidden" Click="ButtonMute_Click">
             <Image Source="/Framework;component/Images/Mute32x32.png"/>
+        </Button>
+
+        <Button x:Name="ButtonShutDown" Grid.Row="8" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Right" Background="Red">
+            <Image Source="/Framework;component/Images/PowerOff64x64.png" Margin="3"/>
         </Button>
     </Grid>
 </UserControl>

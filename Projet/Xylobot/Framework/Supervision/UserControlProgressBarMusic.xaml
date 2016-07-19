@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="300" Loaded="UserControl_Loaded" DataContextChanged="UserControl_DataContextChanged">
     <Grid>
-        <Rectangle x:Name="RectangleProgressFull" Fill="Blue" Opacity="0.4" StrokeThickness="0" Height="3" VerticalAlignment="Center"/>
-        <Rectangle x:Name="RectangleProgress" Fill="Red" StrokeThickness="0" Height="4" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Ellipse x:Name="EllipseProgress" Fill="Red" StrokeThickness="0" Height="15" Width="15" Margin="145,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Rectangle x:Name="RectangleProgressFull" Fill="Blue" Opacity="0.4" StrokeThickness="0" Height="5" VerticalAlignment="Center"/>
+        <Rectangle x:Name="RectangleProgress" Fill="Red" StrokeThickness="0" Height="8" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Ellipse x:Name="EllipseProgress" Fill="Red" StrokeThickness="0" Height="20" Width="20" Margin="145,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

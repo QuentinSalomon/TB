@@ -42,7 +42,7 @@ namespace Framework
         #endregion
 
 
-        public void AddPartition(PartitionXylo partition)
+        public bool AddPartition(PartitionXylo partition)
         {
             bool existInPlaylist = false;
             foreach (PartitionXylo p in Partitions)
@@ -50,6 +50,7 @@ namespace Framework
                     existInPlaylist = true;
             if (!existInPlaylist)
                 Partitions.Add(partition);
+            return !existInPlaylist;
         }
 
         #region WPF command

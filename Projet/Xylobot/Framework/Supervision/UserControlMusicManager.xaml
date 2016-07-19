@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
              d:DesignHeight="32" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:IsPlayingToImageConverter x:Key="IsPlayingToImageConverter"/>
+    </UserControl.Resources>
     <Grid Background="#FF4F4F4F">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -14,8 +17,9 @@
         </Grid.ColumnDefinitions>
         <Border Grid.Column="1" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown">
             <StackPanel Orientation="Horizontal" Margin="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image x:Name="ImagePlay" HorizontalAlignment="Center" Source="/Framework;component/Images/Play32x32.png"/>
-                <Image x:Name="ImagePause" HorizontalAlignment="Center" Source="/Framework;component/Images/Pause32x32.png"/>
+                <!--<Image x:Name="ImagePlay" HorizontalAlignment="Center" Source="/Framework;component/Images/Play32x32.png"/>
+                <Image x:Name="ImagePause" HorizontalAlignment="Center" Source="/Framework;component/Images/Pause32x32.png"/>-->
+                <Image HorizontalAlignment="Center" Source="{Binding Path=IsPlaying, Converter={StaticResource IsPlayingToImageConverter}}"></Image>
             </StackPanel>
         </Border>
         <Grid Grid.Column="0" MouseLeftButtonDown="ImageStop_MouseLeftButtonDown">

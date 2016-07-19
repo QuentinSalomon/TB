@@ -72,17 +72,17 @@ namespace Framework
                     if (value == true)
                     {
                         ListBoxImageSource = new BitmapImage(new Uri(@"/Framework;component/Images/Playlist32x32.png", UriKind.RelativeOrAbsolute));
-                        ButtonBackToPlaylists.Visibility = Visibility.Collapsed;
-                        //GridPlaylists.Visibility = Visibility.Visible;
-                        //GridButtons.Visibility = Visibility.Collapsed;
+                        GridButtons.Opacity = 0.5;
+                        ButtonBackToPlaylists.IsEnabled = false;
+                        ButtonLoadToPlayPartition.IsEnabled = false;
                         TextBlockTitle.Text = "Playlists";
                     }
                     else
                     {
                         ListBoxImageSource = new BitmapImage(new Uri(@"/Framework;component/Images/Note32x32.png", UriKind.RelativeOrAbsolute));
-                        ButtonBackToPlaylists.Visibility = Visibility.Visible;
-                        //GridButtons.Visibility = Visibility.Visible;
-                        //GridPlaylists.Visibility = Visibility.Collapsed;
+                        GridButtons.Opacity = 1;
+                        ButtonBackToPlaylists.IsEnabled = true;
+                        ButtonLoadToPlayPartition.IsEnabled = true;
                         TextBlockTitle.Text = (ListBoxPlaylist.SelectedItem as ListBoxItemPlaylist).Title;
                     }
                     ActualizeListBox();
@@ -109,31 +109,6 @@ namespace Framework
 
         #region Click Methods
 
-        private void ButtonBack_Click(object sender, RoutedEventArgs e)
-        {
-            PartitionXylo p = new PartitionXylo();
-            var messages = new MessageCollection();
-            OpenFileDialog fileDlg = new OpenFileDialog();
-
-            fileDlg.InitialDirectory = FrameworkController.Instance.Settings.DefaultPathLoadFile;
-            fileDlg.Filter = "txt files (*.xml)|*.xml";
-            fileDlg.RestoreDirectory = true;
-            if (fileDlg.ShowDialog() == true)
-            {
-                p.LoadFromFile(fileDlg.FileName, PluginClassManager.AllFactories, messages);
-                p.Name = fileDlg.FileName;
-                if (messages.Count > 0)
-                    ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
-                else
-                    CurrentPlaylist.Partitions.Add(p);
-            }
-        }
-
-        private void ButtonRemovePartition_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPlaylist.Partitions.Remove(ListBoxPlaylist.SelectedItem as PartitionXylo);
-        }
-
         private void ButtonLoadToPlayPartition_Click(object sender, RoutedEventArgs e)
         {
             if (ListBoxPlaylist.SelectedIndex != -1)
@@ -147,24 +122,18 @@ namespace Framework
                 if (messages.Count > 0)
                     ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
                 else
-                    ((EditPlaylistViewModel)DataContext).Playlist.AddPartition(p);
+                {
+                    WindowMessageBoxAutoClosed w = new WindowMessageBoxAutoClosed();
+                    w.TypeWindow = TypeWindow.Information;
+
+                    if (((EditPlaylistViewModel)DataContext).Playlist.AddPartition(p))
+                        w.Text = "Partition added to play";
+                    else
+                        w.Text = "Partition is already added to play";
+
+                    w.Show();
+                }
             }
-        }
-
-        private void ButtonRemovePlaylist_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ButtonAddToPlayPlaylist_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ButtonEditPlaylist_Click(object sender, RoutedEventArgs e)
-        {
-            if (ListBoxPlaylist.SelectedIndex != -1)
-                ShowPlaylists = false;
         }
 
         private void ButtonBackToPlaylists_Click(object sender, RoutedEventArgs e)
@@ -178,7 +147,7 @@ namespace Framework
         {
             if (ShowPlaylists == true)
             {
-                string path = FrameworkController.Instance.Settings.DefaultPathLoadFile;
+                string path = FrameworkController.Instance.Settings.DefaultPathLoadFile + "\\";
 
                 ListPlaylist.Clear();
                 foreach (string s in Directory.GetDirectories(path))
@@ -205,19 +174,6 @@ namespace Framework
     public class ListBoxItemPlaylist
     {
         public ListBoxItemPlaylist(string title, string path)
-        {
-            Title = title;
-            Path = path;
-        }
-
-        public string Path { get; set; }
-
-        public string Title { get; set; }
-    }
-
-    public class ListBoxItemPartition
-    {
-        public ListBoxItemPartition(string title, string path)
         {
             Title = title;
             Path = path;

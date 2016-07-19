@@ -8,21 +8,6 @@
              d:DesignHeight="600" d:DesignWidth="450">
     <UserControl.Resources>
         <local:IndexConverter x:Key="IndexConverter"/>
-        <Style TargetType="{x:Type ListBoxItem}">
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Trigger.Setters>
-                        <Setter Property="Background" Value="Black"/>
-                    </Trigger.Setters>
-                </Trigger>
-                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                    <Setter Property="Background" Value="#FF595959"></Setter>
-                </Trigger>
-                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                    <Setter Property="Background" Value="#FF7F7F7F"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
         <DataTemplate x:Key="DataTemplateListBox">
             <Grid x:Name="GridListBoxItem" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -30,7 +15,7 @@
                     <ColumnDefinition Width="30" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Image Width="20" Height="20" Margin="0,0,0,0" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ListBoxImageSource}"/>
+                <Image Width="20" Height="20" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ListBoxImageSource}"/>
                 <Ellipse Stroke="White" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, 
                                         Converter={StaticResource IndexConverter}}" 
@@ -44,6 +29,11 @@
                     {RelativeSource Mode=FindAncestor, AncestorType=
                     {x:Type ListBoxItem}},Path=IsSelected}" Value="True">
                     <Setter TargetName="GridListBoxItem" Property="Background" Value="{DynamicResource ColorsVirtuosoDarkBlue}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource=
+                    {RelativeSource Mode=FindAncestor,AncestorType=
+                    {x:Type ListBoxItem}},Path=IsMouseOver}" Value="True">
+                    <Setter TargetName="GridListBoxItem" Property="Background" Value="{DynamicResource ColorsVirtuosoMiddleBlue}"/>
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>

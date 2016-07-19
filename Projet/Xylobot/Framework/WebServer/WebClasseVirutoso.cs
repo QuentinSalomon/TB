@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using WebCore;
 using WebMaterial;
@@ -17,6 +18,8 @@ namespace Framework
         {
             _sequencer = sequencer;
             _principalPlaylist = principalPlaylist;
+            _threadActualise = new Thread(Actualise);
+            _threadActualise.Start();
         }
 
         public string PartitionTitle
@@ -34,9 +37,14 @@ namespace Framework
         {
             get
             {
-                return _sequencer.PartitionProgress;
+                return _partitionProgress;
+            }
+            private set
+            {
+                _partitionProgress = value;
             }
         }
+        private double _partitionProgress;
 
         public StaticListPartitionXylo Partitions
         {
@@ -47,7 +55,22 @@ namespace Framework
 
         }
 
+        private void Actualise()
+        {
+            while(!_finishThread)
+            {
+                PartitionProgress = _sequencer.PartitionProgress;
+                Thread.Sleep(300);
+            }
+        }
 
+        public void Finish()
+        {
+            _finishThread = true;
+        }
+
+        private Thread _threadActualise;
+        bool _finishThread = false;
         private Sequencer _sequencer;
         private Playlist _principalPlaylist;
     }

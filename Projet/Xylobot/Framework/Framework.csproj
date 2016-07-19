@@ -91,9 +91,15 @@
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="EditPlaylist\Playlist.cs" />
+    <Compile Include="EditPlaylist\WindowMessageBoxAutoClosed.xaml.cs">
+      <DependentUpon>WindowMessageBoxAutoClosed.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FrameworkController.cs" />
     <Compile Include="Home\UserControlHome.xaml.cs">
       <DependentUpon>UserControlHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Home\WindowMessageBoxInformation.xaml.cs">
+      <DependentUpon>WindowMessageBoxInformation.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainNavigationPages\CurrentPlaylistView.xaml.cs">
       <DependentUpon>CurrentPlaylistView.xaml</DependentUpon>
@@ -190,7 +196,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EditPlaylist\WindowMessageBoxAutoClosed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Home\UserControlHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Home\WindowMessageBoxInformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -274,10 +288,6 @@
     <Resource Include="Images\Sequencer64x64.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\playpause32x32.png" />
-    <Resource Include="Images\playpause64x64.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\add32x32.png" />
     <Resource Include="Images\substract32x32.png" />
   </ItemGroup>
@@ -329,9 +339,6 @@
     <Resource Include="Images\Smartphone32x32.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\LogoHeig.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\HomeImage.png" />
   </ItemGroup>
   <ItemGroup>
@@ -350,6 +357,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Smartphone128x128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Xylophone.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\PowerOff64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Error32x32.png" />
+    <Resource Include="Images\Information32x32.png" />
+    <Resource Include="Images\Warning32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LogoHeig128x128.png" />
+    <Resource Include="Images\LogoHeig32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

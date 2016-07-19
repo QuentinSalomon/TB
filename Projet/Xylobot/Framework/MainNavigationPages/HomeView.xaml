@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Margin="7">
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
+    <Grid Margin="7" x:Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -19,20 +19,32 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Image Grid.ColumnSpan="2" Source="/Framework;component/Images/HomeImage.png"/>
-        <!--<Image Source="/Framework;component/Images/LogoHeig.png" Width="100" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>-->
+        <Image Grid.ColumnSpan="2" Source="/Framework;component/Images/Xylophone.jpg"  Height="{Binding ElementName=Grid, Path=ActualHeight}">
+        </Image>
 
-        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Text="Woopsa" Source="/Framework;component/Images/Woopsa128x128.png" Grid.Row="1" Margin="0,5,5,5"/>
-        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoOrange}" Text="Concept Hmi" Source="/Framework;component/Images/Concept128x128.png" Grid.Row="1" Grid.Column="1" Margin="5,5,0,5"/>
+        <local:UserControlHome x:Name="UserControlHomeHeig" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" 
+                               Text="Art &amp; technologie" Source="/Framework;component/Images/LogoHeig128x128.png" Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" 
+                               MouseLeftButtonDown="UserControlHomeHeig_MouseLeftButtonDown"/>
+        <local:UserControlHome x:Name="UserControlHomeConcept" Background="{DynamicResource ColorsVirtuosoOrange}" 
+                               Text="Concept Hmi" Source="/Framework;component/Images/Concept128x128.png" Grid.Row="1" Grid.Column="1" Margin="5,5,0,5" 
+                               MouseLeftButtonDown="UserControlHomeConceptHmi_MouseLeftButtonDown"/>
 
-        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoRed}" Text="Art &amp; technologie" Source="/Framework;component/Images/Woopsa128x128.png" Grid.Row="2" Margin="0,5,5,5"/>
-        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoPurple}" Text="Web page" Source="/Framework;component/Images/QrCode128x128.png" Grid.Row="2" Grid.Column="1" Margin="5,5,0,5"/>
+        <local:UserControlHome x:Name="UserControlHomeWoopsa" Background="{DynamicResource ColorsVirtuosoRed}" 
+                               Text="Woopsa" Source="/Framework;component/Images/Woopsa128x128.png" Grid.Row="2" Grid.Column="0" Margin="0,5,5,5" 
+                               MouseLeftButtonDown="UserControlHomeWoopsa_MouseLeftButtonDown"/>
+        <local:UserControlHome x:Name="UserControlHomeWebPage" Background="{DynamicResource ColorsVirtuosoPurple}" 
+                               Text="Web page" Source="/Framework;component/Images/QrCode128x128.png" Grid.Row="2" Grid.Column="1" Margin="5,5,0,5" 
+                               MouseLeftButtonDown="UserControlHomeWebPage_MouseLeftButtonDown"/>
 
-        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoYellow}" Text="Smartphone" Source="/Framework;component/Images/Smartphone128x128.png" Grid.Row="3" Margin="0,5,5,5"/>
-        <local:UserControlHome Background="{DynamicResource ColorsVirtuosoGreen}" Text="Wifi" Source="/Framework;component/Images/Wifi128x128.png" Grid.Row="3" Grid.Column="1" Margin="5,5,0,5"/>
+        <local:UserControlHome x:Name="UserControlHomeSmartphone" Background="{DynamicResource ColorsVirtuosoYellow}" 
+                               Text="Smartphone" Source="/Framework;component/Images/Smartphone128x128.png" Grid.Row="3" Grid.Column="0" Margin="0,5,5,5" 
+                               MouseLeftButtonDown="UserControlHomeSmartphone_MouseLeftButtonDown"/>
+        <local:UserControlHome x:Name="UserControlHomeWifi" Background="{DynamicResource ColorsVirtuosoGreen}" 
+                               Text="Wifi" Source="/Framework;component/Images/Wifi128x128.png" Grid.Row="3" Grid.Column="1" Margin="5,5,0,5" 
+                               MouseLeftButtonDown="UserControlHomeWifi_MouseLeftButtonDown"/>
 
-        <Border Background="{DynamicResource ColorsVirtuosoDarkBlue}" Grid.Row="5" Grid.ColumnSpan="2">
-            <TextBlock Text="Quentin Salomon" Style="{DynamicResource TextBlockNormalStyle}" HorizontalAlignment="Right"/>
+        <Border Background="{DynamicResource ColorsVirtuosoDarkBlue}" Grid.Row="5" Grid.ColumnSpan="2" Margin="5">
+            <TextBlock Text="Travail de bachelor Quentin Salomon 2016" Style="{DynamicResource TextBlockNormalStyle}" HorizontalAlignment="Right"/>
         </Border>
     </Grid>
 </UserControl>

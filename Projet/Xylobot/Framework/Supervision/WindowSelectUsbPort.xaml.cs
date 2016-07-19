@@ -62,5 +62,18 @@ namespace Framework
         {
             ButtonOk.IsEnabled = true;
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (ListBoxPortName.Items.Count == 1)
+            {
+                ListBoxPortName.SelectedIndex = 0;
+                ButtonOk_Click(null, null);
+            }
+            else if (ListBoxPortName.Items.Count == 0)
+            {
+                ButtonCancel_Click(null, null);
+            }
+        }
     }
 }

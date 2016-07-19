@@ -12,6 +12,6 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Image x:Name="Image" Width="128" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5"/>
-        <TextBlock x:Name="TextBlock" Text="Text Here" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30" Grid.Row="1"/>
+        <TextBlock x:Name="TextBlock" Text="Text Here" Style="{DynamicResource TextBlockTitleStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="1" Margin="10"/>
     </Grid>
 </UserControl>

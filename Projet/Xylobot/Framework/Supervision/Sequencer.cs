@@ -25,8 +25,8 @@ namespace Framework
         {
             Xylobot = new Xylobot();
             SpeedPlay = 1.0;
-            threadXyloBot = new Thread(ManageXylobot);
-            threadXyloBot.Start();
+            _threadXyloBot = new Thread(ManageXylobot);
+            _threadXyloBot.Start();
             Errors = new ObservableCollection<string>();
         }
 
@@ -131,6 +131,21 @@ namespace Framework
         }
         private double _partitionProgress;
         public const string PartitionProgressPropertyName = "PartitionProgress";
+        
+        public bool IsPlaying
+        {
+            get { return _isPlaying; }
+            private set
+            {
+                if (_isPlaying != value)
+                {
+                    _isPlaying = value;
+                    DoPropertyChanged(IsPlayingPropertyName);
+                }
+            }
+        }
+        private bool _isPlaying;
+        public const string IsPlayingPropertyName = "IsPlaying";
 
         public ObservableCollection<string> Errors { get; set; }
 
@@ -202,11 +217,15 @@ namespace Framework
                     }
                     else if (_pause)
                     {
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                                   IsPlaying = false));
                         Xylobot.Pause();
                         while (_pause && !_stop)
                             Thread.Sleep(50);
                         if(!_stop)
                             Xylobot.Start();
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                                   IsPlaying = true));
                     }
                     else {
                         //Application des changement pour la lecture de la partition
@@ -248,19 +267,25 @@ namespace Framework
                     if (!_stop)
                     {
                         Xylobot.Start();//Start la musique
-                        Application.Current.Dispatcher.Invoke(new Action(() =>
-                            CurrentPartition = Playlist.Partitions[0])); 
+                        Application.Current.Dispatcher.Invoke(new Action(() => {
+                            CurrentPartition = Playlist.Partitions[0];
+                            IsPlaying = true;
+                            })); 
                         PlayPartition(Playlist.Partitions[0]);
                         if (!_stop)
                             Application.Current.Dispatcher.Invoke(new Action(() => 
                                 Playlist.Partitions.RemoveAt(0)));
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                            PartitionProgress = 0));
                     }
                     else {
                         break;
                     }
                 }
-                Application.Current.Dispatcher.Invoke(new Action(() =>
-                    CurrentPartition = null));
+                Application.Current.Dispatcher.Invoke(new Action(() => {
+                    CurrentPartition = null;
+                    IsPlaying = false;
+                }));
 
             }
             catch (Exception e)
@@ -316,7 +341,7 @@ namespace Framework
             //_pause = false;
             _stop = true;
             _actionsThread = ActionsThread.Terminate;
-            threadXyloBot.Join();
+            _threadXyloBot.Join();
         }
 
         private void ApplyChange()
@@ -431,7 +456,7 @@ namespace Framework
 
         private enum ActionsThread { Terminate = -1, Nothing, PlayPlaylist, PlayOneNote, ChangeKeyHitTime }
 
-        private Thread threadXyloBot;
+        private Thread _threadXyloBot;
         private ActionsThread _actionsThread = ActionsThread.Nothing;
         private bool _pause = true, _stop = true, _next = false, _tempoChanged = false, _speedPlayChanged = false, _muteChanged = false, _isMute = false;
        

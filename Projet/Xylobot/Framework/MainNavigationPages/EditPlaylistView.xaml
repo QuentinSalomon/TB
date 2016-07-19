@@ -9,33 +9,34 @@
              d:DesignHeight="700" d:DesignWidth="400" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:IndexConverter x:Key="IndexConverter"/>
-        <Style  TargetType="{x:Type ListBoxItem}">
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource ColorsVirtuosoOrange}"/>
-                </Trigger>
-                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                    <Setter Property="Background" Value="#FF595959"></Setter>
-                </Trigger>
-                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                    <Setter Property="Background" Value="#FF7F7F7F"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
         <DataTemplate x:Key="DataTemplateListBox">
-            <Grid Margin="0,2">
+            <Grid x:Name="GridListBoxItem" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20" />
                     <ColumnDefinition Width="30" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Image Width="20" Height="20" Margin="0,0,0,0" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ListBoxImageSource}"/>
+                <Image Width="20" Height="20" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ListBoxImageSource}"/>
                 <Ellipse Stroke="White" StrokeThickness="2" Fill="Transparent" Width="20" Height="20" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                         AncestorType={x:Type ListBoxItem}}, 
-                                         Converter={StaticResource IndexConverter}}" Foreground="White" FontSize="18" Grid.Column="1" Margin="0,0,0,2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, 
+                                        Converter={StaticResource IndexConverter}}" 
+                                        Foreground="White" FontSize="18" 
+                                        Grid.Column="1" Margin="0,0,0,2" 
+                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding Title}" Style="{DynamicResource TextBlockNormalStyle}" Grid.Column="2"/>
             </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource=
+                    {RelativeSource Mode=FindAncestor, AncestorType=
+                    {x:Type ListBoxItem}},Path=IsSelected}" Value="True">
+                    <Setter TargetName="GridListBoxItem" Property="Background" Value="{DynamicResource ColorsVirtuosoDarkBlue}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource=
+                    {RelativeSource Mode=FindAncestor,AncestorType=
+                    {x:Type ListBoxItem}},Path=IsMouseOver}" Value="True">
+                    <Setter TargetName="GridListBoxItem" Property="Background" Value="{DynamicResource ColorsVirtuosoMiddleBlue}"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
     </UserControl.Resources>
     
@@ -48,9 +49,9 @@
 
         <TextBlock x:Name="TextBlockTitle" Text="Title" DockPanel.Dock="Right" Style="{DynamicResource TextBlockTitleStyle}" Background="{DynamicResource ColorsVirtuosoGreen}"/>
 
-        <ListBox Name="ListBoxPlaylist" AlternationCount="2" Grid.Row="1" SelectionChanged="ListBoxPlaylist_SelectionChanged" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{DynamicResource DataTemplateListBox}" Background="White"/>
+        <ListBox HorizontalContentAlignment="Stretch" Name="ListBoxPlaylist" AlternationCount="2" Grid.Row="1" SelectionChanged="ListBoxPlaylist_SelectionChanged" ItemsSource="{Binding Playlist.Partitions}" ItemTemplate="{DynamicResource DataTemplateListBox}" Background="White"/>
 
-        <Grid x:Name="GridButtons" Height="120" Grid.Row="2" Visibility="Visible">
+        <Grid x:Name="GridButtons" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -60,9 +61,8 @@
                 <Grid Width="{Binding ElementName=ButtonBackToPlaylists, Path=ActualWidth}" Height="{Binding ElementName=ButtonBackToPlaylists, Path=ActualHeight}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
                         <Image Source="/Framework;component/Images/Back32x32.png" Width="32"/>
-                        <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
                     </StackPanel>
-                    <TextBlock Text="Add" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
+                    <TextBlock Text="Back" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
                 </Grid>
             </Button>
 
@@ -70,12 +70,12 @@
                 <Grid Width="{Binding ElementName=ButtonLoadToPlayPartition, Path=ActualWidth}" Height="{Binding ElementName=ButtonLoadToPlayPartition, Path=ActualHeight}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
                         <Image Source="/Framework;component/Images/Import32x32.png" Width="32"/>
-                        <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
                     </StackPanel>
-                    <TextBlock Text="Load to play" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
+                    <TextBlock Text="Load to play" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
                 </Grid>
             </Button>
         </Grid>
 
+        
     </Grid>
 </UserControl>
