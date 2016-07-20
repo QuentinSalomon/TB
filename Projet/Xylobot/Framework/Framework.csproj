@@ -191,10 +191,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ConceptStyles\ConceptSkin.Chrome\WindowStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="EditPlaylist\WindowMessageBoxAutoClosed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

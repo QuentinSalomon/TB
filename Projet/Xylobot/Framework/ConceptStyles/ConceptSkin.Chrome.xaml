@@ -5,7 +5,6 @@
         <ResourceDictionary Source="ConceptSkin.Chrome/NavigationControl.xaml"/>
         <ResourceDictionary Source="ConceptSkin.Chrome/TextBlockStyles.xaml"/>
         <ResourceDictionary Source="ConceptSkin.Chrome/ButtonStyles.xaml"/>
-        <ResourceDictionary Source="ConceptSkin.Chrome/WindowStyles.xaml"/>
         <ResourceDictionary Source="ConceptSkin.Chrome/ListBoxStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

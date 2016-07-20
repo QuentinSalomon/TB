@@ -66,7 +66,7 @@
                         <Image Source="/Framework;component/Images/Clear32x32.png" Width="32"/>
                         <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
                     </StackPanel>
-                    <TextBlock x:Name="TextBlock1" Text="Clear" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
+                    <TextBlock x:Name="TextBlock1" Text="Clear" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
                 </Grid>
             </Button>
 
@@ -76,19 +76,9 @@
                         <Image Source="/Framework;component/Images/Remove32x32.png" Width="32"/>
                         <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
                     </StackPanel>
-                    <TextBlock Text="Remove" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
+                    <TextBlock Text="Remove" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
                 </Grid>
             </Button>
-
-            <!--<Button x:Name="ButtonAdd" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Grid.Column="2" Margin="4,10,0,0" Command="{Binding Path=Playlist.CommandAddPartition}" Grid.ColumnSpan="2">
-                <Grid Width="{Binding ElementName=ButtonClear, Path=ActualWidth}" Height="{Binding ElementName=ButtonClear, Path=ActualHeight}">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-                        <Image Source="/Framework;component/Images/Add32x32.png" Width="32"/>
-                        <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
-                    </StackPanel>
-                    <TextBlock Text="Add" FontFamily="Segoe UI Light" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="30"/>
-                </Grid>
-            </Button>-->
         </Grid>
     </Grid>
 </UserControl>

@@ -3,24 +3,16 @@
                     xmlns:local="clr-namespace:Framework">
 
     <Style x:Key="ButtonStyle" TargetType="Button">
-        <Setter Property="FontFamily" Value="Segoe UI Light"/>
-        <Setter Property="FontSize" Value="30"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border CornerRadius="0" Background="{TemplateBinding Background}">
-                        <Grid>
-                            <Image Source="{TemplateBinding Property=Tag}"/>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsEnabled}" Value="False">
-                <Setter Property="Background" Value="Gray"/>
-            </DataTrigger>
-        </Style.Triggers>
     </Style>
 </ResourceDictionary>
+    
+    
