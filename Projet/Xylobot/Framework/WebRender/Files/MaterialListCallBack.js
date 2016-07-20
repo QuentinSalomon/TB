@@ -1,2 +1,2 @@
-﻿myArray = [<%values%>];
+﻿myArray = value.split("££");
 Actualise();

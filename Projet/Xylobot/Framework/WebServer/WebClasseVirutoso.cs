@@ -60,9 +60,9 @@ namespace Framework
                 string tmp = "";
                 for (int i = 0; i < _principalPlaylist.Partitions.Count; i++)
                 {
-                    tmp += "\"" + _principalPlaylist.Partitions[i].Title + "\"";
+                    tmp += _principalPlaylist.Partitions[i].Title;
                     if (i != _principalPlaylist.Partitions.Count - 1)
-                        tmp += ",";
+                        tmp += "££";
                 }
                 return tmp;
             }

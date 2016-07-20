@@ -11,7 +11,7 @@ namespace Framework
     {
         public WebMaterialShowListRender(PropertyDescription property, object obj)
         {
-            Model = (obj as string);
+            Model = obj;
             PropDescription = property;
         }   
 
@@ -37,13 +37,13 @@ namespace Framework
             {
                 string tmp = file.ReadToEnd();
                 tmp = tmp.Replace("<%id%>", PropDescription.PropertyInfo.Name);
-                tmp = tmp.Replace("<%values%>", Model as string);
+                string tmpVal = (Model as VirutosoWebController).Partitions.Replace("££", ",");
+                tmp = tmp.Replace("<%values%>", "\"" + tmpVal + "\"");
                 pagebuilder.ApendJs(tmp);
             }
             using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialListCallBack.js")))
             {
                 string tmp = file.ReadToEnd();
-                tmp = tmp.Replace("<%values%>", Model as string);
                 SubsciptionCallBackMethode = tmp;
             }
             pagebuilder.RegisterProperty(PropDescription.PropertyInfo.Name, id.ToString(), location);
