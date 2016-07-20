@@ -18,17 +18,16 @@
                     Background="{DynamicResource ColorsVirtuosoBlue}"
                     Width="130" Height="100" Margin="5,5">
             <Image Source="{Binding Path=(concept:NavigationControl.MenuImageSource)}"
-                                       Visibility="{Binding Source, RelativeSource={RelativeSource self}, Converter={concept:NullableToVisibilityConverter}}"
-                                       Width="70" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <!--<TextBlock x:Name="MenuTitleText" Text="{Binding Path=(concept:NavigationControl.MenuTitle)}" TextWrapping="Wrap"
-                       Foreground="{DynamicResource LightBrush}"
-                       HorizontalAlignment="Center" Margin="5" TextAlignment="Center"
-                       FontSize="{DynamicResource SubTitleFontSize}"/>-->
+                        Visibility="{Binding Source, RelativeSource={RelativeSource self}, 
+                        Converter={concept:NullableToVisibilityConverter}}"
+                        Width="70" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
         </DockPanel>
         <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabItem}}}" Value="True">
-                <Setter TargetName="DockPanelButton" Property="Background" Value="{DynamicResource ColorsVirtuosoDarkBlue}"/>
+            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, 
+                    AncestorType={x:Type TabItem}}}" Value="True">
+                <Setter TargetName="DockPanelButton" Property="Background" 
+                        Value="{DynamicResource ColorsVirtuosoDarkBlue}"/>
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>

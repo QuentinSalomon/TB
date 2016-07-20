@@ -1,19 +1,22 @@
-﻿<script>
-    var parent = document.getElementById("p");
-    var myArray = [<%values%>];
+﻿var parent = document.getElementById("p");
+var myArray = [<%values%>];
 
-    function AddItem(i){
-            parent.appendChild(document.createElement("br"));
+function AddItem(i){
+    <!--Ajoute la valeur à la liste-->
+    var new_name = document.createElement("label");
+    new_name.appendChild(document.createTextNode(myArray[i]));
+    parent.appendChild(new_name);
+    
+    parent.appendChild(document.createElement("hr"));
+};
 
-            <!--Ajoute la valeur à la liste-->
-            var new_name = document.createElement("label");
-            new_name.appendChild(document.createTextNode(myArray[i]));
-            parent.appendChild(new_name);
-        });
-    }
-
+function Actualise(){
+    $( "p" ).empty();
     <!--Création de la liste-->
-    for (var i = 0; i < <%count%>; i++){
+    for (var i = 0; i < myArray.length; i++){
         AddItem(i);
     }
-</script>
+}
+
+Actualise();
+

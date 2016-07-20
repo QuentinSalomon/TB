@@ -65,5 +65,7 @@ namespace Framework
         [ConceptAutoCreate]
         [IntlConceptName("Framework.PartitionXylo.Notes", "Notes")]
         public StaticListNote Notes { get; protected set; }
+
+        public static readonly int minOctave = 5, maxOctave = 7, lastNoteOctave = 8, lastNoteHigh = 0;
     }
 }

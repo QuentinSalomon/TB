@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using WebCore;
 using WebMaterial;
 using WebProgressBar;
@@ -18,8 +18,15 @@ namespace Framework
         {
             _sequencer = sequencer;
             _principalPlaylist = principalPlaylist;
-            _threadActualise = new Thread(Actualise);
-            _threadActualise.Start();
+            _timer = new Timer(500);
+            _timer.Elapsed += OnTimedEvent;
+            _timer.AutoReset = true;
+            _timer.Enabled = true;
+        }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            PartitionProgress = _sequencer.PartitionProgress;
         }
 
         public string PartitionTitle
@@ -46,31 +53,23 @@ namespace Framework
         }
         private double _partitionProgress;
 
-        public StaticListPartitionXylo Partitions
+        public string Partitions
         {
             get
             {
-                return _principalPlaylist.Partitions;
-            }
-
-        }
-
-        private void Actualise()
-        {
-            while(!_finishThread)
-            {
-                PartitionProgress = _sequencer.PartitionProgress;
-                Thread.Sleep(300);
+                string tmp = "";
+                for (int i = 0; i < _principalPlaylist.Partitions.Count; i++)
+                {
+                    tmp += "\"" + _principalPlaylist.Partitions[i].Title + "\"";
+                    if (i != _principalPlaylist.Partitions.Count - 1)
+                        tmp += ",";
+                }
+                return tmp;
             }
         }
 
-        public void Finish()
-        {
-            _finishThread = true;
-        }
 
-        private Thread _threadActualise;
-        bool _finishThread = false;
+        private Timer _timer;
         private Sequencer _sequencer;
         private Playlist _principalPlaylist;
     }
@@ -89,10 +88,6 @@ namespace Framework
             render.Color = "33cc33";
             render.ValMin = 0;
             render.ValMax = 1;
-
-            WebMaterialShowListRender render2;
-            //render2 = Find(nameof(VirutosoWebController.Partitions)) as WebMaterialShowListRender;
-            //render2.List = model.Partitions;
         }
     }
 }

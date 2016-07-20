@@ -11,11 +11,9 @@ namespace Framework
     {
         public WebMaterialShowListRender(PropertyDescription property, object obj)
         {
+            Model = (obj as string);
             PropDescription = property;
-            Model = obj;
         }   
-
-        public StaticListPartitionXylo List { get; set; }
 
         public override void BuildControl(WebPageBuilder pagebuilder)
         {
@@ -23,38 +21,31 @@ namespace Framework
             {
                 string tmp = file.ReadToEnd();
                 tmp = tmp.Replace("<%title%>", PropDescription.PropertyInfo.Name);
-                tmp = tmp.Replace("<%id%>", id.ToString());
-                tmp = tmp.Replace("<%value%>", PropDescription.PropertyInfo.GetValue(Model).ToString());
+                tmp = tmp.Replace("<%id%>", PropDescription.PropertyInfo.Name);
+                //tmp = tmp.Replace("<%value%>", _item.PropertyInfo.GetValue(Model).ToString());
                 pagebuilder.ApendHtml(tmp);
             }
 
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialString.css")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialList.css")))
             {
                 string tmp = file.ReadToEnd();
-                tmp = tmp.Replace("<%id%>", id.ToString());
-                tmp = tmp.Replace("<%count%>", List.Count.ToString());
-                string tmpValues = "";
-                for (int i = 0; i < List.Count; i++)
-                    tmpValues += "'" + List[i].Title + "',";
-                tmpValues.Remove(tmpValues.Length - 1); //Suppression de la dernière ,
-                tmp = tmp.Replace("<%values%>", tmpValues);
+
                 pagebuilder.ApendCss(tmp);
             }
 
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialString.js")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialList.js")))
             {
                 string tmp = file.ReadToEnd();
-
+                tmp = tmp.Replace("<%id%>", PropDescription.PropertyInfo.Name);
+                tmp = tmp.Replace("<%values%>", Model as string);
                 pagebuilder.ApendJs(tmp);
             }
-
-            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialStringCallBack.js")))
+            using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.Files.MaterialListCallBack.js")))
             {
                 string tmp = file.ReadToEnd();
-               
+                tmp = tmp.Replace("<%values%>", Model as string);
                 SubsciptionCallBackMethode = tmp;
             }
-
             pagebuilder.RegisterProperty(PropDescription.PropertyInfo.Name, id.ToString(), location);
             pagebuilder.RegisterSubscription(PropDescription.PropertyInfo.Name, SubsciptionCallBackMethode, location);
         }

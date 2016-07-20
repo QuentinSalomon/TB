@@ -28,7 +28,6 @@ namespace Framework
 
         public void Close()
         {
-            _virutosoWebController.Finish();
             Server.Dispose();
         }
     }

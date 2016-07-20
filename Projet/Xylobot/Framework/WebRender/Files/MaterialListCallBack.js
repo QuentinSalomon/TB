@@ -1,1 +1,2 @@
-﻿
+﻿myArray = [<%values%>];
+Actualise();
