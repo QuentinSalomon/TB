@@ -157,7 +157,8 @@
     </Compile>
     <Compile Include="Supervision\XyloCommunication.cs" />
     <Compile Include="Supervision\Xylobot.cs" />
-    <Compile Include="WebRender\WebMaterialShowListRender.cs" />
+    <Compile Include="WebRender\WebMaterialSelectListRender\WebMaterialSelectListRender.cs" />
+    <Compile Include="WebRender\WebMaterialShowListRender\WebMaterialShowListRender.cs" />
     <Compile Include="WebServer\WebClasseVirutoso.cs" />
     <Compile Include="WebServer\WebServer.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -337,10 +338,10 @@
     <Resource Include="Images\HomeImage.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="WebRender\Files\MaterialList.css" />
-    <EmbeddedResource Include="WebRender\Files\MaterialList.html" />
-    <EmbeddedResource Include="WebRender\Files\MaterialList.js" />
-    <EmbeddedResource Include="WebRender\Files\MaterialListCallBack.js" />
+    <EmbeddedResource Include="WebRender\WebMaterialShowListRender\Files\MaterialList.css" />
+    <EmbeddedResource Include="WebRender\WebMaterialShowListRender\Files\MaterialList.html" />
+    <EmbeddedResource Include="WebRender\WebMaterialShowListRender\Files\MaterialList.js" />
+    <EmbeddedResource Include="WebRender\WebMaterialShowListRender\Files\MaterialListCallBack.js" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Concept128x128.png" />
@@ -367,6 +368,13 @@
   <ItemGroup>
     <Resource Include="Images\LogoHeig128x128.png" />
     <Resource Include="Images\LogoHeig32x32.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="WebRender\WebMaterialSelectListRender\Files\MaterialListSelect.css" />
+    <EmbeddedResource Include="WebRender\WebMaterialSelectListRender\Files\MaterialListSelect.html" />
+    <EmbeddedResource Include="WebRender\WebMaterialSelectListRender\Files\MaterialListSelect.js" />
+    <EmbeddedResource Include="WebRender\WebMaterialSelectListRender\Files\MaterialListSelectCallBack.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

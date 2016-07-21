@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows;
 
 namespace Framework
 {
@@ -40,7 +41,6 @@ namespace Framework
         public StaticListPartitionXylo Partitions { get; protected set; }
 
         #endregion
-
 
         public bool AddPartition(PartitionXylo partition)
         {

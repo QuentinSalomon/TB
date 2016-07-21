@@ -1,2 +1,0 @@
-﻿myArray = value.split("££");
-Actualise();

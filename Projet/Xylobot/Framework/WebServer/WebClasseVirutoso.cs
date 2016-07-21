@@ -1,11 +1,15 @@
 ﻿using Common;
+using Concept.Model;
+using Concept.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using WebCore;
 using WebMaterial;
 using WebProgressBar;
@@ -18,7 +22,7 @@ namespace Framework
         {
             _sequencer = sequencer;
             _principalPlaylist = principalPlaylist;
-            _timer = new Timer(500);
+            _timer = new System.Timers.Timer(500);
             _timer.Elapsed += OnTimedEvent;
             _timer.AutoReset = true;
             _timer.Enabled = true;
@@ -68,8 +72,43 @@ namespace Framework
             }
         }
 
+        public string Catalogue
+        {
+            get
+            {
+                string path = FrameworkController.Instance.Settings.DefaultPathLoadFile + "\\Catalogue\\";
+                string tmp = "";
+                int i = 0;
+                string[] fileNames = Directory.GetFiles(path, "*.xml");
 
-        private Timer _timer;
+                foreach (string fileName in fileNames)
+                {
+                    tmp += fileName.Remove(0, path.Length);
+                    if (i++ != fileNames.Length - 1)
+                        tmp += "££";
+                }
+                return tmp;
+            }
+            set { _selectFileName = value; }
+        }
+
+        public void DoRequest()
+        {
+            if (_selectFileName != null && _selectFileName != "")
+            {
+                PartitionXylo p = new PartitionXylo();
+                var messages = new MessageCollection();
+
+                p.LoadFromFile(FrameworkController.Instance.Settings.DefaultPathLoadFile + "\\Catalogue\\" + _selectFileName, PluginClassManager.AllFactories, messages);
+                p.Name = _selectFileName.Split('.')[0];
+                if (messages.Count == 0)
+                    Application.Current.Dispatcher.Invoke(new Action(() => _principalPlaylist.AddPartition(p)));
+                
+            }
+        }
+
+        private string _selectFileName;
+        private System.Timers.Timer _timer;
         private Sequencer _sequencer;
         private Playlist _principalPlaylist;
     }
@@ -77,6 +116,7 @@ namespace Framework
     [WebRenderCustom(nameof(VirutosoWebController.PartitionProgress), typeof(WebRoundProgressBarRender))]
     [WebRenderCustom(nameof(VirutosoWebController.PartitionTitle), typeof(WebMaterialStringRefreshRender))]
     [WebRenderCustom(nameof(VirutosoWebController.Partitions), typeof(WebMaterialShowListRender))]
+    [WebRenderCustom(nameof(VirutosoWebController.Catalogue), typeof(WebMaterialSelectListRender))]
     public class CustomVirutosoWebView : WebMaterialView
     {
         public CustomVirutosoWebView(VirutosoWebController model)
