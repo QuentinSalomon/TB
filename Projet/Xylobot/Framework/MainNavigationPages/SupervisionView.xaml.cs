@@ -45,29 +45,5 @@ namespace Framework
             }
         }
 
-        private void ImageNext_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
-
-        private void ImagePlayPause_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            (DataContext as SupervisionViewModel).Sequencer.PlayPause();
-        }
-
-        private void ImageStop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            (DataContext as SupervisionViewModel).Sequencer.Stop();
-        }
-
-        private void ButtonPlayPause_Click(object sender, RoutedEventArgs e)
-        {
-            //(DataContext as SupervisionViewModel).Sequencer.PlayPause();
-        }
-
-        private void ButtonStop_Click(object sender, RoutedEventArgs e)
-        {
-            //(DataContext as SupervisionViewModel).Sequencer.Stop();
-        }
     }
 }

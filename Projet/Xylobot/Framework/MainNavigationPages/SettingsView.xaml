@@ -17,18 +17,18 @@
             <RowDefinition Height="32"/>
             <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="5,0,5,0">
+        <Grid Grid.Row="0" Background="{DynamicResource ColorsVirtuosoGreen}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="32"/>
             </Grid.ColumnDefinitions>
-            <concept:StringEditor Title="Default load path" Value="{Binding Path=Settings.DefaultPathLoadFile}" Height="32"/>
+            <concept:StringEditor Title="Default load path" Value="{Binding Path=Settings.DefaultPathLoadFile}" FontFamily="Segoe UI Light" FontSize="34" Foreground="White"/>
             <Button Content="..." Command="{Binding Path=Settings.CommandPathLoadFile}" Width="32" Height="32" Grid.Column="1"/>
         </Grid>
 
-        <Border Grid.Row="2" Background="{DynamicResource ColorsVirtuosoMiddleBlue}">
+        <Border Grid.Row="2" Background="{DynamicResource ColorsVirtuosoGreen}">
             <TextBlock x:Name="TextBlockKeyTitle" Style="{DynamicResource TextBlockTitleStyle}" Text="DO 5" VerticalAlignment="Center"/>
         </Border>
         <Grid Grid.Row="3" >
@@ -61,8 +61,17 @@
             <Image Source="/Framework;component/Images/Mute32x32.png"/>
         </Button>
 
-        <Button x:Name="ButtonShutDown" Grid.Row="8" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Right" Background="Red">
-            <Image Source="/Framework;component/Images/PowerOff64x64.png" Margin="3"/>
+        <Button x:Name="ButtonShutDown" Grid.Row="8" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonShutDown_Click" Margin="5">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Stroke="Black" StrokeThickness="2" Fill="{DynamicResource ColorsVirtuosoRed}"/>
+                        <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+            <Image Source="/Framework;component/Images/PowerOff64x64.png" Margin="5,5,5,10"/>
         </Button>
     </Grid>
 </UserControl>

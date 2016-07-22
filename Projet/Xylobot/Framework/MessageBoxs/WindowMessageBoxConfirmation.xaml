@@ -1,0 +1,32 @@
+﻿<Window x:Class="Framework.WindowMessageBoxConfirmation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Framework"
+        mc:Ignorable="d"
+        Title="WindowMessageBoxAutoClosed" SizeToContent="WidthAndHeight" BorderBrush="Black" BorderThickness="2" Background="Gray"
+        ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="StackPanel1" Orientation="Horizontal" Margin="5" Height="auto" Width="300">
+            <Image x:Name="Image" Height="32" Width="32" VerticalAlignment="Top" Margin="5" Source="/Framework;component/Images/Validation32x32.png"/>
+            <TextBlock x:Name="TextBlock" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" Margin="10,0,0,0" Width="248">
+                <AccessText x:Name="AccessText" TextWrapping="WrapWithOverflow"/>
+            </TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="1">
+            <Button x:Name="ButtonCancel" Style="{DynamicResource ButtonStyle}" 
+                    Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Click="ButtonCancel_Click" Margin="5">
+                <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Cancel" Margin="5"/>
+            </Button>
+            <Button x:Name="ButtonYes" Style="{DynamicResource ButtonStyle}" 
+                    Background="{DynamicResource ColorsVirtuosoGreen}" Click="ButtonYes_Click" Margin="5">
+                <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Yes" Margin="5"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

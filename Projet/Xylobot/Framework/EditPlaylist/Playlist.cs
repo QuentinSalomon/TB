@@ -53,6 +53,11 @@ namespace Framework
             return !existInPlaylist;
         }
 
+        public void ClearPartitions()
+        {
+            Partitions.Clear();
+        }
+
         #region WPF command
 
         public WpfCommand CommandAddPartition

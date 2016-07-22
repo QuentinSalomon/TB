@@ -60,7 +60,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="ButtonClear" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoRed}" Grid.Column="0" Margin="0,10,4,0" Command="{Binding Path=Playlist.CommandClearPartitions}">
+            <Button x:Name="ButtonClear" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoRed}" Grid.Column="0" Margin="0,10,4,0" Click="ButtonClear_Click">
                 <Grid Width="{Binding ElementName=ButtonClear, Path=ActualWidth}" Height="{Binding ElementName=ButtonClear, Path=ActualHeight}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
                         <Image Source="/Framework;component/Images/Clear32x32.png" Width="32"/>

@@ -11,10 +11,11 @@ function AddItemSelectable(i){
     var new_name = document.createElement("label");
     <!--new_name.appendChild(document.createTextNode(listName<%id%>[i]));-->
     new_name.innerHTML = listName<%id%>[i];
-    $(document.body).on('click', 'label', function() {
+    new_name.class = "itemListLabelClickable";
+    new_name.onclick = function() {
         inputSelected<%id%>.value = this.innerHTML;
         server.write("<%path%>", inputSelected<%id%>.value, function(value){});
-    });
+    }
     <!--new_name.onClick = ClickLabel;(new_name.innerHTML);-->
     listSelectable<%id%>.appendChild(new_name);
     

@@ -26,6 +26,8 @@ namespace Framework
             InitializeComponent();
         }
         
+        public Settings Settings { get; set; }
+
         public int CurrentIdNote {
             get { return _currentIdNote; }
             set
@@ -34,35 +36,36 @@ namespace Framework
                 Note n;
                 n = IdToNoteTest(CurrentIdNote);
                 TextBlockKeyTitle.Text = "Note : " + n.HighString + "   \tOctave : " + n.Octave;
-                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
-                //TextBlockHitTime.Text = Truncate((DataContext as SettingsViewModel).Sequencer.Xylobot.Keys[CurrentIdNote].HitTime).ToString();
+                Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime);
+                TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
             }
         }
         private int _currentIdNote;
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            Settings = (DataContext as SettingsViewModel).Settings;
             CurrentIdNote = 0;
         }
 
         private void ButtonLessTime_Click(object sender, RoutedEventArgs e)
         {
             Note n;
-            (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime - 0.1);
-            TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
+            Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime - 0.1);
+            TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
             n = IdToNoteTest(CurrentIdNote);
             (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
-                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
+                Settings.Keys[CurrentIdNote].HitTime);
         }
 
         private void ButtonMoreTime_Click(object sender, RoutedEventArgs e)
         {
             Note n;
-            (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime = Truncate((DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime + 0.1);
-            TextBlockHitTime.Text = (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime.ToString();
+            Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime + 0.1);
+            TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
             n = IdToNoteTest(CurrentIdNote);
             (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
-                (DataContext as SettingsViewModel).Settings.Keys[CurrentIdNote].HitTime);
+                Settings.Keys[CurrentIdNote].HitTime);
         }
 
         private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
@@ -98,6 +101,15 @@ namespace Framework
         private void ButtonMute_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as SettingsViewModel).Sequencer.Mute();
+        }
+
+        private void ButtonShutDown_Click(object sender, RoutedEventArgs e)
+        {
+            WindowMessageBoxConfirmation w = new WindowMessageBoxConfirmation();
+            w.Text = "Voulez-vous vraiment fermer l'application et éteindre le Virtuoso?";
+            w.Width = 400;
+            if (w.Execute() == true)
+                System.Diagnostics.Process.Start("ShutDown", "/s");
         }
     }
 }

@@ -61,5 +61,14 @@ namespace Framework
                 ListBoxPlaylist.Refresh();
             }
         }
+
+        private void ButtonClear_Click(object sender, RoutedEventArgs e)
+        {
+            WindowMessageBoxConfirmation w = new WindowMessageBoxConfirmation();
+            w.Text = "Voulez-vous vraiment supprimer toute la liste de lecture?";
+            w.Width = 400;
+            if (w.Execute() == true)
+                ((CurrentPlaylistViewModel)DataContext).Playlist.ClearPartitions();
+        }
     }
 }
