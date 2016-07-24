@@ -4,12 +4,8 @@ using Concept.Utils.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace Framework
 {
@@ -159,33 +155,35 @@ namespace Framework
             while (_actionsThread != ActionsThread.Terminate)
             {
                 Thread.Sleep(10);
-                switch (_actionsThread)
-                {
-                    case ActionsThread.PlayPlaylist:
 
-                        PlayPlaylist();
-                        _actionsThread = ActionsThread.Nothing;
-                        _stop = false; //reset le stop au cas ou la fonction s'est termninée avec un stop
-                        break;
-                    case ActionsThread.PlayOneNote:
-                        _actionsThread = ActionsThread.Nothing;
+                if (Xylobot.IsInit)
+                    switch (_actionsThread)
+                    {
+                        case ActionsThread.PlayPlaylist:
 
-                        List<Note> note = new List<Note>();
-                        note.Add(_noteToPlay);
-                        Xylobot.Stop(); //Vide le buffer de l'arduino
-                        Xylobot.SendNotes(note);    //Charge la note dans le buffer
-                        Xylobot.Start();    //Lance la lecture du buffer
-                        break;
-                    case ActionsThread.ChangeKeyHitTime:
-                        _actionsThread = ActionsThread.Nothing;
+                            PlayPlaylist();
+                            _actionsThread = ActionsThread.Nothing;
+                            _stop = false; //reset le stop au cas ou la fonction s'est termninée avec un stop
+                            break;
+                        case ActionsThread.PlayOneNote:
+                            _actionsThread = ActionsThread.Nothing;
 
-                        Xylobot.Stop();
-                        Xylobot.SendKeyHitTime(_indexKey, _keyHitTime);
-                        _actionsThread = ActionsThread.PlayOneNote;
-                        break;
-                    default:
-                        break;
-                }
+                            List<Note> note = new List<Note>();
+                            note.Add(_noteToPlay);
+                            Xylobot.Stop(); //Vide le buffer de l'arduino
+                            Xylobot.SendNotes(note);    //Charge la note dans le buffer
+                            Xylobot.Start();    //Lance la lecture du buffer
+                            break;
+                        case ActionsThread.ChangeKeyHitTime:
+                            _actionsThread = ActionsThread.Nothing;
+
+                            Xylobot.Stop();
+                            Xylobot.SendKeyHitTime(_indexKey, _keyHitTime);
+                            _actionsThread = ActionsThread.PlayOneNote;
+                            break;
+                        default:
+                            break;
+                    }
             }
         }
 
@@ -197,7 +195,7 @@ namespace Framework
                     Errors.Add("Init USB failed.")));
             else
                 for (int i = 0; i < Xylobot.numberKeysXylophone; i++)
-                    Xylobot.SendKeyHitTime(i, FrameworkController.Instance.Settings.Keys[i].HitTime);
+                    Xylobot.SendKeyHitTime(i, FrameworkController.Instance.Settings.Keys[i].HitTime); //TODO : à voir
         }
 
         private void PlayPartition(PartitionXylo partition)

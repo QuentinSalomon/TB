@@ -2,6 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Framework">
 
+
+    <Style TargetType="{x:Type ListBox}">
+        <Setter Property="AlternationCount" Value="2"/>
+    </Style>
+
     <Style TargetType="{x:Type ListBoxItem}">
         <Style.Triggers>
             <Trigger Property="ItemsControl.AlternationIndex" Value="0">

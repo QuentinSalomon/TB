@@ -2,13 +2,7 @@
 using Concept.Model;
 using Concept.Utils;
 using Concept.Utils.Wpf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows;
 
 namespace Framework
 {
@@ -51,6 +45,16 @@ namespace Framework
             if (!existInPlaylist)
                 Partitions.Add(partition);
             return !existInPlaylist;
+        }
+
+        public void RemovePartitionAt(int index)
+        {
+            Partitions.RemoveAt(index);
+        }
+
+        public void RemovePartition(PartitionXylo partition)
+        {
+            Partitions.Remove(partition);
         }
 
         public void ClearPartitions()

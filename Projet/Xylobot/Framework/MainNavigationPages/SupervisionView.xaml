@@ -20,22 +20,6 @@
         <local:UserControlProgressBarMusic DataContext="{Binding Path=Sequencer.PartitionProgress}" Grid.Row="1"/>
 
         <local:UserControlMusicManager Grid.Row="2" DataContext="{Binding Path=Sequencer}" />
-       
-        <!--<StackPanel Grid.Row="3" Orientation="Horizontal" FlowDirection="RightToLeft">
-            <Button x:Name="ButtonMoreSpeed" Width="70" Height="70" Background="{DynamicResource ColorsVirtuosoGreen}" Style="{DynamicResource ButtonStyle}" Click="ButtonMoreSpeed_Click" VerticalAlignment="Bottom">
-                <Image Source="/Framework;component/Images/Up32x32.png" Width="32"/>
-            </Button>
-            <Border BorderBrush="{x:Null}" Background="Gray" Height="70" VerticalAlignment="Bottom">
-                <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
-                    <TextBlock Text="Speed : " Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="TextBlockSpeed" Text="1.0" Width="30" Style="{DynamicResource TextBlockNormalStyle}" Foreground="Aqua" VerticalAlignment="Center"/>
-                    <TextBlock TextWrapping="Wrap" Text="x" Style="{DynamicResource TextBlockNormalStyle}" Foreground="Aqua" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                </StackPanel>
-            </Border>
-            <Button x:Name="ButtonLessSpeed" Width="70" Height="70" Background="{DynamicResource ColorsVirtuosoOrange}" Style="{DynamicResource ButtonStyle}" Click="ButtonLessSpeed_Click" VerticalAlignment="Bottom">
-                <Image Source="/Framework;component/Images/Down32x32.png" Width="32"/>
-            </Button>
-        </StackPanel>-->
 
         <Grid Grid.Row="3" Margin="0,10,0,0">
             <Grid.ColumnDefinitions>

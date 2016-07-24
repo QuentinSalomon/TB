@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Framework"
         mc:Ignorable="d"
-        Title="WindowMessageBoxAutoClosed" SizeToContent="WidthAndHeight" BorderBrush="Black" BorderThickness="2" Background="Gray"
+        Title="WindowMessageBoxAutoClosed" SizeToContent="WidthAndHeight" Background="{DynamicResource ColorsVirtuosoBlue}"
         ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -20,11 +20,11 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="1">
             <Button x:Name="ButtonCancel" Style="{DynamicResource ButtonStyle}" 
-                    Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Click="ButtonCancel_Click" Margin="5">
+                    Background="{DynamicResource ColorsVirtuosoDarkBlue}" Click="ButtonCancel_Click" Margin="5">
                 <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Cancel" Margin="5"/>
             </Button>
             <Button x:Name="ButtonYes" Style="{DynamicResource ButtonStyle}" 
-                    Background="{DynamicResource ColorsVirtuosoGreen}" Click="ButtonYes_Click" Margin="5">
+                    Background="{DynamicResource ColorsVirtuosoDarkBlue}" Click="ButtonYes_Click" Margin="5" BorderBrush="White" BorderThickness="2">
                 <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Yes" Margin="5"/>
             </Button>
         </StackPanel>

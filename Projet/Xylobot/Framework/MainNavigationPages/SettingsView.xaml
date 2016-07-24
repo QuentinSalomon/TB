@@ -13,28 +13,28 @@
             <RowDefinition Height="32"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{DynamicResource ColorsVirtuosoGreen}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <concept:StringEditor Title="Default load path" Value="{Binding Path=Settings.DefaultPathLoadFile}" FontFamily="Segoe UI Light" FontSize="34" Foreground="White"/>
-            <Button Content="..." Command="{Binding Path=Settings.CommandPathLoadFile}" Width="32" Height="32" Grid.Column="1"/>
+            <concept:StringEditor Title="Default load path" Value="{Binding Path=Settings.DefaultPathLoadFile}" FontFamily="Segoe UI Light" FontSize="34" 
+                                  Foreground="White"/>
+            <Button x:Name="ButtonSelectFolder" Content="..." Command="{Binding Path=Settings.CommandPathLoadFile}" Style="{DynamicResource ButtonStyle}" 
+                    Background="Gray" Width="{Binding ElementName=ButtonSelectFolder, Path=ActualHeight}" Grid.Column="1" 
+                    FontFamily="Segoe UI Light" FontSize="34" Foreground="White"/>
         </Grid>
 
-        <Border Grid.Row="2" Background="{DynamicResource ColorsVirtuosoGreen}">
-            <TextBlock x:Name="TextBlockKeyTitle" Style="{DynamicResource TextBlockTitleStyle}" Text="DO 5" VerticalAlignment="Center"/>
+        <Border Grid.Row="2" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,0,5">
+            <TextBlock x:Name="TextBlockKeyTitle" Style="{DynamicResource TextBlockTitleStyle}" Text="DO 5" VerticalAlignment="Center" Margin="5,0,0,0"/>
         </Border>
-        <Grid Grid.Row="3" >
+        <Grid Grid.Row="3" Height="45">
             <StackPanel Orientation="Horizontal">
                 <Border Background="Gray">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                         <TextBlock TextWrapping="Wrap" Text="Hit time : " Style="{DynamicResource TextBlockTitleStyle}" VerticalAlignment="Center"/>
                         <TextBlock x:Name="TextBlockHitTime" TextWrapping="Wrap" Text="10.5" Width="60" Style="{DynamicResource TextBlockTitleStyle}" Foreground="Aqua" VerticalAlignment="Center"/>
                         <TextBlock TextWrapping="Wrap" Text="ms" Style="{DynamicResource TextBlockTitleStyle}" Foreground="Aqua" VerticalAlignment="Center"/>
@@ -61,17 +61,17 @@
             <Image Source="/Framework;component/Images/Mute32x32.png"/>
         </Button>
 
-        <Button x:Name="ButtonShutDown" Grid.Row="8" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonShutDown_Click" Margin="5">
+        <Button x:Name="ButtonShutDown" Grid.Row="5" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonShutDown_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Ellipse Stroke="Black" StrokeThickness="2" Fill="{DynamicResource ColorsVirtuosoRed}"/>
+                        <Ellipse Stroke="Black" StrokeThickness="0" Fill="{DynamicResource ColorsVirtuosoRed}"/>
                         <ContentPresenter HorizontalAlignment="Center"
                                   VerticalAlignment="Center"/>
                     </Grid>
                 </ControlTemplate>
             </Button.Template>
-            <Image Source="/Framework;component/Images/PowerOff64x64.png" Margin="5,5,5,10"/>
+            <Image Source="/Framework;component/Images/PowerOff64x64.png" Margin="10,10,10,20"/>
         </Button>
     </Grid>
 </UserControl>

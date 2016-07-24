@@ -3,27 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:concept="http://www.objectis.ch/concept"
         xmlns:local="clr-namespace:Framework"
-        Title="Virtuoso" >
-    <!--Icon="/Framework;component/Images/Xylophone64x64.png" WindowStyle="None" ResizeMode="NoResize"  
+        Title="Virtuoso">
+    <!--WindowStyle="None" ResizeMode="NoResize"  
         WindowStartupLocation="CenterScreen" WindowState="Maximized" BorderThickness="0">-->
-    <Viewbox>
-    <Grid Width="768" Height="1366">
+
+    <Grid>
         <concept:NavigationControl NavigationBarDock="Top" Background="#FFF0F0F0" Transition="Fade">
             <local:HomeView concept:NavigationControl.MenuTitle="Home"
-                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/Home32x32.png"/>
+                            concept:NavigationControl.MenuImageSource="/Framework;component/Images/Home32x32.png"/>
             <local:SupervisionView concept:NavigationControl.MenuTitle="Supervision" 
-                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/Supervision32x32.png"
-                                DataContext="{Binding Path=SupervisionViewModel}"/>
+                            concept:NavigationControl.MenuImageSource="/Framework;component/Images/Supervision32x32.png"
+                            DataContext="{Binding Path=SupervisionViewModel}"/>
             <local:CurrentPlaylistView concept:NavigationControl.MenuTitle="Current Playlist"
-                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/CurrentPlay64x32.png"
-                                DataContext="{Binding Path=CurrentPlaylistViewModel}"/>
+                            concept:NavigationControl.MenuImageSource="/Framework;component/Images/CurrentPlay64x32.png"
+                            DataContext="{Binding Path=CurrentPlaylistViewModel}"/>
             <local:EditPlaylistView concept:NavigationControl.MenuTitle="Playlist" 
-                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/Playlist32x32.png"
-                                DataContext="{Binding Path=EditPlaylistViewModel}"/>
+                            concept:NavigationControl.MenuImageSource="/Framework;component/Images/Playlist32x32.png"
+                            DataContext="{Binding Path=EditPlaylistViewModel}"/>
             <local:SettingsView concept:NavigationControl.MenuTitle="Settings" 
-                                concept:NavigationControl.MenuImageSource="/Framework;component/Images/Settings32x32.png"
-                                DataContext="{Binding Path=SettingsViewModel}"/>
+                            concept:NavigationControl.MenuImageSource="/Framework;component/Images/Settings32x32.png"
+                            DataContext="{Binding Path=SettingsViewModel}"/>
         </concept:NavigationControl>
     </Grid>
-    </Viewbox>
 </Window>

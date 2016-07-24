@@ -19,11 +19,11 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Image Grid.ColumnSpan="2" Source="/Framework;component/Images/Xylophone.jpg"  Height="{Binding ElementName=Grid, Path=ActualHeight}">
+        <Image Grid.ColumnSpan="2" Source="/Framework;component/Images/Xylophone2.jpg"  Height="{Binding ElementName=Grid, Path=ActualHeight}">
         </Image>
 
         <local:UserControlHome x:Name="UserControlHomeHeig" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" 
-                               Text="Art &amp; technologie" Source="/Framework;component/Images/LogoHeig128x128.png" Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" 
+                               Text="Art &amp; technologie" Source="/Framework;component/Images/HeigVd.jpg" Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" 
                                MouseLeftButtonDown="UserControlHomeHeig_MouseLeftButtonDown"/>
         <local:UserControlHome x:Name="UserControlHomeConcept" Background="{DynamicResource ColorsVirtuosoOrange}" 
                                Text="Concept Hmi" Source="/Framework;component/Images/Concept128x128.png" Grid.Row="1" Grid.Column="1" Margin="5,5,0,5" 
