@@ -25,7 +25,8 @@ namespace Framework
                 Note n;
                 n = IdToNoteTest(CurrentIdNote);
                 TextBlockKeyTitle.Text = "Note : " + n.HighString + "   \tOctave : " + n.Octave;
-                Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime);
+                //Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime);
+                Settings.ChangeKey(CurrentIdNote, Truncate(Settings.Keys[CurrentIdNote].HitTime));
                 TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
             }
         }
@@ -40,7 +41,8 @@ namespace Framework
         private void ButtonLessTime_Click(object sender, RoutedEventArgs e)
         {
             Note n;
-            Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime - 0.1);
+            //Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime - 0.1);
+            Settings.ChangeKey(CurrentIdNote, Truncate(Settings.Keys[CurrentIdNote].HitTime - 0.1));
             TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
             n = IdToNoteTest(CurrentIdNote);
             (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
@@ -50,7 +52,8 @@ namespace Framework
         private void ButtonMoreTime_Click(object sender, RoutedEventArgs e)
         {
             Note n;
-            Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime + 0.1);
+            //Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime + 0.1);
+            Settings.ChangeKey(CurrentIdNote, Truncate(Settings.Keys[CurrentIdNote].HitTime + 0.1));
             TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
             n = IdToNoteTest(CurrentIdNote);
             (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
@@ -98,7 +101,16 @@ namespace Framework
             w.Text = "Voulez-vous vraiment fermer l'application et éteindre le Virtuoso?";
             w.Width = 400;
             if (w.Execute() == true)
-                System.Diagnostics.Process.Start("ShutDown", "/s");
+            {
+                System.Diagnostics.Process.Start("ShutDown", "/p");
+                FrameworkController.Instance.Unload();
+            }
+        }
+
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+                UserControlCodeSettings.Reset();
         }
     }
 }

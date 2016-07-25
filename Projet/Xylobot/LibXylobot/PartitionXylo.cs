@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 namespace Common
 {
     [IntlConceptName("Common.PartitionXylo.Name", "PartitionXylo")]
-    [ConceptSmallImage(typeof(PartitionXylo), "/Images/Partition32x32.png")]
-    [ConceptLargeImage(typeof(PartitionXylo), "/Images/Partition64x64.png")]
     public class PartitionXylo : ConceptComponent
     {
         #region Constructeur

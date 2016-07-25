@@ -142,6 +142,9 @@
     <Compile Include="MessageBoxs\WindowMessageBoxConfirmation.xaml.cs">
       <DependentUpon>WindowMessageBoxConfirmation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings\UserControlCodeSettings.xaml.cs">
+      <DependentUpon>UserControlCodeSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Supervision\Sequencer.cs" />
     <Compile Include="Supervision\UserControlMusicManager.xaml.cs">
       <DependentUpon>UserControlMusicManager.xaml</DependentUpon>
@@ -232,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MessageBoxs\WindowMessageBoxConfirmation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings\UserControlCodeSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

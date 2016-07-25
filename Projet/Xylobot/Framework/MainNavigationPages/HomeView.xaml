@@ -23,7 +23,7 @@
         </Image>
 
         <local:UserControlHome x:Name="UserControlHomeHeig" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" 
-                               Text="Art &amp; technologie" Source="/Framework;component/Images/HeigVd.jpg" Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" 
+                               Text="Art &amp; technologie" Source="/Framework;component/Images/LogoHeig128x128.png" Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" 
                                MouseLeftButtonDown="UserControlHomeHeig_MouseLeftButtonDown"/>
         <local:UserControlHome x:Name="UserControlHomeConcept" Background="{DynamicResource ColorsVirtuosoOrange}" 
                                Text="Concept Hmi" Source="/Framework;component/Images/Concept128x128.png" Grid.Row="1" Grid.Column="1" Margin="5,5,0,5" 
@@ -43,8 +43,8 @@
                                Text="Wifi" Source="/Framework;component/Images/Wifi128x128.png" Grid.Row="3" Grid.Column="1" Margin="5,5,0,5" 
                                MouseLeftButtonDown="UserControlHomeWifi_MouseLeftButtonDown"/>
 
-        <Border Background="{DynamicResource ColorsVirtuosoDarkBlue}" Grid.Row="5" Grid.ColumnSpan="2" Margin="5">
-            <TextBlock Text="Travail de bachelor Quentin Salomon 2016" Style="{DynamicResource TextBlockNormalStyle}" HorizontalAlignment="Right"/>
+        <Border Background="{DynamicResource ColorsVirtuosoDarkBlue}" Grid.Row="5" Grid.ColumnSpan="2" Margin="0,5">
+            <TextBlock Text="Travail de bachelor Quentin Salomon" Style="{DynamicResource TextBlockNormalStyle}" HorizontalAlignment="Right" Padding="0,0,10,0"/>
         </Border>
     </Grid>
 </UserControl>

@@ -123,6 +123,26 @@ namespace Framework
             render.Color = "33cc33";
             render.ValMin = 0;
             render.ValMax = 1;
+
+            WebMaterialStringRefreshRender render2;
+
+            render2 = Find(nameof(VirutosoWebController.PartitionTitle)) as WebMaterialStringRefreshRender;
+            render2.Title = "Partition courante";
+
+            WebMaterialShowListRender render3;
+
+            render3 = Find(nameof(VirutosoWebController.Partitions)) as WebMaterialShowListRender;
+            render3.Title = "Liste de lecture";
+
+            WebMaterialSelectListRender render4;
+
+            render4 = Find(nameof(VirutosoWebController.Catalogue)) as WebMaterialSelectListRender;
+            render4.Title = "Catalogue des partitions";
+
+            WebMaterialVoidRender render5;
+
+            render5 = Find(nameof(VirutosoWebController.DoRequest)) as WebMaterialVoidRender;
+            render5.Title = "Demande d'ajout";
         }
     }
 }

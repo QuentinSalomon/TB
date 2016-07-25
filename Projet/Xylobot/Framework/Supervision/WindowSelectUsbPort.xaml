@@ -22,7 +22,11 @@
         
         <ListBox x:Name="ListBoxPortName" Grid.ColumnSpan="3" Grid.Row="1" Background="Gray" SelectionChanged="ListBoxPortName_SelectionChanged"/>
 
-        <Button Content="Cancel" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoOrange}" Grid.Row="2" Grid.Column="2" Click="ButtonCancel_Click" IsCancel="True"/>
-        <Button x:Name="ButtonOk" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Content="Ok" IsEnabled="False" Grid.Row="2" Grid.Column="1" Click="ButtonOk_Click"/>
+        <Button Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoOrange}" Grid.Row="2" Grid.Column="2" Click="ButtonCancel_Click" IsCancel="True">
+            <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Cancel" Margin="5"/>
+        </Button>
+        <Button x:Name="ButtonOk" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" IsEnabled="False" Grid.Row="2" Grid.Column="1" Click="ButtonOk_Click">
+            <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Ok" Margin="5"/>
+        </Button>
     </Grid>
 </Window>

@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:concept="http://www.objectis.ch/concept"
         xmlns:local="clr-namespace:Framework"
-        Title="Virtuoso">
-    <!--WindowStyle="None" ResizeMode="NoResize"  
-        WindowStartupLocation="CenterScreen" WindowState="Maximized" BorderThickness="0">-->
+        Title="Virtuoso"
+    WindowStyle="None" ResizeMode="NoResize"  
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" BorderThickness="0">
 
     <Grid>
         <concept:NavigationControl NavigationBarDock="Top" Background="#FFF0F0F0" Transition="Fade">

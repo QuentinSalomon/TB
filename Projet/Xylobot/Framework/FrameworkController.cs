@@ -23,7 +23,7 @@ namespace Framework
 
         public void Load()
         {
-            Playlist = new Playlist() { Title = "Playlist Principal" };
+            Playlist = new Playlist() { Title = "Liste de lecture" };
             Settings = new Settings();
             Sequencer = new Sequencer();
             Sequencer.Playlist = Playlist;

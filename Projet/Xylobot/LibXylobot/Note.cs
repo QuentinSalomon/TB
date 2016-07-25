@@ -21,8 +21,6 @@ namespace Common
     //}
 
     [IntlConceptName("Common.Note.Name", "NotesMidi")]
-    [ConceptSmallImage(typeof(Note), "/Images/Note32x32.png")]
-    [ConceptLargeImage(typeof(Note), "/Images/Note64x64.png")]
     public class Note : ConceptComponent
     {
 

@@ -69,7 +69,7 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
                         <Image Source="/Framework;component/Images/Back32x32.png" Width="32"/>
                     </StackPanel>
-                    <TextBlock Text="Back" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
+                    <TextBlock Text="Retour" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
                 </Grid>
             </Button>
 
@@ -78,7 +78,7 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
                         <Image Source="/Framework;component/Images/Import32x32.png" Width="32"/>
                     </StackPanel>
-                    <TextBlock Text="Load to play" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
+                    <TextBlock Text="Charger" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
                 </Grid>
             </Button>
         </Grid>

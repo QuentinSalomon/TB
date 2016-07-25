@@ -6,72 +6,78 @@
              xmlns:concept="http://www.objectis.ch/concept"
              xmlns:local="clr-namespace:Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500" Loaded="UserControl_Loaded">
-    <Grid Margin="7">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="120"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="{DynamicResource ColorsVirtuosoGreen}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <concept:StringEditor Title="Default load path" Value="{Binding Path=Settings.DefaultPathLoadFile}" FontFamily="Segoe UI Light" FontSize="34" 
-                                  Foreground="White"/>
-            <Button x:Name="ButtonSelectFolder" Content="..." Command="{Binding Path=Settings.CommandPathLoadFile}" Style="{DynamicResource ButtonStyle}" 
-                    Background="Gray" Width="{Binding ElementName=ButtonSelectFolder, Path=ActualHeight}" Grid.Column="1" 
-                    FontFamily="Segoe UI Light" FontSize="34" Foreground="White"/>
-        </Grid>
-
-        <Border Grid.Row="2" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,0,5">
-            <TextBlock x:Name="TextBlockKeyTitle" Style="{DynamicResource TextBlockTitleStyle}" Text="DO 5" VerticalAlignment="Center" Margin="5,0,0,0"/>
-        </Border>
-        <Grid Grid.Row="3" Height="45">
-            <StackPanel Orientation="Horizontal">
-                <Border Background="Gray">
-                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                        <TextBlock TextWrapping="Wrap" Text="Hit time : " Style="{DynamicResource TextBlockTitleStyle}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="TextBlockHitTime" TextWrapping="Wrap" Text="10.5" Width="60" Style="{DynamicResource TextBlockTitleStyle}" Foreground="Aqua" VerticalAlignment="Center"/>
-                        <TextBlock TextWrapping="Wrap" Text="ms" Style="{DynamicResource TextBlockTitleStyle}" Foreground="Aqua" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-                <Button x:Name="ButtonLessTime" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoOrange}" Click="ButtonLessTime_Click">
-                    <Image Source="/Framework;component/Images/Down32x32.png" Margin="5"/>
-                </Button>
-                <Button x:Name="ButtonMoreTime" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}"  Click="ButtonMoreTime_Click">
-                    <Image Source="/Framework;component/Images/Up32x32.png" Margin="5"/>
-                </Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="ButtonPrevious" HorizontalAlignment="Right" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Click="ButtonPrevious_Click">
-                    <Image Source="/Framework;component/Images/Previous32x32.png" Margin="5"/>
-                </Button>
-                <Button x:Name="ButtonNext" HorizontalAlignment="Right" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Click="ButtonNext_Click" Margin="5,0,0,0">
-                    <Image Source="/Framework;component/Images/Next32x32.png" Margin="5"/>
-                </Button>
-            </StackPanel>
-        </Grid>
+             d:DesignHeight="300" d:DesignWidth="500" Loaded="UserControl_Loaded" IsVisibleChanged="UserControl_IsVisibleChanged">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <local:UserControlCodeSettings x:Name="UserControlCodeSettings" Height="{Binding ElementName=UserControlCodeSettings, Path=ActualWidth}"/>
+        <Grid x:Name="GridSettings" Margin="7" Visibility="{Binding ElementName=UserControlCodeSettings, Path=PasswordRight, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="120"/>
+            </Grid.RowDefinitions>
         
-        <Button x:Name="ButtonMute" Grid.Row="5" Width="32" Background="Orange" HorizontalAlignment="Right" Margin="0,0,5,0" Visibility="Hidden" Click="ButtonMute_Click">
-            <Image Source="/Framework;component/Images/Mute32x32.png"/>
-        </Button>
+            <Grid Grid.Row="0" Background="{DynamicResource ColorsVirtuosoGreen}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <concept:StringEditor Title="Chemin de recherche" Value="{Binding Path=Settings.DefaultPathLoadFile}" FontFamily="Segoe UI Light" FontSize="34" 
+                                      Foreground="White"/>
+                <Button x:Name="ButtonSelectFolder" Content="..." Command="{Binding Path=Settings.CommandPathLoadFile}" Style="{DynamicResource ButtonStyle}" 
+                        Background="Gray" Width="{Binding ElementName=ButtonSelectFolder, Path=ActualHeight}" Grid.Column="1" 
+                        FontFamily="Segoe UI Light" FontSize="34" Foreground="White"/>
+            </Grid>
 
-        <Button x:Name="ButtonShutDown" Grid.Row="5" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonShutDown_Click">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Grid>
-                        <Ellipse Stroke="Black" StrokeThickness="0" Fill="{DynamicResource ColorsVirtuosoRed}"/>
-                        <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
-                    </Grid>
-                </ControlTemplate>
-            </Button.Template>
-            <Image Source="/Framework;component/Images/PowerOff64x64.png" Margin="10,10,10,20"/>
-        </Button>
+            <Border Grid.Row="2" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,0,5">
+                <TextBlock x:Name="TextBlockKeyTitle" Style="{DynamicResource TextBlockTitleStyle}" Text="DO 5" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            </Border>
+            <Grid Grid.Row="3" Height="55">
+                <StackPanel Orientation="Horizontal">
+                    <Border Background="Gray">
+                        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                            <TextBlock TextWrapping="Wrap" Text="Temps de frappe : " Style="{DynamicResource TextBlockTitleStyle}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TextBlockHitTime" TextWrapping="Wrap" Text="10.5" Width="60" Style="{DynamicResource TextBlockTitleStyle}" Foreground="Aqua" VerticalAlignment="Center"/>
+                            <TextBlock TextWrapping="Wrap" Text="ms" Style="{DynamicResource TextBlockTitleStyle}" Foreground="Aqua" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Button x:Name="ButtonLessTime" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoOrange}" Click="ButtonLessTime_Click">
+                        <Image Source="/Framework;component/Images/Down32x32.png" Margin="5"/>
+                    </Button>
+                    <Button x:Name="ButtonMoreTime" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}"  Click="ButtonMoreTime_Click">
+                        <Image Source="/Framework;component/Images/Up32x32.png" Margin="5"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="ButtonPrevious" HorizontalAlignment="Right" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Click="ButtonPrevious_Click">
+                        <Image Source="/Framework;component/Images/Previous32x32.png" Margin="5"/>
+                    </Button>
+                    <Button x:Name="ButtonNext" HorizontalAlignment="Right" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Click="ButtonNext_Click" Margin="5,0,0,0">
+                        <Image Source="/Framework;component/Images/Next32x32.png" Margin="5"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        
+            <Button x:Name="ButtonMute" Grid.Row="5" Width="32" Background="Orange" HorizontalAlignment="Right" Margin="0,0,5,0" Visibility="Hidden" Click="ButtonMute_Click">
+                <Image Source="/Framework;component/Images/Mute32x32.png"/>
+            </Button>
+
+            <Button x:Name="ButtonShutDown" Grid.Row="5" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonShutDown_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Stroke="Black" StrokeThickness="0" Fill="{DynamicResource ColorsVirtuosoRed}"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+                <Image Source="/Framework;component/Images/PowerOff64x64.png" Margin="10,10,10,20"/>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

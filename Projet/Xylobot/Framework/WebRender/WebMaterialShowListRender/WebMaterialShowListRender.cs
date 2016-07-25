@@ -17,7 +17,7 @@ namespace Framework
             using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.WebMaterialShowListRender.Files.MaterialList.html")))
             {
                 string tmp = file.ReadToEnd();
-                tmp = tmp.Replace("<%title%>", PropDescription.PropertyInfo.Name);
+                tmp = tmp.Replace("<%title%>", Title);
                 tmp = tmp.Replace("<%id%>", PropDescription.PropertyInfo.Name);
                 //tmp = tmp.Replace("<%value%>", _item.PropertyInfo.GetValue(Model).ToString());
                 pagebuilder.ApendHtml(tmp);
@@ -47,5 +47,7 @@ namespace Framework
             pagebuilder.RegisterProperty(PropDescription.PropertyInfo.Name, id.ToString(), location);
             pagebuilder.RegisterSubscription(PropDescription.PropertyInfo.Name, SubsciptionCallBackMethode, location);
         }
+
+        public string Title { get; set; }
     }
 }

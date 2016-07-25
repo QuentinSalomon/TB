@@ -52,7 +52,7 @@
         <TextBlock Text="{Binding Path=Playlist.Title}" Style="{DynamicResource TextBlockTitleStyle}" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,0,5" Padding="5,0,0,0"/>
 
         <ListBox Name="ListBoxPlaylist" SelectionMode="Single" Grid.Row="1" ItemsSource="{Binding Playlist.Partitions}" 
-                 ItemTemplate="{StaticResource DataTemplateListBox}" HorizontalContentAlignment="Stretch"  Background="White"/>
+                 ItemTemplate="{StaticResource DataTemplateListBox}" HorizontalContentAlignment="Stretch"  Background="White" />
         
         <local:UserControlProgressBarMusic DataContext="{Binding Path=Sequencer.PartitionProgress}" Grid.Row="2"/>
 
@@ -69,7 +69,7 @@
                         <Image Source="/Framework;component/Images/Clear32x32.png" Width="32"/>
                         <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
                     </StackPanel>
-                    <TextBlock x:Name="TextBlock1" Text="Clear" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
+                    <TextBlock x:Name="TextBlock1" Text="Effacer" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
                 </Grid>
             </Button>
 
@@ -79,7 +79,7 @@
                         <Image Source="/Framework;component/Images/Remove32x32.png" Width="32"/>
                         <Image Source="/Framework;component/Images/Partition32x32.png" Width="32"/>
                     </StackPanel>
-                    <TextBlock Text="Remove" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
+                    <TextBlock Text="Enlever" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"/>
                 </Grid>
             </Button>
         </Grid>

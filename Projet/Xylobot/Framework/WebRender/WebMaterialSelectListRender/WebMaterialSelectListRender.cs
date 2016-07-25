@@ -17,7 +17,7 @@ namespace Framework
             using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.WebMaterialSelectListRender.Files.MaterialListSelect.html")))
             {
                 string tmp = file.ReadToEnd();
-                tmp = tmp.Replace("<%title%>", PropDescription.PropertyInfo.Name);
+                tmp = tmp.Replace("<%title%>", Title);
                 tmp = tmp.Replace("<%id%>", PropDescription.PropertyInfo.Name);
                 pagebuilder.ApendHtml(tmp);
             }
@@ -32,7 +32,7 @@ namespace Framework
             using (StreamReader file = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("Framework.WebRender.WebMaterialSelectListRender.Files.MaterialListSelect.js")))
             {
                 string tmp = file.ReadToEnd();
-                tmp = tmp.Replace("<%id%>", PropDescription.PropertyInfo.Name);
+                tmp = tmp.Replace("<%id%>", Title);
                 tmp = tmp.Replace("<%path%>", location + "/" + PropDescription.PropertyInfo.Name);
                 string tmpVal = (Model as VirutosoWebController).Catalogue.Replace("££", "\",\"");
                 tmp = tmp.Replace("<%values%>", "\"" + tmpVal + "\"");
@@ -47,5 +47,7 @@ namespace Framework
             //pagebuilder.RegisterProperty(PropDescription.PropertyInfo.Name, id.ToString(), location);
             pagebuilder.RegisterSubscription(PropDescription.PropertyInfo.Name, SubsciptionCallBackMethode, location);
         }
+
+        public string Title { get; set; }
     }
 }

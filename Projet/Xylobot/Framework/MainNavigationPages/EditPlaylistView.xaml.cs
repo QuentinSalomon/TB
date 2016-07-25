@@ -118,9 +118,9 @@ namespace Framework
                     w.TypeWindow = TypeWindow.Information;
 
                     if (((EditPlaylistViewModel)DataContext).Playlist.AddPartition(p))
-                        w.Text = "Partition added to play";
+                        w.Text = "Partition ajoutée à la liste de lecture";
                     else
-                        w.Text = "Partition is already added to play";
+                        w.Text = "Partition déjà présente dans la liste de lecture";
 
                     w.Show();
                 }

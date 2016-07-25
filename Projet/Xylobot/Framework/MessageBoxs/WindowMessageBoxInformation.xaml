@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="WindowMessageBoxAutoClosed" SizeToContent="WidthAndHeight" BorderBrush="Black" BorderThickness="2" MouseLeftButtonDown="Window_MouseLeftButtonDown"
         ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen">
-    <StackPanel Orientation="Horizontal" Margin="5" Height="auto" Width="300">
-        <Image x:Name="Image" Height="32" Width="32" VerticalAlignment="Top" Margin="5" Source="/Framework;component/Images/Home32x32.png"/>
-        <TextBlock x:Name="TextBlock" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" Margin="10,0,0,0" Width="248">
+    <StackPanel Orientation="Horizontal" Margin="15" Height="auto" Width="300">
+        <Image x:Name="Image" Height="64" Width="64" VerticalAlignment="Top" Margin="5" Source="/Framework;component/Images/Home32x32.png"/>
+        <TextBlock x:Name="TextBlock" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" Margin="10,0,0,0" Width="216">
             <AccessText x:Name="AccessText" TextWrapping="WrapWithOverflow"/>
         </TextBlock>
     </StackPanel>

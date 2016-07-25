@@ -16,12 +16,11 @@
         <DockPanel x:Name="DockPanelButton"
                     HorizontalAlignment="Center" 
                     Background="{DynamicResource ColorsVirtuosoBlue}"
-                    Width="130" Height="100" Margin="5,5">
+                    Width="127.5" Height="128" Margin="5,5">
             <Image Source="{Binding Path=(concept:NavigationControl.MenuImageSource)}"
                         Visibility="{Binding Source, RelativeSource={RelativeSource self}, 
                         Converter={concept:NullableToVisibilityConverter}}"
                         Width="70" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
         </DockPanel>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, 

@@ -7,7 +7,7 @@ namespace Framework
     [IntlConceptName("Framework.Settings.Name", "Settings")]
     [ConceptSmallImage(typeof(Settings), "/Images/Settings32x32.png")]
     [ConceptLargeImage(typeof(Settings), "/Images/Settings64x64.png")]
-    public class Settings :ConceptComponent
+    public class Settings : ConceptComponent
     {
         public Settings()
         {
@@ -33,68 +33,43 @@ namespace Framework
                 {
                     _defaultPathLoadFile = value;
                     DoPropertyChanged(DefaultPathLoadFilePropertyName);
+                    NeedSaved = true;
                 }
             }
         }
         private string _defaultPathLoadFile;
         public const string DefaultPathLoadFilePropertyName = "DefaultPathLoadFile";
 
-        [ConceptSerialized]
-        [ConceptViewVisible]
-        [IntlConceptName("Framework.Settings.PathSaveFile", "PathSaveFile")]
-        public string PathSaveFile
-        {
-            get { return _pathSaveFile; }
-            set
-            {
-                if (_pathSaveFile != value)
-                {
-                    _pathSaveFile = value;
-                    DoPropertyChanged(PathSaveFilePropertyName);
-                }
-            }
-        }
-        private string _pathSaveFile;
-        public const string PathSaveFilePropertyName = "PathSaveFile";
 
         [ConceptSerialized]
         [ConceptAutoCreate]
-        [IntlConceptName("Common.PartitionXylo.Keys", "Keys")]
+        [IntlConceptName("Framework.Settings.Keys", "Keys")]
         public StaticListKey Keys { get; protected set; }
+
+        public void ChangeKey(int index, double hitTime)
+        {
+            Keys[index].HitTime = hitTime;
+            NeedSaved = true;
+        }
+
+        public bool NeedSaved
+        {
+            get { return _needSaved; }
+            set
+            {
+                if (_needSaved != value)
+                {
+                    _needSaved = value;
+                    DoPropertyChanged(NeedSavedPropertyName);
+                }
+            }
+        }
+        private bool _needSaved;
+        public const string NeedSavedPropertyName = "NeedSaved";
 
         #endregion
 
         #region WPF command
-
-        public WpfCommand CommandPathSaveFile
-        {
-            get
-            {
-                if (_commandPathSaveFile == null)
-                {
-                    _commandPathSaveFile = new WpfCommand();
-                    _commandPathSaveFile.Executed += (sender, e) =>
-                    {
-                        System.Windows.Forms.FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
-                        // Do not allow the user to create new files via the FolderBrowserDialog.
-                        dlg.ShowNewFolderButton = false;
-                        
-                        dlg.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-                        if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        {
-                            PathSaveFile = dlg.SelectedPath;
-                        }
-                    };
-
-                    _commandPathSaveFile.CanExecuteChecking += (sender, e) =>
-                    {
-                        e.CanExecute = true;
-                    };
-                }
-                return _commandPathSaveFile;
-            }
-        }
-        private WpfCommand _commandPathSaveFile;
 
         public WpfCommand CommandPathLoadFile
         {
@@ -132,8 +107,6 @@ namespace Framework
     }
 
     [IntlConceptName("Framework.Key.Name", "Key")]
-    [ConceptSmallImage(typeof(Key), "/Images/Keys32x32.png")]
-    [ConceptLargeImage(typeof(Key), "/Images/Keys64x64.png")]
     public class Key : ConceptComponent
     {
         public Key()

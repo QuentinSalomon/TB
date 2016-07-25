@@ -70,7 +70,7 @@ void setup() {
   i2cXylo.Init();
 }
 
-void loop() {
+void loop() {  
   /*****I2C*****/
   if(play)
     Push();
@@ -276,6 +276,7 @@ void NotesMsg(uint16_t dataSize)
 void StartMsg(uint16_t dataSize)
 {
   play = true;
+  i2cXylo.GraduateLight(true);
   msgSendType = SendType_Ok;
 }
 void StopMsg(uint16_t dataSize)
@@ -283,6 +284,7 @@ void StopMsg(uint16_t dataSize)
   play=false;
   bufferNotes.Clear();
   currentTick = 0;
+  i2cXylo.GraduateLight(false);
   msgSendType = SendType_Ok;
 }
 void PauseMsg(uint16_t dataSize)
