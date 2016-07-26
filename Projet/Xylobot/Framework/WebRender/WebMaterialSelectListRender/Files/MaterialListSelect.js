@@ -2,10 +2,6 @@
 var inputSelected<%id%> = document.getElementById("inputSelected<%id%>");
 var listName<%id%> = [<%values%>];
 
-function ClickLabel(){
-    inputSelected<%id%>.value = innerHTML;
-}
-
 function AddItemSelectable(i){
     <!--Ajoute la valeur à la liste-->
     var new_name = document.createElement("label");
@@ -16,7 +12,6 @@ function AddItemSelectable(i){
         inputSelected<%id%>.value = this.innerHTML;
         server.write("<%path%>", inputSelected<%id%>.value, function(value){});
     }
-    <!--new_name.onClick = ClickLabel;(new_name.innerHTML);-->
     listSelectable<%id%>.appendChild(new_name);
     
     listSelectable<%id%>.appendChild(document.createElement("hr"));

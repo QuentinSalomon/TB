@@ -94,7 +94,8 @@ namespace Framework
                 PartitionXylo p = new PartitionXylo();
                 var messages = new MessageCollection();
 
-                p.LoadFromFile(FrameworkController.Instance.Settings.DefaultPathLoadFile + "\\Catalogue\\" + _selectFileName, PluginClassManager.AllFactories, messages);
+                p.LoadFromFile(FrameworkController.Instance.Settings.DefaultPathLoadFile + "\\Catalogue\\"
+                    + _selectFileName, PluginClassManager.AllFactories, messages);
                 p.Name = _selectFileName.Split('.')[0];
                 if (messages.Count == 0)
                     Application.Current.Dispatcher.Invoke(new Action(() => _principalPlaylist.AddPartition(p)));
