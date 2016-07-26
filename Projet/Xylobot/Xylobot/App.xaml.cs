@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Framework;
 
 namespace Xylobot
 {
@@ -10,7 +11,7 @@ namespace Xylobot
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            Bootstrapper boot = new Bootstrapper();
+            Bootstrapper boot = new Bootstrapper(new SpalshScreen());
             boot.Run();
         }
     }

@@ -9,10 +9,7 @@ using System.Windows;
 
 namespace Framework
 {
-    //[ConceptView(typeof(UserControlSequencer))]
     [IntlConceptName("Framework.Sequencer.Name", "Sequencer")]
-    [ConceptSmallImage(typeof(Playlist), "/Images/Sequencer32x32.png")]
-    [ConceptLargeImage(typeof(Playlist), "/Images/Sequencer64x64.png")]
     public class Sequencer : ConceptComponent
     {
         #region Constructor
@@ -78,23 +75,6 @@ namespace Framework
         private PartitionXylo _currentPartition;
         public const string CurrentPartitionPropertyName = "CurrentPartition";
         
-        [IntlConceptName("Framework.Sequencer.Tempo", "Tempo")]
-        public UInt16 Tempo
-        {
-            get { return _tempo; }
-            set
-            {
-                if (_tempo != value)
-                {
-                    _tempo = value;
-                    DoPropertyChanged(TempoPropertyName);
-                    Xylobot.SendTempo(value);
-                }
-            }
-        }
-        private UInt16 _tempo;
-        public const string TempoPropertyName = "Tempo";
-        
         [IntlConceptName("Framework.Sequencer.SpeedPlay", "SpeedPlay")]
         public double SpeedPlay
         {
@@ -149,7 +129,7 @@ namespace Framework
 
         #region Methods
 
-        public void ManageXylobot()
+        private void ManageXylobot()
         {
             Init();
             while (_actionsThread != ActionsThread.Terminate)
@@ -314,11 +294,6 @@ namespace Framework
             _actionsThread = ActionsThread.ChangeKeyHitTime;
         }
 
-        public void Mute()
-        {
-            _muteChanged = true;
-        }
-
         public void Stop()
         {
             _stop = true;
@@ -349,23 +324,6 @@ namespace Framework
                 _speedPlayChanged = false;
                 Xylobot.SendSpeedFactor(SpeedPlay);
             }
-            if (_tempoChanged)
-            {
-                _tempoChanged = false;
-                Xylobot.SendTempo(Tempo);
-            }
-            //if (_muteChanged)
-            //{
-            //    int i;
-            //    if (!_isMute)
-            //        for (i = 0; i < Xylobot.numberKeysXylophone; i++)
-            //            Xylobot.SendKeyHitTime(i, 3);
-            //    else
-            //        for (i = 0; i < Xylobot.numberKeysXylophone; i++)
-            //            Xylobot.SendKeyHitTime(i, Xylobot.Keys[i].HitTime);
-            //    _muteChanged = false;
-            //    _isMute = !_isMute;
-            //}
         }
 
         private void ActualiseProgress()
@@ -377,86 +335,13 @@ namespace Framework
 
         #endregion
 
-        #region Wpf Commands
-
-        public WpfCommand CommandPlayPlaylist
-        {
-            get
-            {
-                if (_commandPlayPlaylist == null)
-                {
-                    _commandPlayPlaylist = new WpfCommand();
-                    _commandPlayPlaylist.Executed += (sender, e) =>
-                    {
-                        if (_actionsThread == ActionsThread.Nothing)
-                            _actionsThread = ActionsThread.PlayPlaylist;
-                        else
-                            _pause = !_pause;
-                    };
-
-                    _commandPlayPlaylist.CanExecuteChecking += (sender, e) =>
-                    {
-                        e.CanExecute = true;
-                    };
-                }
-                return _commandPlayPlaylist;
-            }
-        }
-        private WpfCommand _commandPlayPlaylist;
-
-        public WpfCommand CommandInit
-        {
-            get
-            {
-                if (_commandInit == null)
-                {
-                    _commandInit = new WpfCommand();
-                    _commandInit.Executed += (sender, e) =>
-                    {
-                        Init();
-                    };
-
-                    _commandInit.CanExecuteChecking += (sender, e) =>
-                    {
-                        e.CanExecute = true;
-                    };
-                }
-                return _commandInit;
-            }
-        }
-        private WpfCommand _commandInit;
-
-        public WpfCommand CommandStop
-        {
-            get
-            {
-                if (_commandStop == null)
-                {
-                    _commandStop = new WpfCommand();
-                    _commandStop.Executed += (sender, e) =>
-                    {
-                        _stop = true;
-                    };
-
-                    _commandStop.CanExecuteChecking += (sender, e) =>
-                    {
-                        e.CanExecute = true;
-                    };
-                }
-                return _commandStop;
-            }
-        }
-        private WpfCommand _commandStop;
-
-        #endregion
-
         #region private
 
         private enum ActionsThread { Terminate = -1, Nothing, PlayPlaylist, PlayOneNote, ChangeKeyHitTime }
 
         private Thread _threadXyloBot;
         private ActionsThread _actionsThread = ActionsThread.Nothing;
-        private bool _pause = true, _stop = true, _next = false, _tempoChanged = false, _speedPlayChanged = false, _muteChanged = false, _isMute = false;
+        private bool _pause = true, _stop = true, _next = false, _speedPlayChanged = false;
        
         private Note _noteToPlay;   //Note à jouer pour PlayOneNote
 

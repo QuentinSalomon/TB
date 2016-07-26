@@ -145,15 +145,15 @@
     <Compile Include="Settings\UserControlCodeSettings.xaml.cs">
       <DependentUpon>UserControlCodeSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SpalshScreen.xaml.cs">
+      <DependentUpon>SpalshScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Supervision\Sequencer.cs" />
     <Compile Include="Supervision\UserControlMusicManager.xaml.cs">
       <DependentUpon>UserControlMusicManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Supervision\UserControlProgressBarMusic.xaml.cs">
       <DependentUpon>UserControlProgressBarMusic.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Supervision\UserControlSequencer.xaml.cs">
-      <DependentUpon>UserControlSequencer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Supervision\UserControlShowPartition.xaml.cs">
       <DependentUpon>UserControlShowPartition.xaml</DependentUpon>
@@ -242,15 +242,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SpalshScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Supervision\UserControlMusicManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Supervision\UserControlProgressBarMusic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Supervision\UserControlSequencer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

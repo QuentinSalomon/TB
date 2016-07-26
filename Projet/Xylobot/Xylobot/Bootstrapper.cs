@@ -1,11 +1,25 @@
 ﻿using Concept.Model.Wpf;
 using Framework;
 using System.Windows;
+using System;
 
 namespace Xylobot
 {
     public class Bootstrapper : ConceptBootstrapper
     {
+        protected override Uri SplashScreenImageUri
+        {
+            get
+            {
+                return new Uri(@"/Framework;component/Images/Xylophone2.jpg", UriKind.RelativeOrAbsolute);
+            }
+        }
+
+        public Bootstrapper(Window splashScreen) : base(splashScreen)
+        {
+
+        }
+
         protected override void Load()
         {
             base.Load();
@@ -22,18 +36,5 @@ namespace Xylobot
         {
             return new MainWindow() { DataContext = new MainViewModel() };
         }
-
-        //protected override void LoadCustomSkins()
-        //{
-        //    base.LoadCustomSkins();
-        //    LoadSkin();
-        //}
-
-        //private static void LoadSkin()
-        //{
-        //    ConceptStyle.AddSkin("ConceptSkin.Chrome", "Flat Blue");
-
-        //    ConceptStyle.ApplySkin("ConceptSkin.Chrome");
-        //}
     }
 }

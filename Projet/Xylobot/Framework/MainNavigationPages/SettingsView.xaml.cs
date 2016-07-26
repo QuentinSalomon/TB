@@ -90,11 +90,6 @@ namespace Framework
             return note;
         }
 
-        private void ButtonMute_Click(object sender, RoutedEventArgs e)
-        {
-            (DataContext as SettingsViewModel).Sequencer.Mute();
-        }
-
         private void ButtonShutDown_Click(object sender, RoutedEventArgs e)
         {
             WindowMessageBoxConfirmation w = new WindowMessageBoxConfirmation();

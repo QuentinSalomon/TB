@@ -45,7 +45,6 @@ namespace Framework
         #region Public Properties
 
         public Playlist Playlist { get; private set; }
-        public Xylobot Xylobot { get; private set; }
         public Settings Settings { get; private set; }
         public Sequencer Sequencer { get; private set; }
         public VirtuosoWebServer WebServer { get; private set; }
