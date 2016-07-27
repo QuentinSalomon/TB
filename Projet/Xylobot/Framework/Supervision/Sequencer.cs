@@ -1,6 +1,4 @@
-﻿using Common;
-using Concept.Model;
-using Concept.Utils.Wpf;
+﻿using Concept.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

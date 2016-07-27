@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Framework"
         mc:Ignorable="d"
-        Title="WindowMessageBoxAutoClosed" SizeToContent="WidthAndHeight" Loaded="Window_Loaded" 
-        ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen">
+        Title="WindowMessageBoxAutoClosed" Loaded="Window_Loaded" 
+        ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen" 
+        SizeToContent="WidthAndHeight">
     <StackPanel Orientation="Horizontal" Margin="5" Height="auto" Width="300">
         <Image x:Name="Image" Height="32" Width="32" VerticalAlignment="Top" Margin="5"/>
         <TextBlock x:Name="TextBlock" Style="{DynamicResource TextBlockNormalStyle}" VerticalAlignment="Bottom" Margin="10,0,0,0" Width="248">

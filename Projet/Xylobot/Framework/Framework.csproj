@@ -90,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="EditPlaylist\Note.cs" />
+    <Compile Include="EditPlaylist\PartitionXylo.cs" />
     <Compile Include="EditPlaylist\Playlist.cs" />
     <Compile Include="MessageBoxs\WindowMessageBoxAutoClosed.xaml.cs">
       <DependentUpon>WindowMessageBoxAutoClosed.xaml</DependentUpon>
@@ -279,12 +281,6 @@
     <Resource Include="Images\Xylophone64x64.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibXylobot\LibVirtuoso.csproj">
-      <Project>{dcdce5ea-07ee-4375-aeda-5803d8ce35e6}</Project>
-      <Name>LibVirtuoso</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Note32x32.png" />
     <Resource Include="Images\Note64x64.png" />
     <Resource Include="Images\Partition32x32.png" />
@@ -380,10 +376,6 @@
     <Resource Include="Images\Warning32x32.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\LogoHeig128x128.png" />
-    <Resource Include="Images\LogoHeig32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Validation32x32.png" />
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +389,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Xylophone2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LogoHeig.png" />
+    <Resource Include="Images\LogoHeigSmall.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

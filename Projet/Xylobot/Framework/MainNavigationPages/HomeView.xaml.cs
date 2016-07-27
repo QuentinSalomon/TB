@@ -21,7 +21,7 @@ namespace Framework
             WindowMessageBoxInformation w = new WindowMessageBoxInformation();
             w.Text = "Le projet Virtuoso a été développé à la heig-vd.";
             w.Background = UserControlHomeHeig.Background;
-            w.ImageSource = new BitmapImage(new Uri(@"/Framework;component/Images/LogoHeig128x128.png", UriKind.RelativeOrAbsolute));
+            w.ImageSource = new BitmapImage(new Uri(@"/Framework;component/Images/LogoHeigSmall.png", UriKind.RelativeOrAbsolute));
             w.ShowDialog();
         }
         private void UserControlHomeConceptHmi_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -59,7 +59,7 @@ namespace Framework
         private void UserControlHomeWifi_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             WindowMessageBoxInformation w = new WindowMessageBoxInformation();
-            w.Text = "Connectez-vous au wifi et accédez à la page web.";
+            w.Text = "Connectez-vous au wifi \"Virtuoso\" et accédez à la page web.";
             w.Background = UserControlHomeWifi.Background;
             w.ImageSource = new BitmapImage(new Uri(@"/Framework;component/Images/Wifi128x128.png", UriKind.RelativeOrAbsolute));
             w.ShowDialog();

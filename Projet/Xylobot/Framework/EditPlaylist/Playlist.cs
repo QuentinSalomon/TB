@@ -1,14 +1,8 @@
-﻿using Common;
-using Concept.Model;
-using Concept.Utils;
-using Concept.Utils.Wpf;
-using System.Windows.Forms;
+﻿using Concept.Model;
 
 namespace Framework
 {
     [IntlConceptName("Framework.Playlist.Name", "Playlist principal")]
-    [ConceptSmallImage(typeof(Playlist), "/Images/Playlist32x32.png")]
-    [ConceptLargeImage(typeof(Playlist), "/Images/Playlist64x64.png")]
     public class Playlist : ConceptComponent
     {
         #region Properties
@@ -61,68 +55,6 @@ namespace Framework
         {
             Partitions.Clear();
         }
-
-        #region WPF command
-
-        public WpfCommand CommandAddPartition
-        {
-            get
-            {
-                if (_commandAddPartition == null)
-                {
-                    _commandAddPartition = new WpfCommand();
-                    _commandAddPartition.Executed += (sender, e) =>
-                    {
-                        PartitionXylo p = new PartitionXylo();
-                        var messages = new MessageCollection();
-                        OpenFileDialog fileDlg = new OpenFileDialog();
-
-                        fileDlg.InitialDirectory = FrameworkController.Instance.Settings.DefaultPathLoadFile;
-                        fileDlg.Filter = "xml files (*.xml)|*.xml";
-                        fileDlg.RestoreDirectory = true;
-                        if (fileDlg.ShowDialog() == DialogResult.OK)
-                        {
-                            p.LoadFromFile(fileDlg.FileName, PluginClassManager.AllFactories, messages);
-                            p.Name = fileDlg.FileName;
-                            if (messages.Count > 0)
-                                ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
-                            else
-                                AddPartition(p);
-                        }
-                    };
-
-                    _commandAddPartition.CanExecuteChecking += (sender, e) =>
-                    {
-                        e.CanExecute = true;
-                    };
-                }
-                return _commandAddPartition;
-            }
-        }
-        private WpfCommand _commandAddPartition;
-
-        public WpfCommand CommandClearPartitions
-        {
-            get
-            {
-                if (_commandClearPartitions == null)
-                {
-                    _commandClearPartitions = new WpfCommand();
-                    _commandClearPartitions.Executed += (sender, e) =>
-                    {
-                        Partitions.Clear();
-                    };
-
-                    _commandClearPartitions.CanExecuteChecking += (sender, e) =>
-                    {
-                        e.CanExecute = true;
-                    };
-                }
-                return _commandClearPartitions;
-            }
-        }
-        private WpfCommand _commandClearPartitions;
-
-    #endregion
+        
     }
 }

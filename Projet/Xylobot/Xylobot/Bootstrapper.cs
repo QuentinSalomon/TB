@@ -7,14 +7,6 @@ namespace Xylobot
 {
     public class Bootstrapper : ConceptBootstrapper
     {
-        protected override Uri SplashScreenImageUri
-        {
-            get
-            {
-                return new Uri(@"/Framework;component/Images/Xylophone2.jpg", UriKind.RelativeOrAbsolute);
-            }
-        }
-
         public Bootstrapper(Window splashScreen) : base(splashScreen)
         {
 

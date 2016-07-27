@@ -1,5 +1,4 @@
-﻿using Common;
-using Concept.Model;
+﻿using Concept.Model;
 using Concept.Utils;
 using Concept.Utils.Wpf;
 using System;
