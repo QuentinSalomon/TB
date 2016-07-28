@@ -63,9 +63,7 @@ namespace Framework
 
         #endregion
     }
-
-    [ConceptSmallImage(typeof(StaticListPartitionXylo), "../../../Images/Partition32x32.png")]
-    [ConceptLargeImage(typeof(StaticListPartitionXylo), "../../../Images/Partition64x64.png")]
+    
     public class StaticListPartitionXylo : ConceptStaticList<PartitionXylo>
     { }
 }

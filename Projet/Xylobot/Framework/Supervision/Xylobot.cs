@@ -7,8 +7,6 @@ using System.Windows;
 namespace Framework
 {
     [IntlConceptName("Framework.Xylobot.Name", "Xylobot")]
-    [ConceptSmallImage(typeof(Playlist), "/Images/Xylophone32x32.png")]
-    [ConceptLargeImage(typeof(Playlist), "/Images/Xylophone64x64.png")]
     public class Xylobot : ConceptComponent
     {
         #region Constructor

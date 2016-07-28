@@ -33,7 +33,7 @@
                                Text="Woopsa" Source="/Framework;component/Images/Woopsa128x128.png" Grid.Row="2" Grid.Column="0" Margin="0,5,5,5" 
                                MouseLeftButtonDown="UserControlHomeWoopsa_MouseLeftButtonDown"/>
         <local:UserControlHome x:Name="UserControlHomeWebPage" Background="{DynamicResource ColorsVirtuosoPurple}" 
-                               Text="Web page" Source="/Framework;component/Images/QrCode128x128.png" Grid.Row="2" Grid.Column="1" Margin="5,5,0,5" 
+                               Text="Web page" Source="/Framework;component/Images/QrCode290x290.jpg" Grid.Row="2" Grid.Column="1" Margin="5,5,0,5" 
                                MouseLeftButtonDown="UserControlHomeWebPage_MouseLeftButtonDown"/>
 
         <local:UserControlHome x:Name="UserControlHomeSmartphone" Background="{DynamicResource ColorsVirtuosoYellow}" 

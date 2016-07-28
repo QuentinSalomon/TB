@@ -20,6 +20,7 @@ namespace Framework
         { "DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI" };
         double rectangleNoteSize = 15;
         double factorSpaceNote = 2;
+        int offsetScroll = 50;
 
         public double KeyWidth { get { return columnKeys.ActualWidth; } set { columnKeys.Width = new GridLength(value); } }
 
@@ -161,7 +162,7 @@ namespace Framework
 
                     maxTick = maxTick < note.Tick ? note.Tick : maxTick;
                 }
-                CanvasNotes.Width = maxTick / factorSpaceNote + 50;
+                CanvasNotes.Width = maxTick / factorSpaceNote + offsetScroll;
             }
         }
 

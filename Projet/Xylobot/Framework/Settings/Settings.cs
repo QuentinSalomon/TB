@@ -5,8 +5,6 @@ using System;
 namespace Framework
 {
     [IntlConceptName("Framework.Settings.Name", "Settings")]
-    [ConceptSmallImage(typeof(Settings), "/Images/Settings32x32.png")]
-    [ConceptLargeImage(typeof(Settings), "/Images/Settings64x64.png")]
     public class Settings : ConceptComponent
     {
         public Settings()

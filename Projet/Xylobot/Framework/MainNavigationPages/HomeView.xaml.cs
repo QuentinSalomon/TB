@@ -37,7 +37,7 @@ namespace Framework
             WindowMessageBoxInformation w = new WindowMessageBoxInformation();
             w.Text = "Scannez le Qr code pour accéder à la page web.";
             w.Background = UserControlHomeWebPage.Background;
-            w.ImageSource = new BitmapImage(new Uri(@"/Framework;component/Images/QrCode128x128.png", UriKind.RelativeOrAbsolute));
+            w.ImageSource = new BitmapImage(new Uri(@"/Framework;component/Images/QrCode290x290.jpg", UriKind.RelativeOrAbsolute));
             w.ShowDialog();
         }
         private void UserControlHomeWoopsa_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
