@@ -10,7 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <StackPanel x:Name="StackPanel1" Orientation="Horizontal" Margin="5" Height="auto" Width="300">
             <Image x:Name="Image" Height="32" Width="32" VerticalAlignment="Top" Margin="5" Source="/Framework;component/Images/Validation32x32.png"/>
@@ -18,14 +18,16 @@
                 <AccessText x:Name="AccessText" TextWrapping="WrapWithOverflow"/>
             </TextBlock>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="1">
-            <Button x:Name="ButtonCancel" Style="{DynamicResource ButtonStyle}" 
-                    Background="{DynamicResource ColorsVirtuosoDarkBlue}" Click="ButtonCancel_Click" Margin="5">
-                <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Cancel" Margin="5"/>
-            </Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">
             <Button x:Name="ButtonYes" Style="{DynamicResource ButtonStyle}" 
                     Background="{DynamicResource ColorsVirtuosoDarkBlue}" Click="ButtonYes_Click" Margin="5" BorderBrush="White" BorderThickness="2">
-                <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Yes" Margin="5"/>
+                <!--<TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Oui" Margin="5"/>-->
+                <Image Source="/Framework;component/Images/Validation32x32.png" Margin="5"/>
+            </Button>
+            <Button x:Name="ButtonCancel" Style="{DynamicResource ButtonStyle}" 
+                    Background="{DynamicResource ColorsVirtuosoDarkBlue}" Click="ButtonCancel_Click" Margin="5">
+                <!--<TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Annuler" Margin="5"/>-->
+                <Image Source="/Framework;component/Images/Cancel32x32.png" Margin="8"/>
             </Button>
         </StackPanel>
     </Grid>

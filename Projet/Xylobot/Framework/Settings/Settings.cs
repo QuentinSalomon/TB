@@ -9,12 +9,14 @@ namespace Framework
     {
         public Settings()
         {
+            //Initialisation des 37 touches
             for (int i = 0; i < Xylobot.numberKeysXylophone; i++)
             {
                 Key tmp = new Key(Xylobot.defaultTimeHitKey);
                 tmp.Name = "key" + i.ToString();
                 Keys.Add(tmp);
             }
+            NeedSaved = false;
         }
 
         #region Propriétés
@@ -29,9 +31,10 @@ namespace Framework
             {
                 if (_defaultPathLoadFile != value)
                 {
+                    if(_defaultPathLoadFile != null)
+                        NeedSaved = true;
                     _defaultPathLoadFile = value;
                     DoPropertyChanged(DefaultPathLoadFilePropertyName);
-                    NeedSaved = true;
                 }
             }
         }

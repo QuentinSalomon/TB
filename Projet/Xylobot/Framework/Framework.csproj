@@ -34,27 +34,27 @@
   <ItemGroup>
     <Reference Include="Concept.Components, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Components.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Components.dll</HintPath>
     </Reference>
     <Reference Include="Concept.Components.Wpf, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Components.Wpf.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Components.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Concept.Model, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Model.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Model.dll</HintPath>
     </Reference>
     <Reference Include="Concept.Model.Wpf, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Model.Wpf.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Model.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Concept.Utils, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Utils.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Concept.Utils.Wpf, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Utils.Wpf.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Utils.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -347,9 +347,6 @@
     <Resource Include="Images\Smartphone128x128.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Xylophone.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\PowerOff64x64.png" />
   </ItemGroup>
   <ItemGroup>
@@ -370,14 +367,18 @@
     <Resource Include="Images\HeigVd.JPG" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Xylophone2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\LogoHeig.png" />
     <Resource Include="Images\LogoHeigSmall.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\QrCode290x290.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Cancel32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Xylophone.png" />
+    <Resource Include="Images\Xylophone2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

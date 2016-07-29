@@ -62,7 +62,7 @@ namespace Framework
         }
         public void SaveConfiguration()
         {
-            Settings.SaveToFile("FileConfig.xml");
+            //Settings.SaveToFile("FileConfig.xml");
         }
 
         #endregion

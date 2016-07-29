@@ -11,11 +11,13 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
-        <local:UserControlCodeSettings x:Name="UserControlCodeSettings" Height="{Binding ElementName=UserControlCodeSettings, Path=ActualWidth}"/>
+        <local:UserControlCodeSettings x:Name="UserControlCodeSettings" Height="300" Width="300"/>
+        <!--Height="{Binding ElementName=UserControlCodeSettings, Path=ActualWidth}"/>-->
         <Grid x:Name="GridSettings" Margin="7" Visibility="{Binding ElementName=UserControlCodeSettings, Path=PasswordRight, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="32"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
@@ -62,8 +64,12 @@
                     </Button>
                 </StackPanel>
             </Grid>
+            <Button Width="60" Style="{DynamicResource ButtonStyle}"  Grid.Row="4" Click="ButtonSettings_Click" Background="Gray"
+                    Visibility="{Binding Path=Settings.NeedSaved, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Save"/>
+            </Button>
 
-            <Button x:Name="ButtonShutDown" Grid.Row="5" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonShutDown_Click">
+            <Button x:Name="ButtonShutDown" Grid.Row="6" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonShutDown_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>

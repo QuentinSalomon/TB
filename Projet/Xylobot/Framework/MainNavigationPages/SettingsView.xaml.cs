@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Framework
 {
@@ -24,8 +25,6 @@ namespace Framework
                 Note n;
                 n = IdToNoteTest(CurrentIdNote);
                 TextBlockKeyTitle.Text = "Note : " + n.HighString + "   \tOctave : " + n.Octave;
-                //Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime);
-                Settings.ChangeKey(CurrentIdNote, Truncate(Settings.Keys[CurrentIdNote].HitTime));
                 TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
             }
         }
@@ -40,8 +39,7 @@ namespace Framework
         private void ButtonLessTime_Click(object sender, RoutedEventArgs e)
         {
             Note n;
-            //Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime - 0.1);
-            Settings.ChangeKey(CurrentIdNote, Truncate(Settings.Keys[CurrentIdNote].HitTime - 0.1));
+            Settings.ChangeKey(CurrentIdNote, Round(Settings.Keys[CurrentIdNote].HitTime - 0.1));
             TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
             n = IdToNoteTest(CurrentIdNote);
             (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
@@ -51,8 +49,7 @@ namespace Framework
         private void ButtonMoreTime_Click(object sender, RoutedEventArgs e)
         {
             Note n;
-            //Settings.Keys[CurrentIdNote].HitTime = Truncate(Settings.Keys[CurrentIdNote].HitTime + 0.1);
-            Settings.ChangeKey(CurrentIdNote, Truncate(Settings.Keys[CurrentIdNote].HitTime + 0.1));
+            Settings.ChangeKey(CurrentIdNote, Round(Settings.Keys[CurrentIdNote].HitTime + 0.1));
             TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
             n = IdToNoteTest(CurrentIdNote);
             (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
@@ -71,7 +68,7 @@ namespace Framework
                 CurrentIdNote++;
         }
 
-        private double Truncate(double value)
+        private double Round(double value)
         {
             return (double)Math.Truncate((decimal)(100 * value)) / 100;
         }
@@ -105,6 +102,17 @@ namespace Framework
         {
             if ((bool)e.NewValue)
                 UserControlCodeSettings.Reset();
+        }
+
+        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.SaveToFile("FileConfig.xml");
+            Settings.NeedSaved = false;
+            WindowMessageBoxAutoClosed w = new WindowMessageBoxAutoClosed();
+            w.TypeWindow = TypeWindow.Information;
+            w.Text = "Données sauvegardée.";
+            //w.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0xA6, 0x00));
+            w.Show();
         }
     }
 }

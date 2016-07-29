@@ -19,7 +19,8 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Image Grid.ColumnSpan="2" Source="/Framework;component/Images/Xylophone2.jpg"  Height="{Binding ElementName=Grid, Path=ActualHeight}">
+        <Image Grid.ColumnSpan="2" Source="/Framework;component/Images/Xylophone2.png" 
+               Height="{Binding ElementName=Grid, Path=ActualHeight}">
         </Image>
 
         <local:UserControlHome x:Name="UserControlHomeHeig" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" 

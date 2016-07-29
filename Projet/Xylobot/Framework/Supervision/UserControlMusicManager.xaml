@@ -15,17 +15,20 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="1" MouseLeftButtonDown="ImagePlayPause_MouseLeftButtonDown">
-            <StackPanel Orientation="Horizontal" Margin="7" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image HorizontalAlignment="Center" Source="{Binding Path=IsPlaying, Converter={StaticResource IsPlayingToImageConverter}}"></Image>
-            </StackPanel>
-        </Border>
-        <Grid Grid.Column="0" MouseLeftButtonDown="ImageStop_MouseLeftButtonDown">
-            <Image x:Name="ImageStop" Margin="7" HorizontalAlignment="Center" Source="/Framework;component/Images/Stop32x32.png"/>
+        <Button x:Name="ButtonPlayPause" Style="{DynamicResource ButtonStyle}" Background="#FF4F4F4F" Grid.Column="1" Click="ButtonPlayPause_Click">
+            <Image HorizontalAlignment="Center" Margin="7" Source="{Binding Path=IsPlaying, 
+                        Converter={StaticResource IsPlayingToImageConverter}}"/>
+        </Button>
+        <Grid Grid.Column="0">
+            <Button x:Name="ButtonStop" Style="{DynamicResource ButtonStyle}" Background="#FF4F4F4F" Click="ButtonStop_Click">
+                <Image x:Name="ImageStop" Margin="7" HorizontalAlignment="Center" Source="/Framework;component/Images/Stop32x32.png"/>
+            </Button>
             <Rectangle Width="1" Fill="LightGray" HorizontalAlignment="Right"/>
         </Grid>
-        <Grid Grid.Column="2" MouseLeftButtonDown="ImageNext_MouseLeftButtonDown">
-            <Image x:Name="ImageNext" Grid.Column="2" Margin="7" HorizontalAlignment="Center" Source="/Framework;component/Images/Next32x32.png"/>
+        <Grid Grid.Column="2">
+            <Button x:Name="ButtonNext" Style="{DynamicResource ButtonStyle}" Background="#FF4F4F4F" Click="ButtonNext_Click">
+                <Image x:Name="ImageNext" Grid.Column="2" Margin="7" HorizontalAlignment="Center" Source="/Framework;component/Images/Next32x32.png"/>
+            </Button>
             <Rectangle Width="1" Fill="LightGray" HorizontalAlignment="Left"/>
         </Grid>
     </Grid>

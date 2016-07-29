@@ -8,7 +8,7 @@
         Title="SpalshScreen" SizeToContent="WidthAndHeight"
         ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Image Source="/Framework;component/Images/Xylophone2.jpg" Width="600" 
+        <Image Source="/Framework;component/Images/Xylophone2.png" Width="600" 
                SnapsToDevicePixels="True"/>
     </Grid>
 </Window>

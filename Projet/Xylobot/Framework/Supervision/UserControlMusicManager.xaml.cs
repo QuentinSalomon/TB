@@ -17,19 +17,19 @@ namespace Framework
             InitializeComponent();
         }
 
-        private void ImagePlayPause_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ButtonPlayPause_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             ((Sequencer)DataContext).PlayPause();
         }
 
-        private void ImageStop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ((Sequencer)DataContext).Stop();
-        }
-
-        private void ImageNext_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ButtonNext_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             ((Sequencer)DataContext).Next();
+        }
+
+        private void ButtonStop_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ((Sequencer)DataContext).Stop();
         }
     }
 

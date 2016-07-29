@@ -37,27 +37,27 @@
   <ItemGroup>
     <Reference Include="Concept.Components, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Components.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Components.dll</HintPath>
     </Reference>
     <Reference Include="Concept.Components.Wpf, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Components.Wpf.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Components.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Concept.Model, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Model.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Model.dll</HintPath>
     </Reference>
     <Reference Include="Concept.Model.Wpf, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Model.Wpf.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Model.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Concept.Utils, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Utils.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Concept.Utils.Wpf, Version=3.5.0.2412, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LibsForVirtuoso\Concept\Binaries\Concept\Concept.Utils.Wpf.dll</HintPath>
+      <HintPath>bin\Debug\Concept.Utils.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

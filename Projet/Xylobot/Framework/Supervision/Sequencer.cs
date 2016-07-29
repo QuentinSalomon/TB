@@ -140,7 +140,8 @@ namespace Framework
                         case ActionsThread.PlayPlaylist:
 
                             PlayPlaylist();
-                            _actionsThread = ActionsThread.Nothing;
+                            _actionsThread = _actionsThread == ActionsThread.Terminate ? 
+                                ActionsThread.Terminate : ActionsThread.Nothing;
                             _stop = false; //reset le stop au cas ou la fonction s'est termninée avec un stop
                             break;
                         case ActionsThread.PlayOneNote:
@@ -198,10 +199,12 @@ namespace Framework
                         Xylobot.Pause();
                         while (_pause && !_stop && !_next)
                             Thread.Sleep(50);
-                        if(!_stop)
+                        if (!_stop)
+                        {
                             Xylobot.Start();
-                        Application.Current.Dispatcher.Invoke(new Action(() =>
-                                   IsPlaying = true));
+                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                                       IsPlaying = true));
+                        }
                     }
                     else {
                         //Application des changement pour la lecture de la partition
@@ -223,6 +226,9 @@ namespace Framework
                         notes.Clear();
                         Thread.Sleep(50);
                     }
+                    //Si on termine le programme, on sort de la fonction
+                    if (_actionsThread == ActionsThread.Terminate)
+                        return;
                 }
             }
             catch (Exception e) {
@@ -248,6 +254,10 @@ namespace Framework
                             IsPlaying = true;
                             })); 
                         PlayPartition(Playlist.Partitions[0]);
+                        //Si on sort de la partition pour terminer l'execution du porgramme
+                        //, on quitte directement la fonciton
+                        if (_actionsThread == ActionsThread.Terminate)
+                            return;
                         if (!_stop)
                             Application.Current.Dispatcher.Invoke(new Action(() => 
                                 Playlist.Partitions.RemoveAt(0)));
