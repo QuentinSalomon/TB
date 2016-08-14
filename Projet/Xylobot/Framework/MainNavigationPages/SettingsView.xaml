@@ -11,7 +11,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
-        <local:UserControlCodeSettings x:Name="UserControlCodeSettings" Height="300" Width="300"/>
+        <local:UserControlCodeSettings x:Name="UserControlCodeSettings" Height="500" Width="500"/>
         <!--Height="{Binding ElementName=UserControlCodeSettings, Path=ActualWidth}"/>-->
         <Grid x:Name="GridSettings" Margin="7" Visibility="{Binding ElementName=UserControlCodeSettings, Path=PasswordRight, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
@@ -39,7 +39,8 @@
             <Border Grid.Row="2" Background="{DynamicResource ColorsVirtuosoGreen}" Margin="0,0,0,5">
                 <TextBlock x:Name="TextBlockKeyTitle" Style="{DynamicResource TextBlockTitleStyle}" Text="DO 5" VerticalAlignment="Center" Margin="5,0,0,0"/>
             </Border>
-            <Grid Grid.Row="3" Height="55">
+            
+            <Grid Grid.Row="3" Height="60">
                 <StackPanel Orientation="Horizontal">
                     <Border Background="Gray">
                         <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
@@ -54,6 +55,20 @@
                     <Button x:Name="ButtonMoreTime" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}"  Click="ButtonMoreTime_Click">
                         <Image Source="/Framework;component/Images/Up32x32.png" Margin="5"/>
                     </Button>
+                    <StackPanel Orientation="Horizontal" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Margin="15,0,0,0">
+                        <CheckBox x:Name="CheckBoxPlayNote" Checked="CheckBoxPlayNote_Checked" VerticalAlignment="Center">
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="3" ScaleY="3"/>
+                            </CheckBox.LayoutTransform>
+                        </CheckBox>
+                        <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Jouer la note" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                        <CheckBox x:Name="CheckBoxPlayGamme" Checked="CheckBoxPlayGamme_Checked" VerticalAlignment="Center">
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="3" ScaleY="3"/>
+                            </CheckBox.LayoutTransform>
+                        </CheckBox>
+                        <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Jouer la gamme" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="ButtonPrevious" HorizontalAlignment="Right" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Click="ButtonPrevious_Click">
@@ -64,7 +79,7 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <Button Width="60" Style="{DynamicResource ButtonStyle}"  Grid.Row="4" Click="ButtonSettings_Click" Background="Gray"
+            <Button Width="60" Style="{DynamicResource ButtonStyle}"  Grid.Row="4" Click="ButtonSaveSettings_Click" Background="Gray"
                     Visibility="{Binding Path=Settings.NeedSaved, Converter={StaticResource BoolToVisibilityConverter}}">
                 <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Save"/>
             </Button>

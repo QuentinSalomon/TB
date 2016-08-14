@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -103,26 +104,29 @@ namespace Framework
         {
             if (ListBoxPlaylist.SelectedIndex != -1)
             {
-                PartitionXylo p = new PartitionXylo();
-                var messages = new MessageCollection();
+                PartitionXylo partitionXylo = new PartitionXylo();
+                PartitionMidi partitionMidi = new PartitionMidi();
+                //var messages = new MessageCollection();
                 ListBoxItemPlaylist item = ((ListBoxItemPlaylist)ListBoxPlaylist.SelectedItem);
 
-                p.LoadFromFile(item.Path + item.Title, PluginClassManager.AllFactories, messages);
-                p.Name = item.Title.Split('.')[0];
-                if (messages.Count > 0)
-                    ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
+                //p.LoadFromFile(item.Path + item.Title, PluginClassManager.AllFactories, messages);
+                //p.Name = item.Title.Split('.')[0];
+                //if (messages.Count > 0)
+                //    ConceptMessage.ShowError(string.Format("Error while loading the configuration file:\n{0}", messages.Text), "Loading Error");
+                //else
+                //{
+                partitionMidi.Load(item.Path + item.Title);
+                partitionXylo = partitionMidi.ConvertCompleteToPartitionXylo();
+                WindowMessageBoxAutoClosed w = new WindowMessageBoxAutoClosed();
+                w.TypeWindow = TypeWindow.Information;
+
+                if (((EditPlaylistViewModel)DataContext).Playlist.AddPartition(partitionXylo))
+                    w.Text = "Partition ajoutée à la liste de lecture";
                 else
-                {
-                    WindowMessageBoxAutoClosed w = new WindowMessageBoxAutoClosed();
-                    w.TypeWindow = TypeWindow.Information;
+                    w.Text = "Partition déjà présente dans la liste de lecture";
 
-                    if (((EditPlaylistViewModel)DataContext).Playlist.AddPartition(p))
-                        w.Text = "Partition ajoutée à la liste de lecture";
-                    else
-                        w.Text = "Partition déjà présente dans la liste de lecture";
-
-                    w.Show();
-                }
+                w.Show();
+                //}
             }
         }
 
@@ -147,9 +151,10 @@ namespace Framework
             {
                 ListBoxItemPlaylist playlistInfos = ListBoxPlaylist.SelectedItem as ListBoxItemPlaylist;
                 string path = playlistInfos.Path + playlistInfos.Title + "\\";
-
+                string[] extensions = { ".midi", ".mid" };
                 ListPlaylist.Clear();
-                foreach (string file in Directory.GetFiles(path, "*.xml"))
+                foreach (string file in Directory.GetFiles(path, "*.*")
+                        .Where(f => extensions.Contains(new FileInfo(f).Extension.ToLower())).ToArray())
                     ListPlaylist.Add(new ListBoxItemPlaylist(file.Remove(0, path.Length), path));
             }
         }

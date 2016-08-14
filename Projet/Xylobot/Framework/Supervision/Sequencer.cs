@@ -19,6 +19,9 @@ namespace Framework
             _threadXyloBot = new Thread(ManageXylobot);
             _threadXyloBot.Start();
             Errors = new ObservableCollection<string>();
+            _gamme = new List<Note>();
+            for(int i=0; i<Xylobot.numberKeysXylophone; i++)
+                _gamme.Add(NotesConvert.IdToNote(i, 0, i * 100));
         }
 
         #endregion
@@ -130,11 +133,11 @@ namespace Framework
         private void ManageXylobot()
         {
             Init();
-            while (_actionsThread != ActionsThread.Terminate)
+            if (Xylobot.IsInit)
+                while (_actionsThread != ActionsThread.Terminate)
             {
                 Thread.Sleep(10);
 
-                if (Xylobot.IsInit)
                     switch (_actionsThread)
                     {
                         case ActionsThread.PlayPlaylist:
@@ -144,21 +147,35 @@ namespace Framework
                                 ActionsThread.Terminate : ActionsThread.Nothing;
                             _stop = false; //reset le stop au cas ou la fonction s'est termninée avec un stop
                             break;
-                        case ActionsThread.PlayOneNote:
-                            _actionsThread = ActionsThread.Nothing;
-
-                            List<Note> note = new List<Note>();
-                            note.Add(_noteToPlay);
-                            Xylobot.Stop(); //Vide le buffer de l'arduino
-                            Xylobot.SendNotes(note);    //Charge la note dans le buffer
-                            Xylobot.Start();    //Lance la lecture du buffer
-                            break;
-                        case ActionsThread.ChangeKeyHitTime:
-                            _actionsThread = ActionsThread.Nothing;
-
-                            Xylobot.Stop();
-                            Xylobot.SendKeyHitTime(_indexKey, _keyHitTime);
-                            _actionsThread = ActionsThread.PlayOneNote;
+                        case ActionsThread.ChangeKeysHitTime:
+                            Xylobot.Stop(); // reset le buffer des notes de l'arduino
+                            Thread.Sleep(50);
+                            Xylobot.SendTempo(4000);
+                            Xylobot.Start();
+                            while (_actionsThread == ActionsThread.ChangeKeysHitTime)
+                            {
+                                if(_needChangeHitTime)
+                                {
+                                    Xylobot.SendKeyHitTime(_indexKey, _keyHitTime);
+                                    List<Note> note = new List<Note>();
+                                    note.Add(_noteToPlay);
+                                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                                        _needChangeHitTime = false));
+                                    if(_needPlayNote)
+                                    {
+                                        Xylobot.SendNotes(note);
+                                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                                            _needPlayNote = false));
+                                    }
+                                    else if(_needPlayGamme)
+                                    {
+                                        Xylobot.SendNotes(_gamme);
+                                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                                            _needPlayGamme = false));
+                                    }
+                                }
+                                Thread.Sleep(100);
+                            }
                             break;
                         default:
                             break;
@@ -297,9 +314,31 @@ namespace Framework
             _indexKey = (n.High + (n.Octave - Xylobot.startOctaveXylophone) * Xylobot.octaveSize);
             _keyHitTime = hitTime;
             _noteToPlay = n;
-            if (!_stop) //Arrête si une playlist est en cours de lecture
-                Stop();
-            _actionsThread = ActionsThread.ChangeKeyHitTime;
+            _needChangeHitTime = true;
+            //set le mode pour changer le temps des notes si on est pas dedans
+            if (_actionsThread != ActionsThread.ChangeKeysHitTime)
+            {
+                Stop(); //Arrête si une playlist est en cours de lecture
+                _actionsThread = ActionsThread.ChangeKeysHitTime;
+            }
+        }
+
+        public void ChangeKeyHitTimeWithPlay(Note n, double hitTime)
+        {
+            _needPlayNote = true;
+            ChangeKeyHitTime(n, hitTime);
+        }
+
+        public void ChangeKeyHitTimeWithGamme(Note n, double hitTime)
+        {
+            _needPlayGamme = true;
+            ChangeKeyHitTime(n, hitTime);
+        }
+
+        public void StopChangeKeyHitTime()
+        {
+            if (_actionsThread == ActionsThread.ChangeKeysHitTime)
+                _actionsThread = ActionsThread.Nothing;
         }
 
         public void Stop()
@@ -345,7 +384,7 @@ namespace Framework
 
         #region private
 
-        private enum ActionsThread { Terminate = -1, Nothing, PlayPlaylist, PlayOneNote, ChangeKeyHitTime }
+        private enum ActionsThread { Terminate = -1, Nothing, PlayPlaylist, ChangeKeysHitTime }
 
         private Thread _threadXyloBot;
         private ActionsThread _actionsThread = ActionsThread.Nothing;
@@ -353,9 +392,11 @@ namespace Framework
        
         private Note _noteToPlay;   //Note à jouer pour PlayOneNote
 
+        bool _needChangeHitTime = false, _needPlayNote = false, _needPlayGamme = false;
         int _indexKey;      //Index de la touche pour ChangeKeyHitTime
         double _keyHitTime; //Temps de frappe pour ChangeKeyHitTime
 
+        private List<Note> _gamme;
         #endregion
     }
 }

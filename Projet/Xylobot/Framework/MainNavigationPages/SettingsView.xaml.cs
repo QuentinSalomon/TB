@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace Framework
 {
@@ -22,38 +22,35 @@ namespace Framework
             set
             {                
                 _currentIdNote = value;
-                Note n;
-                n = IdToNoteTest(CurrentIdNote);
-                TextBlockKeyTitle.Text = "Note : " + n.HighString + "   \tOctave : " + n.Octave;
+                _currentNoteCalibration = IdToNoteCalibration(CurrentIdNote);
+                TextBlockKeyTitle.Text = "Note : " + _currentNoteCalibration.HighString + 
+                        "   \tOctave : " + _currentNoteCalibration.Octave;
                 TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
             }
         }
         private int _currentIdNote;
 
+        private Note _currentNoteCalibration;
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             Settings = (DataContext as SettingsViewModel).Settings;
             CurrentIdNote = 0;
+            InitTimerCalibration();
         }
+
+        #region Functions Composants
 
         private void ButtonLessTime_Click(object sender, RoutedEventArgs e)
         {
-            Note n;
             Settings.ChangeKey(CurrentIdNote, Round(Settings.Keys[CurrentIdNote].HitTime - 0.1));
             TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
-            n = IdToNoteTest(CurrentIdNote);
-            (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
-                Settings.Keys[CurrentIdNote].HitTime);
         }
 
         private void ButtonMoreTime_Click(object sender, RoutedEventArgs e)
         {
-            Note n;
             Settings.ChangeKey(CurrentIdNote, Round(Settings.Keys[CurrentIdNote].HitTime + 0.1));
             TextBlockHitTime.Text = Settings.Keys[CurrentIdNote].HitTime.ToString();
-            n = IdToNoteTest(CurrentIdNote);
-            (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(n,
-                Settings.Keys[CurrentIdNote].HitTime);
         }
 
         private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
@@ -68,22 +65,27 @@ namespace Framework
                 CurrentIdNote++;
         }
 
-        private double Round(double value)
+        private void CheckBoxPlayNote_Checked(object sender, RoutedEventArgs e)
         {
-            return (double)Math.Truncate((decimal)(100 * value)) / 100;
+            if (CheckBoxPlayNote.IsChecked == true)
+                CheckBoxPlayGamme.IsChecked = false;
         }
 
-        private static readonly string[] tabNote = new string[]
-        { "DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI" };
-        private static Note IdToNoteTest(int id)
+        private void CheckBoxPlayGamme_Checked(object sender, RoutedEventArgs e)
         {
-            Note note = new Note();
-            note.Octave = (byte)(id / Xylobot.octaveSize + Xylobot.startOctaveXylophone);
-            note.High = (byte)(id % Xylobot.octaveSize);
-            note.HighString = tabNote[id % Xylobot.octaveSize];
-            note.Tick = 0;
-            note.Intensity = 64;
-            return note;
+            if (CheckBoxPlayGamme.IsChecked == true)
+                CheckBoxPlayNote.IsChecked = false;
+        }
+
+        private void ButtonSaveSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.SaveToFile("FileConfig.xml");
+            Settings.NeedSaved = false;
+            WindowMessageBoxAutoClosed w = new WindowMessageBoxAutoClosed();
+            w.TypeWindow = TypeWindow.Information;
+            w.Text = "Données sauvegardée.";
+            //w.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0xA6, 0x00));
+            w.Show();
         }
 
         private void ButtonShutDown_Click(object sender, RoutedEventArgs e)
@@ -100,19 +102,72 @@ namespace Framework
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            //Reset le code à chaque affichage des settings
             if ((bool)e.NewValue)
+            {
                 UserControlCodeSettings.Reset();
+                _timerCalibration.Start();
+            }
+            else
+            {
+                _timerCalibration.Stop();
+                (DataContext as SettingsViewModel).Sequencer.StopChangeKeyHitTime();
+            }
+
         }
 
-        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+        #endregion
+
+        private double Round(double value)
         {
-            Settings.SaveToFile("FileConfig.xml");
-            Settings.NeedSaved = false;
-            WindowMessageBoxAutoClosed w = new WindowMessageBoxAutoClosed();
-            w.TypeWindow = TypeWindow.Information;
-            w.Text = "Données sauvegardée.";
-            //w.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0xA6, 0x00));
-            w.Show();
+            return (double)Math.Truncate((decimal)(100 * value)) / 100;
         }
+
+        private static readonly string[] tabNote = new string[]
+        { "DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI" };
+        private static Note IdToNoteCalibration(int id)
+        {
+            Note note = new Note();
+            note.Octave = (byte)(id / Xylobot.octaveSize + Xylobot.startOctaveXylophone);
+            note.High = (byte)(id % Xylobot.octaveSize);
+            note.HighString = tabNote[id % Xylobot.octaveSize];
+            note.Tick = 0;
+            note.Intensity = 0;
+            return note;
+        }
+
+        #region Timer calibration
+
+        private void InitTimerCalibration()
+        {
+            if (_timerCalibration == null)
+            {
+                _timerCalibration = new Timer(1000);
+                _timerCalibration.Elapsed += OnTimedEvent;
+                _timerCalibration.AutoReset = true;
+                _timerCalibration.Stop();
+            }
+        }
+
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    if(CheckBoxPlayNote.IsChecked == true)
+                        (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTimeWithPlay(_currentNoteCalibration,
+                            Settings.Keys[CurrentIdNote].HitTime);
+                    else if (CheckBoxPlayGamme.IsChecked == true)
+                        (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTimeWithGamme(_currentNoteCalibration,
+                            Settings.Keys[CurrentIdNote].HitTime);
+                    else
+                        (DataContext as SettingsViewModel).Sequencer.ChangeKeyHitTime(_currentNoteCalibration,
+                            Settings.Keys[CurrentIdNote].HitTime);
+                }
+            ));
+        }
+
+        private Timer _timerCalibration;
+
+        #endregion
     }
 }

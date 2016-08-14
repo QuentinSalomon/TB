@@ -260,12 +260,12 @@ void NotesMsg(uint16_t dataSize)
       
       tmpTick = 0;
       for(j=0;j<4;j++)
-        tmpTick |= (((uint32_t)noteBytes[j+1]) << (j*8));  // TODO : a verifier
+        tmpTick |= (((uint32_t)noteBytes[j+1]) << (j*8));
       if(tmpTick > 100000000)
         DebugBlink(3);
       tmpNote.SetPitch(noteBytes[0]);
       tmpNote.SetTick(tmpTick);
-      tmpNote.SetIntensity(((int)noteBytes[5]-64)*500/64); //Intensité changeant de +-0.5 ms le temps de frappe
+      tmpNote.SetIntensity((int)noteBytes[5]*4000/128); //Intensité changeant de 0 à 4 ms le temps de frappe
       bufferNotes.Write(tmpNote);
     }
     else

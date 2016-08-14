@@ -2,6 +2,7 @@
 using Concept.Utils;
 using System;
 using System.IO;
+using System.Linq;
 using System.Timers;
 using System.Windows;
 using WebCore;
@@ -73,7 +74,9 @@ namespace Framework
                 string path = FrameworkController.Instance.Settings.DefaultPathLoadFile + "\\Catalogue\\";
                 string tmp = "";
                 int i = 0;
-                string[] fileNames = Directory.GetFiles(path, "*.xml");
+                string[] extensions = { ".midi", ".mid" };
+                string[] fileNames = Directory.GetFiles(path, "*.*")
+                    .Where(f => extensions.Contains(new FileInfo(f).Extension.ToLower())).ToArray();
 
                 foreach (string fileName in fileNames)
                 {
@@ -90,14 +93,17 @@ namespace Framework
         {
             if (_selectFileName != null && _selectFileName != "")
             {
-                PartitionXylo p = new PartitionXylo();
+                PartitionXylo partitionXylo = new PartitionXylo();
+                PartitionMidi partitionMidi = new PartitionMidi();
                 var messages = new MessageCollection();
 
-                p.LoadFromFile(FrameworkController.Instance.Settings.DefaultPathLoadFile + "\\Catalogue\\"
-                    + _selectFileName, PluginClassManager.AllFactories, messages);
-                p.Name = _selectFileName.Split('.')[0];
-                if (messages.Count == 0)
-                    Application.Current.Dispatcher.Invoke(new Action(() => _principalPlaylist.AddPartition(p)));
+                //p.LoadFromFile(FrameworkController.Instance.Settings.DefaultPathLoadFile + "\\Catalogue\\"
+                //    + _selectFileName, PluginClassManager.AllFactories, messages);
+                //p.Name = _selectFileName.Split('.')[0];
+                //if (messages.Count == 0)
+                partitionMidi.Load(FrameworkController.Instance.Settings.DefaultPathLoadFile + "\\Catalogue\\" + _selectFileName);
+                partitionXylo = partitionMidi.ConvertCompleteToPartitionXylo();
+                Application.Current.Dispatcher.Invoke(new Action(() => _principalPlaylist.AddPartition(partitionXylo)));
                 
             }
         }

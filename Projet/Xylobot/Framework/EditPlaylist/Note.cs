@@ -5,6 +5,25 @@ namespace Framework
     [IntlConceptName("Framework.Note.Name", "NotesMidi")]
     public class Note : ConceptComponent
     {
+        #region Constructeur
+
+        public Note()
+        {
+
+        }
+
+        public Note(Note n)
+        {
+            Name = n.Name;
+            Octave = n.Octave;
+            Tick = n.Tick;
+            High = n.High;
+            HighString = n.HighString;
+            Intensity = n.Intensity;
+        }
+
+        #endregion
+
         #region Propriétés
 
         [ConceptSerialized]

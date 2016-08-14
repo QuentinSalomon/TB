@@ -2,9 +2,6 @@
 using Sanford.Multimedia.Midi;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Framework
 {
@@ -150,7 +147,9 @@ namespace Framework
             Sequence sequence = new Sequence(filename);
             string[] tabString = filename.Split('\\');
             string title = tabString[tabString.Length - 1];
-            Title = title.Split('.')[0];
+            Title = "";
+            for (int i=0; i<title.Length-1; i++)
+                Title += title.Split('.')[i];
             foreach (Track t in sequence)
             {
                 foreach (MidiEvent midiEvent in t.Iterator())

@@ -154,7 +154,7 @@ namespace Framework
                 Rectangle rectChannel = new Rectangle();
                 rectChannel.Width = rectangleNoteSize;
                 rectChannel.Height = rectangleNoteSize;
-                rectChannel.Fill = ColorChannel[i];
+                rectChannel.Fill = ColorChannel[i%7];
                 rectChannel.DataContext = ch;
                 rectChannel.Visibility = Visibility.Visible;
                 rectChannel.HorizontalAlignment = HorizontalAlignment.Center;

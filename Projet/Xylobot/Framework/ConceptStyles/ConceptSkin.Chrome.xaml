@@ -6,6 +6,7 @@
         <ResourceDictionary Source="ConceptSkin.Chrome/TextBlockStyles.xaml"/>
         <ResourceDictionary Source="ConceptSkin.Chrome/ButtonStyles.xaml"/>
         <ResourceDictionary Source="ConceptSkin.Chrome/ListBoxStyles.xaml"/>
+        <ResourceDictionary Source="ConceptSkin.Chrome/CheckBoxStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
     
