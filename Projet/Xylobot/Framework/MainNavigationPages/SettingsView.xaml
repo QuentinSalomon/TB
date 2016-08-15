@@ -20,6 +20,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="120"/>
             </Grid.RowDefinitions>
@@ -55,20 +56,7 @@
                     <Button x:Name="ButtonMoreTime" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoGreen}"  Click="ButtonMoreTime_Click">
                         <Image Source="/Framework;component/Images/Up32x32.png" Margin="5"/>
                     </Button>
-                    <StackPanel Orientation="Horizontal" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Margin="15,0,0,0">
-                        <CheckBox x:Name="CheckBoxPlayNote" Checked="CheckBoxPlayNote_Checked" VerticalAlignment="Center">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="3" ScaleY="3"/>
-                            </CheckBox.LayoutTransform>
-                        </CheckBox>
-                        <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Jouer la note" VerticalAlignment="Center" Margin="5,0,10,0"/>
-                        <CheckBox x:Name="CheckBoxPlayGamme" Checked="CheckBoxPlayGamme_Checked" VerticalAlignment="Center">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="3" ScaleY="3"/>
-                            </CheckBox.LayoutTransform>
-                        </CheckBox>
-                        <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Jouer la gamme" VerticalAlignment="Center" Margin="5,0,10,0"/>
-                    </StackPanel>
+                    
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="ButtonPrevious" HorizontalAlignment="Right" Style="{DynamicResource ButtonStyle}" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Click="ButtonPrevious_Click">
@@ -79,12 +67,26 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <Button Width="60" Style="{DynamicResource ButtonStyle}"  Grid.Row="4" Click="ButtonSaveSettings_Click" Background="Gray"
+            <StackPanel Orientation="Horizontal" Background="{DynamicResource ColorsVirtuosoMiddleBlue}" Grid.Row="4">
+                <CheckBox x:Name="CheckBoxPlayNote" Checked="CheckBoxPlayNote_Checked" VerticalAlignment="Center">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="3" ScaleY="3"/>
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Jouer la note" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                <CheckBox x:Name="CheckBoxPlayGamme" Checked="CheckBoxPlayGamme_Checked" VerticalAlignment="Center">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="3" ScaleY="3"/>
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Jouer la gamme" VerticalAlignment="Center" Margin="5,0,10,0"/>
+            </StackPanel>
+            <Button Width="60" Style="{DynamicResource ButtonStyle}"  Grid.Row="5" Click="ButtonSaveSettings_Click" Background="Gray"
                     Visibility="{Binding Path=Settings.NeedSaved, Converter={StaticResource BoolToVisibilityConverter}}">
                 <TextBlock Style="{DynamicResource TextBlockNormalStyle}" Text="Save"/>
             </Button>
 
-            <Button x:Name="ButtonShutDown" Grid.Row="6" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonShutDown_Click">
+            <Button x:Name="ButtonShutDown" Grid.Row="7" Width="{Binding ElementName=ButtonShutDown, Path=ActualHeight}" Style="{DynamicResource ButtonStyle}" Click="ButtonShutDown_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>

@@ -160,16 +160,16 @@ namespace Framework
                 if (i == 0)
                     correctTick = 0;
                 else {
-                    correctTick = Tempos[0].Tick / Tempos[0].Value;
+                    correctTick = Tempos[0].Tick * Tempos[0].Value;
                     for (int j = 1; j < i; j++)
-                        correctTick += (Tempos[j].Tick - Tempos[j - 1].Tick) / Tempos[j].Value;
+                        correctTick += (Tempos[j].Tick - Tempos[j - 1].Tick) * Tempos[j].Value;
                 }
 
                 //Correction des notes par tempo
                 while (notes[k].Tick >= Tempos[i].Tick)
                 {
                     notes[k].Tick = (int)
-                        ((notes[k].Tick - correctTick) / Tempos[i].Value + correctTick);
+                        ((notes[k].Tick - correctTick) * Tempos[i].Value + correctTick);
                     if (--k < 0)
                         break;
                 }

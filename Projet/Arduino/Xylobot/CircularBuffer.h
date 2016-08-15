@@ -4,7 +4,7 @@
 #include <arduino.h>
 #include "Notes.h"
 
-#define BUFFER_SIZE 100   //Max 256 (1 byte)
+#define BUFFER_SIZE 50   //Max 256 (1 byte)
 
 class CircularBuffer
 {

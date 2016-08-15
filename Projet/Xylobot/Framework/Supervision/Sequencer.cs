@@ -20,8 +20,17 @@ namespace Framework
             _threadXyloBot.Start();
             Errors = new ObservableCollection<string>();
             _gamme = new List<Note>();
-            for(int i=0; i<Xylobot.numberKeysXylophone; i++)
-                _gamme.Add(NotesConvert.IdToNote(i, 0, i * 100));
+            for (int i = 0; i < Xylobot.numberKeysXylophone; i++)
+            {
+                int id = i + (Xylobot.startOctaveXylophone+1) * Xylobot.octaveSize;
+                //Note note = new Note();
+                //note = NotesConvert.IdToNote(id, 0, i * 20);
+                //note.Octave = (byte)(i / Xylobot.octaveSize);
+                //note.High = (byte)(i % Xylobot.octaveSize);
+                //note.Intensity = 0;
+                //note.Tick = i * 200;
+                _gamme.Add(NotesConvert.IdToNote(id, 0, i * 20));
+            }
         }
 
         #endregion
@@ -150,7 +159,7 @@ namespace Framework
                         case ActionsThread.ChangeKeysHitTime:
                             Xylobot.Stop(); // reset le buffer des notes de l'arduino
                             Thread.Sleep(50);
-                            Xylobot.SendTempo(4000);
+                            Xylobot.SendTempo(2000);
                             Xylobot.Start();
                             while (_actionsThread == ActionsThread.ChangeKeysHitTime)
                             {
@@ -158,11 +167,11 @@ namespace Framework
                                 {
                                     Xylobot.SendKeyHitTime(_indexKey, _keyHitTime);
                                     List<Note> note = new List<Note>();
-                                    note.Add(_noteToPlay);
                                     Application.Current.Dispatcher.Invoke(new Action(() =>
                                         _needChangeHitTime = false));
                                     if(_needPlayNote)
                                     {
+                                        note.Add(_noteToPlay);
                                         Xylobot.SendNotes(note);
                                         Application.Current.Dispatcher.Invoke(new Action(() =>
                                             _needPlayNote = false));
@@ -232,6 +241,8 @@ namespace Framework
                         {
                             if (k + i >= partition.Notes.Count)
                                 break;
+                            partition.Notes[k + i].Intensity = partition.Notes[k + i].Intensity + 64 > _maxIntensity
+                                ? _maxIntensity : partition.Notes[k + i].Intensity;
                             notes.Add(partition.Notes[k + i]);
                         }
                         k += i;
@@ -241,7 +252,7 @@ namespace Framework
                         ActualiseProgress();
 
                         notes.Clear();
-                        Thread.Sleep(50);
+                        Thread.Sleep(_sleepTimeMs);
                     }
                     //Si on termine le programme, on sort de la fonction
                     if (_actionsThread == ActionsThread.Terminate)
@@ -397,6 +408,9 @@ namespace Framework
         double _keyHitTime; //Temps de frappe pour ChangeKeyHitTime
 
         private List<Note> _gamme;
+
+        private const int _sleepTimeMs = 100;
+        private const byte _maxIntensity = 127;
         #endregion
     }
 }

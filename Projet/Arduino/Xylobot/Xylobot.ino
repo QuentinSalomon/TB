@@ -146,10 +146,10 @@ void Push()
       if(!bufferNotes.Current(&currentNote)) //Actualise la note courante, s'il y en a plus on quitte la boucle
         break;
 /****************************DEBUG***************************************/
-      if(currentTick + 10000 < currentNote.GetTick()){
-        currentTick = currentNote.GetTick() - 100;
-        digitalWrite(13, HIGH);
-      }
+//      if(currentTick + 10000 < currentNote.GetTick()){
+//        currentTick = currentNote.GetTick() - 100;
+//        digitalWrite(13, HIGH);
+//      }
 /**************************END DEBUG*************************************/
     }
     i2cXylo.ApplyPush();
@@ -261,11 +261,11 @@ void NotesMsg(uint16_t dataSize)
       tmpTick = 0;
       for(j=0;j<4;j++)
         tmpTick |= (((uint32_t)noteBytes[j+1]) << (j*8));
-      if(tmpTick > 100000000)
-        DebugBlink(3);
+//      if(tmpTick > 100000000)
+//        DebugBlink(3);
       tmpNote.SetPitch(noteBytes[0]);
       tmpNote.SetTick(tmpTick);
-      tmpNote.SetIntensity((int)noteBytes[5]*4000/128); //Intensité changeant de 0 à 4 ms le temps de frappe
+      tmpNote.SetIntensity((double)noteBytes[5]*4000/128); //Intensité changeant de 0 à 4 ms le temps de frappe
       bufferNotes.Write(tmpNote);
     }
     else

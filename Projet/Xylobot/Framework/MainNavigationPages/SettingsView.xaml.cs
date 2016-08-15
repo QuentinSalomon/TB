@@ -68,13 +68,19 @@ namespace Framework
         private void CheckBoxPlayNote_Checked(object sender, RoutedEventArgs e)
         {
             if (CheckBoxPlayNote.IsChecked == true)
+            {
                 CheckBoxPlayGamme.IsChecked = false;
+                _timerCalibration.Interval = 1000;
+            }
         }
 
         private void CheckBoxPlayGamme_Checked(object sender, RoutedEventArgs e)
         {
             if (CheckBoxPlayGamme.IsChecked == true)
+            {
                 CheckBoxPlayNote.IsChecked = false;
+                _timerCalibration.Interval = 2000;
+            }
         }
 
         private void ButtonSaveSettings_Click(object sender, RoutedEventArgs e)
